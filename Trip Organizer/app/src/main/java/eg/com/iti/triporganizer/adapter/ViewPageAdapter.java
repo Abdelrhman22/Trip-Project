@@ -1,4 +1,9 @@
 package eg.com.iti.triporganizer.adapter;
 
-public class ViewPageAdapter {
+/* ViewPageAdapter Will help me to switch between BottomNavigationView
+  on Of them History , Map
+ */
+public class ViewPageAdapter
+{
+
 }

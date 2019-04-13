@@ -6,6 +6,7 @@ package eg.com.iti.triporganizer.adapter;
    -------------------------------
    if you want to delete this note
  */
+//expandable card view  in which we add notes
 public class RawNotesAdapter
 {
 

@@ -5,6 +5,7 @@ package eg.com.iti.triporganizer.adapter;
  [Note2 Specific Trip]  ✖
  [Note3 Specific Trip]  √
  */
+//beside each trip in the history (...)
 public class ShowDetailsAdapter
 {
 

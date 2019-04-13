@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 
 public final class NetworkUtilities {
 
-
+    //to check if user connected to the internet
     public static boolean isOnline(Context context) {
         ConnectivityManager cm =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

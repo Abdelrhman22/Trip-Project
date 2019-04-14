@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "194389676673",
+    "firebase_url": "https://road-trip-a8dc5.firebaseio.com",
+    "project_id": "road-trip-a8dc5",
+    "storage_bucket": "road-trip-a8dc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194389676673:android:5c06ae26d723239b",
+        "android_client_info": {
+          "package_name": "eg.com.iti.triporganizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194389676673-ppott6ue2lv71mu13ivhku7ldfa929d3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "eg.com.iti.triporganizer",
+            "certificate_hash": "b31436e51f26253b57384a8209514a5add1ab4a9"
+          }
+        },
+        {
+          "client_id": "194389676673-3cvmfj8nkek5totmgs9332v79omdlev8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVPDdx6HVYfnVNqkDliZc2jimDdy24Do0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194389676673-3cvmfj8nkek5totmgs9332v79omdlev8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

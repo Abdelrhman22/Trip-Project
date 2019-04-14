@@ -19,9 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="16dp"
-            card_view:cardCornerRadius="8dp"
-            card_view:cardElevation="8dp"
+           android:layout_marginLeft="@dimen/cardview_marginLeft"
+            android:layout_marginRight="@dimen/cardview_marginRight"
+            android:layout_marginTop="@dimen/cardview_marginTop"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="4dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,11 +95,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            card_view:cardCornerRadius="8dp"
-            card_view:cardElevation="8dp"
+            android:layout_marginLeft="@dimen/cardview_marginLeft"
+            android:layout_marginRight="@dimen/cardview_marginRight"
+            android:layout_marginTop="@dimen/cardview_marginTop"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="4dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -265,11 +267,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            card_view:cardCornerRadius="8dp"
-            card_view:cardElevation="8dp"
+            android:layout_marginLeft="@dimen/cardview_marginLeft"
+            android:layout_marginRight="@dimen/cardview_marginRight"
+            android:layout_marginTop="@dimen/cardview_marginTop"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="4dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -310,12 +312,15 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <Button
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="30dp"
             android:layout_marginLeft="30dp"
             android:textColor="#FFFFFF"
             android:background="@drawable/btn_rounded"
             android:layout_gravity="center"
-            android:text="Add Trip"
+            android:text="@string/add_trip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

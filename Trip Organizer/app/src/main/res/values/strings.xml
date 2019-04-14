@@ -15,7 +15,8 @@
     <string name="trip_date">Trip Date</string>
     <string name="trip_time">Trip Time</string>
     <string name="two_way">Two Way   </string>
-    <string name="note">buy a car</string>
+    <string name="note">Note name</string>
+    <string name="add_trip">Add Trip</string>
     <string-array name="Trip_arrays">
         <item>No Repeat</item>
         <item>Repeat Daily</item>

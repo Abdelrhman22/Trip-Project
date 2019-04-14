@@ -6,7 +6,9 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <!-- Arafa Start -->
-
+    <dimen name="cardview_marginRight">10dp</dimen>
+    <dimen name="cardview_marginLeft">10dp</dimen>
+    <dimen name="cardview_marginTop">5dp</dimen>
 
     <!-- Arafa End ******************************** -->
     <!-- Mai Start -->

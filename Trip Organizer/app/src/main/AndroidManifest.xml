@@ -4,7 +4,17 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Arafa Start -->
 
+    <!-- Arafa End *************************************************** -->
+
+    <!-- Mai Start -->
+
+    <!-- Mai End *************************************************** -->
+
+    <!--salma start-->
+
+    <!-- salma End *************************************************** -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +31,11 @@
             android:name=".screens.splash.SplashActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
@@ -28,11 +43,7 @@
         <!-- Mai End *************************************************** -->
         <!--salma start-->
         <activity android:name=".screens.register.RegistrationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- salma end-->
     </application>

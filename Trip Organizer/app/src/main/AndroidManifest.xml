@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eg.com.iti.triporganizer">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Arafa Start -->
-
-    <!-- Arafa End -->
-
-    <!-- Mai Start -->
-
-    <!-- Mai End -->
-
-    <!-- Salma Start -->
-
-    <!-- Salma End -->
 
     <application
         android:allowBackup="true"
@@ -25,29 +15,26 @@
         <activity
             android:name=".screens.home.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <!-- Arafa Start -->
         <activity
             android:name=".screens.splash.SplashActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
+        </activity>
+        <!-- Arafa End *************************************************** -->
+        <!-- Mai Start -->
+        <activity android:name=".screens.login.LoginActivity" />
+        <!-- Mai End *************************************************** -->
+        <!--salma start-->
+        <activity android:name=".screens.register.RegistrationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- Arafa End *************************************************** -->
-        <!-- Mai Start -->
-        <activity android:name=".screens.login.LoginActivity"></activity>
-
-        <!-- Mai End  ***************************************************** -->
-
-        <!-- Salma Start -->
-
-        <!-- Salma End ***************************************************** -->
+        <!-- salma end-->
     </application>
 
 </manifest>

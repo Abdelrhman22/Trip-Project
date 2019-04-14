@@ -13,6 +13,21 @@
     <string name="start_point">Start Point</string>
     <string name="end_point">End Point</string>
     <string name="trip_name">Trip Name</string>
+    <string name="trip_date">Trip Date</string>
+    <string name="trip_time">Trip Time</string>
+    <string name="two_way">Two Way   </string>
+    <string name="note">buy a car</string>
+    <string-array name="Trip_arrays">
+        <item>No Repeat</item>
+        <item>Repeat Daily</item>
+        <item>Repeat Weekly</item>
+        <item>Repeat Monthly</item>
+        <item>Custom Period</item>
+    </string-array>
+    <string-array name="units">
+        <item>Days</item>
+        <item>Weeks</item>
+    </string-array>
     <!-- Arafa End ******************************** -->
     <!-- Mai Start -->
     <string name="Login">Login</string>

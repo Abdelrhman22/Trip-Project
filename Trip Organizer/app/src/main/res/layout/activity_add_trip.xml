@@ -58,6 +58,7 @@
                     card_view:layout_constraintTop_toBottomOf="@+id/tripName_input" />
 
                 <fragment android:id="@+id/place_autocomplete_fragment_from"
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
@@ -88,11 +89,234 @@
 
         <!-- CardView for the Second part -->
         <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="8dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        >
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_calendar_colored"
+                            android:id="@+id/start_date"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/start_date_text"
+                            android:fontFamily="@font/bold"
+                            android:text="@string/trip_date"
+                            />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_alarm_clock"
+                            android:id="@+id/start_time"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/start_time_text"
+                            android:fontFamily="@font/bold"
+                            android:text="@string/trip_time"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_gravity="center"
+                    android:id="@+id/rounded_trip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/two_way"
+                    android:textSize="16sp"
+                    />
+                <!-- This Layout in Case of user Choosed Two Way trip
+                it will appear
+                -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rounded_layout"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    >
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        >
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_calendar_colored"
+                            android:id="@+id/return_date"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/return_date_text"
+                            android:fontFamily="@font/bold"
+                            android:text=""/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_alarm_clock"
+                            android:id="@+id/return_time"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/return_time_text"
+                            android:fontFamily="@font/bold"
+                            android:text=""/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/repeat_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="16dp"
+                        android:entries="@array/Trip_arrays"
+                        android:textAlignment="center"/>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/period_count"
+                        android:visibility="gone"
+                        android:inputType="number" />
+                    <Spinner
+                        android:id="@+id/unit_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:entries="@array/units"
+                        android:layout_margin="16dp"
+                        android:visibility="gone"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
 
         </android.support.v7.widget.CardView>
 
-
+        <!-- CardView for the Third part -->
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            card_view:cardCornerRadius="8dp"
+            card_view:cardElevation="8dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="16dp">
+                 <android.support.design.widget.TextInputLayout
+                     android:layout_width="0dp"
+                     android:layout_weight="4"
+                     android:layout_height="wrap_content">
+                     <android.support.design.widget.TextInputEditText
+                         android:hint="@string/note"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content" />
+                 </android.support.design.widget.TextInputLayout>
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/add_note"
+                        android:id="@+id/add_notes"
+                        android:paddingStart="15dp"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <Button
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_rounded"
+            android:layout_gravity="center"
+            android:text="Add Trip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

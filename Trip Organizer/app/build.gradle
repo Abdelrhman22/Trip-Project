@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
@@ -34,13 +34,17 @@ dependencies {
     // New Dependencies From Here ---------------------------------------------------
     implementation 'com.google.firebase:firebase-core:16.0.8'
     // Arafa Start
-
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.google.android.gms:play-services-places:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.google.android.libraries.places:places:1.0.0'
     // Arafa End ---------------------------------------------------------------------
     // Mai Start
-
     // Mai End -----------------------------------------------------------------------
     // Salma Start
     implementation 'com.google.firebase:firebase-auth:16.2.1'
     // Salma End -----------------------------------------------------------------------
+
 }
 apply plugin: 'com.google.gms.google-services'

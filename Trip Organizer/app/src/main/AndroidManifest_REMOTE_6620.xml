@@ -28,15 +28,9 @@
             </intent-filter>
         </activity> <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
-        <activity android:name=".screens.login.LoginActivity" >
-
-        </activity>
-        <!-- Mai End *************************************************** -->
-        <!--salma start-->
-        <activity android:name=".screens.register.RegistrationActivity">
-
-        </activity>
-        <!-- salma end-->
+        <activity android:name=".screens.login.LoginActivity" /> <!-- Mai End *************************************************** -->
+        <!-- salma start -->
+        <activity android:name=".screens.register.RegistrationActivity"></activity>
     </application>
 
 </manifest>

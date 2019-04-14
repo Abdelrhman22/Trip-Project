@@ -16,6 +16,14 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- Arafa Start -->
+
+
+    <!-- Arafa End ******************************** -->
+    <!-- Mai Start -->
+
+
+    <!-- Mai End ********************************** -->
     <!-- salma start -->
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/btn_rounded</item>

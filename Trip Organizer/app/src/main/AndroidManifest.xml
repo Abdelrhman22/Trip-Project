@@ -39,7 +39,9 @@
         </activity>
         <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
-        <activity android:name=".screens.login.LoginActivity" />
+        <activity android:name=".screens.login.LoginActivity" >
+
+        </activity>
         <!-- Mai End *************************************************** -->
         <!--salma start-->
         <activity android:name=".screens.register.RegistrationActivity">

@@ -28,11 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBMhPgYhWPJN0MPISegD8NYqMSLF_Vu5P8" />
-            -->
+            android:value="AIzaSyBLPdtvo4KoNgMDdVYXcCtJOpM8yvkuSCQ" />
+
         <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
         <activity android:name=".screens.login.LoginActivity" >

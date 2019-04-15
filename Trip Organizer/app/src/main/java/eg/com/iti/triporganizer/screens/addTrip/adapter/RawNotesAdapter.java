@@ -1,4 +1,4 @@
-package eg.com.iti.triporganizer.adapter;
+package eg.com.iti.triporganizer.screens.addTrip.adapter;
 
 /*RawNotesAdapter will be used after you have added note you will see
    -------------------------------

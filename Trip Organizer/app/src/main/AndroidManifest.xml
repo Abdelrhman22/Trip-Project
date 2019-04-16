@@ -31,11 +31,6 @@
             android:name=".screens.splash.SplashActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
@@ -43,7 +38,11 @@
         <!-- Mai End *************************************************** -->
         <!--salma start-->
         <activity android:name=".screens.register.RegistrationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!-- salma end-->
     </application>

@@ -50,6 +50,7 @@ dependencies {
     // Mai End -----------------------------------------------------------------------
     // Salma Start
     implementation 'com.google.firebase:firebase-auth:16.2.1'
+
     // Salma End -----------------------------------------------------------------------
 
 }

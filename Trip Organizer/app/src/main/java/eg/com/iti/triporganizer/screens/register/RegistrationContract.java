@@ -5,11 +5,13 @@ import eg.com.iti.triporganizer.model.UserDTO;
 public interface RegistrationContract {
     interface RegistrationView{
         void respondToSuccessfulRegistration();
-        void respondToFailedRegistration();
+        void respondToFailedRegistration(String errorMsg);
+        void showProgress();
+        void hideProgress();
     }
     interface RegistrationPresenter{
         void registerUser(UserDTO userDTO);
         void notifyViewWithSuccessfulRegistration();
-        void notifyViewWithFailedRegistration();
+        void notifyViewWithFailedRegistration(String errorMsg);
     }
 }

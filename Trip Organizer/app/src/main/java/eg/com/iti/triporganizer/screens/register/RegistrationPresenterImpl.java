@@ -26,8 +26,8 @@ public class RegistrationPresenterImpl implements RegistrationContract.Registrat
     }
 
     @Override
-    public void notifyViewWithFailedRegistration() {
-        registrationView.respondToFailedRegistration();
+    public void notifyViewWithFailedRegistration(String errorMsg) {
+        registrationView.respondToFailedRegistration(errorMsg);
 
     }
 }

@@ -36,12 +36,12 @@ public class FirebaseAuthenticationUsingEmailAndPassword {
                                         if (task.isSuccessful()) {
                                             registrationPresenter.notifyViewWithSuccessfulRegistration();
                                         } else
-                                            registrationPresenter.notifyViewWithFailedRegistration();
+                                            registrationPresenter.notifyViewWithFailedRegistration(task.getException().getMessage());
                                     }
                                 });
                     }
                 } else
-                    registrationPresenter.notifyViewWithFailedRegistration();
+                    registrationPresenter.notifyViewWithFailedRegistration(task.getException().getMessage());
             }
         });
     }

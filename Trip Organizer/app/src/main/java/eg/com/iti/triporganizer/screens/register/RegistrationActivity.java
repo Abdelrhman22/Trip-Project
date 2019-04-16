@@ -5,10 +5,11 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.UserDTO;
+import eg.com.iti.triporganizer.utils.NetworkUtilities;
 import eg.com.iti.triporganizer.utils.UserDataValidation;
 
 public class RegistrationActivity extends AppCompatActivity implements RegistrationContract.RegistrationView {
@@ -19,6 +20,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     private TextInputLayout passwordWrapper;
     private TextInputLayout passwordConfirmationWrapper;
     private TextInputLayout phoneNumWrapper;
+    private ProgressBar progressBar;
     private Button signUpButton;
     //-------------------------values------------------------------
     private String userName;
@@ -29,7 +31,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
     //-------------------------------------------------------------
     RegistrationContract.RegistrationPresenter registrationPresenter;
-    UserDTO registringUser;
+    UserDTO regisetringUser;
     UserDataValidation userDataValidation;
     boolean check;
 
@@ -54,25 +56,26 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
         passwordConfirmationWrapper = findViewById(R.id.confirmPasswordTextInputLayout);
         phoneNumWrapper = findViewById(R.id.phoneTextInputLayout);
         signUpButton = findViewById(R.id.signUpButton);
+        progressBar = findViewById(R.id.progress);
     }
 
 
     private void addingListeners() {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
-                boolean dataInsertedCorrectly = getValues();
-                if(dataInsertedCorrectly){
-                    registringUser=new UserDTO(userName,userEmail,userPassword,userPhoneNum);
-                    registrationPresenter.registerUser(registringUser);
-                }
+                if(NetworkUtilities.isOnline(RegistrationActivity.this))
+                        register();
+                else
+                    Toast.makeText(RegistrationActivity.this, "Check your internet connection please", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
     private boolean getValues() {
-        boolean done=true;
+        boolean done = true;
         if (nameWrapper.getEditText() != null) {
             userName = nameWrapper.getEditText().getText().toString();
             nameWrapper.setError(null);
@@ -141,9 +144,8 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
                 if (!check) {
                     phoneNumWrapper.setError("Enter valid mobile number");
                     done = false;
-                }
-                else
-                    done=true;
+                } else
+                    done = true;
             }
         }
         return done;
@@ -152,29 +154,49 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
     @Override
     public void respondToSuccessfulRegistration() {
+        hideProgress();
         Toast.makeText(this, "Registered Successfully,Please verify your email", Toast.LENGTH_SHORT).show();
         cleanFields();
     }
 
 
+    @Override
+    public void respondToFailedRegistration(String errorMsg) {
+        hideProgress();
+        Toast.makeText(this, errorMsg, Toast.LENGTH_LONG).show();
+
+    }
+    private void register(){
+        boolean dataInsertedCorrectly = getValues();
+        if (dataInsertedCorrectly) {
+            showProgress();
+            regisetringUser = new UserDTO(userName, userEmail, userPassword, userPhoneNum);
+            registrationPresenter.registerUser(regisetringUser);
+        }
+    }
 
     @Override
-    public void respondToFailedRegistration() {
-        Toast.makeText(this, "Registered Failed", Toast.LENGTH_LONG).show();
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
     }
 
     private void cleanFields() {
-        if(nameWrapper.getEditText()!=null)
-        nameWrapper.getEditText().setText("");
-        if(emailWrapper.getEditText()!=null)
+        if (nameWrapper.getEditText() != null)
+            nameWrapper.getEditText().setText("");
+        if (emailWrapper.getEditText() != null)
             emailWrapper.getEditText().setText("");
-        if(passwordWrapper.getEditText()!=null)
+        if (passwordWrapper.getEditText() != null)
             passwordWrapper.getEditText().setText("");
-        if(passwordConfirmationWrapper.getEditText()!=null)
+        if (passwordConfirmationWrapper.getEditText() != null)
             passwordConfirmationWrapper.getEditText().setText("");
-        if(phoneNumWrapper.getEditText()!=null)
+        if (phoneNumWrapper.getEditText() != null)
             phoneNumWrapper.getEditText().setText("");
 
     }
+
 }

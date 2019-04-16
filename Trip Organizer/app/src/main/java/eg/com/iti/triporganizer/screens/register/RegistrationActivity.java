@@ -109,7 +109,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
             } else {
                 check = userDataValidation.validatePassword(userPassword);
                 if (!check) {
-                    nameWrapper.setError("Password should be of at least 6 characters");
+                    passwordWrapper.setError("Password should be of at least 6 characters");
                     done = false;
                 } else
                     done = true;

@@ -2,16 +2,18 @@ package eg.com.iti.triporganizer.model;
 
 public class UserDTO {
     //----------------salma start-----------------------
+    private String userID;
     private String userName;
     private String userEmail;
     private String userPassword;
     private String userPhoneNum;
 
     public UserDTO() {
-      this.userName=null;
-      this.userEmail=null;
-      this.userPassword=null;
-      this.userPhoneNum=null;
+        this.userID = null;
+        this.userName = null;
+        this.userEmail = null;
+        this.userPassword = null;
+        this.userPhoneNum = null;
     }
 
     public UserDTO(String userName, String userEmail, String userPassword, String userPhoneNum) {
@@ -19,6 +21,23 @@ public class UserDTO {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userPhoneNum = userPhoneNum;
+    }
+
+    public UserDTO(String userID, String userName, String userEmail, String userPassword, String userPhoneNum) {
+        this.userID = userID;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.userPhoneNum = userPhoneNum;
+    }
+
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getUserName() {

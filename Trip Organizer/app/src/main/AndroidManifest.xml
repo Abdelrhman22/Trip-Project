@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eg.com.iti.triporganizer">
-
     <!-- Arafa start -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,8 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
+        <activity android:name=".screens.dialog.DialogActivity"></activity>
         <activity android:name=".screens.addTrip.AddTripActivity" />
         <activity
             android:name=".screens.home.HomeActivity"
@@ -41,11 +39,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBLPdtvo4KoNgMDdVYXcCtJOpM8yvkuSCQ" /> <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
-        <activity android:name=".screens.login.LoginActivity"></activity> <!-- Mai End *************************************************** -->
+        <activity android:name=".screens.login.LoginActivity" /> <!-- Mai End *************************************************** -->
         <!-- salma start -->
-        <activity android:name=".screens.register.RegistrationActivity">
-
-        </activity>
+        <activity android:name=".screens.register.RegistrationActivity"></activity>
     </application>
 
 </manifest>

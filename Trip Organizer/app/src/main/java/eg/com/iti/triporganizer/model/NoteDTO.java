@@ -9,25 +9,30 @@ public class NoteDTO implements Serializable {
     this class contains information about note like if it is checked or not , Note Content
     which is a part of Trip as , each trip has it's own notes.
      */
-    private boolean isChecked;
-    private String content;
+    private boolean done;
+    private String body;
 
-    public NoteDTO() {}
-
-    public NoteDTO(boolean isChecked, String content) {
-        this.isChecked = isChecked;
-        this.content = content;
+    public NoteDTO() {
     }
 
-    public void setChecked(boolean checked) {
-        isChecked = checked;
+    public NoteDTO(boolean done, String body) {
+        this.done = done;
+        this.body = body;
     }
 
-    public boolean isChecked() {
-        return isChecked;
+    public boolean isDone() {
+        return done;
     }
 
-    public String getContent() {
-        return content;
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 }

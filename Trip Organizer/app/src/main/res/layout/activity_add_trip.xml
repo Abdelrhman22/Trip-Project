@@ -31,21 +31,22 @@
                 android:orientation="vertical"
                 android:layout_margin="16dp">
                 <TextView
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="30sp"
                     android:layout_gravity="center"
                     android:text="@string/app_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:theme="@style/AppTheme.TextView"/>
 
                 <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tripNameWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/tripName_input"
-                        android:hint="@string/trip_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:hint="@string/trip_name" />
                 </android.support.design.widget.TextInputLayout>
                 <TextView
                     android:layout_marginTop="5dp"
@@ -59,7 +60,7 @@
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toBottomOf="@+id/tripName_input" />
 
-                <fragment android:id="@+id/place_autocomplete_fragment_from"
+                <fragment android:id="@+id/tripSrc"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,16 +76,15 @@
                     android:textStyle="bold"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@+id/place_autocomplete_fragment_from" />
+                    card_view:layout_constraintTop_toBottomOf="@+id/tripSrc" />
 
                 <fragment
-                    android:id="@+id/place_autocomplete_fragment_to"
+                    android:id="@+id/tripDestination"
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                     android:layout_marginTop="8dp"
-                    android:orientation="vertical"
-                    />
+                    android:orientation="vertical" />
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
@@ -126,13 +126,13 @@
                             android:src="@drawable/ic_calendar_colored"
                             android:id="@+id/start_date"
                             />
+
                         <TextView
+                            android:id="@+id/start_date_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/start_date_text"
                             android:fontFamily="@font/bold"
-                            android:text="@string/trip_date"
-                            />
+                            android:text="@string/trip_date" />
 
                     </LinearLayout>
                     <LinearLayout
@@ -147,27 +147,27 @@
                             android:src="@drawable/ic_alarm_clock"
                             android:id="@+id/start_time"
                             />
+
                         <TextView
+                            android:id="@+id/start_time_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/start_time_text"
                             android:fontFamily="@font/bold"
-                            android:text="@string/trip_time"/>
+                            android:text="@string/trip_time" />
 
                     </LinearLayout>
                 </LinearLayout>
 
                 <android.support.v7.widget.SwitchCompat
-                    android:layout_gravity="center"
                     android:id="@+id/rounded_trip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="12dp"
+                    android:layout_marginEnd="8dp"
                     android:text="@string/two_way"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
                 <!-- This Layout in Case of user Choosed Two Way trip
                 it will appear
                 -->
@@ -237,7 +237,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_margin="16dp"
                         android:entries="@array/Trip_arrays"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center" />
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -283,15 +283,18 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_margin="16dp">
-                 <android.support.design.widget.TextInputLayout
-                     android:layout_width="0dp"
-                     android:layout_weight="4"
-                     android:layout_height="wrap_content">
-                     <android.support.design.widget.TextInputEditText
-                         android:hint="@string/note"
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content" />
-                 </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/noteNameWrapper"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/note" />
+                    </android.support.design.widget.TextInputLayout>
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -311,17 +314,19 @@
                     />
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
         <Button
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/btn_rounded"
-            android:layout_gravity="center"
-            android:text="@string/add_trip"
+            android:id="@+id/addTripBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btn_rounded"
+            android:padding="10dp"
+            android:text="@string/add_trip"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

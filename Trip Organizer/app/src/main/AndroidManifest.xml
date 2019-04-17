@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screens.dialog.DialogActivity"></activity>
+        <activity android:name=".screens.history.HistoryActivity"></activity>
+        <activity android:name=".screens.dialog.DialogActivity" />
         <activity android:name=".screens.addTrip.AddTripActivity" />
         <activity
             android:name=".screens.home.HomeActivity"
@@ -39,11 +40,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBLPdtvo4KoNgMDdVYXcCtJOpM8yvkuSCQ" /> <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
-        <activity android:name=".screens.login.LoginActivity">
-        </activity> <!-- Mai End *************************************************** -->
-
+        <activity android:name=".screens.login.LoginActivity"></activity> <!-- Mai End *************************************************** -->
         <!-- salma start -->
-        <activity android:name=".screens.register.RegistrationActivity"></activity>
+        <activity android:name=".screens.register.RegistrationActivity" />
     </application>
 
 </manifest>

@@ -23,7 +23,6 @@
         <item>Repeat Daily</item>
         <item>Repeat Weekly</item>
         <item>Repeat Monthly</item>
-        <item>Custom Period</item>
     </string-array>
     <string-array name="units">
         <item>Days</item>
@@ -36,6 +35,8 @@
     <string name="Password">Password</string>
     <string name="NotAMember">Not A Member?</string>
     <string name="SignUp">Sign Up</string>
+    <string name="Backdate">Back Trip Date</string>
+    <string name="backTime">Back Trip Time</string>
 
     <!-- Mai End ********************************** -->
     <!-- Salma Start -->

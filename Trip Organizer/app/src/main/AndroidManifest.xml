@@ -20,11 +20,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".screens.dialog.DialogActivity"></activity>
         <activity android:name=".screens.addTrip.AddTripActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".screens.home.HomeActivity"
@@ -42,6 +38,11 @@
             android:value="AIzaSyBLPdtvo4KoNgMDdVYXcCtJOpM8yvkuSCQ" /> <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
         <activity android:name=".screens.login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity> <!-- Mai End *************************************************** -->
 
         <!-- salma start -->

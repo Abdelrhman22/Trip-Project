@@ -11,8 +11,7 @@ import eg.com.iti.triporganizer.model.Notes;
 
 @Entity(tableName = "trip")
 public class TripDTO implements Serializable {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+
     @ColumnInfo(name = "name")
     private String name;
     @ColumnInfo(name = "trip_start_point")
@@ -31,8 +30,8 @@ public class TripDTO implements Serializable {
     private String trip_date;
     @ColumnInfo(name = "trip_time")
     private String trip_time;
-    @ColumnInfo(name = "roundStatus")
-    private String roundStatus;
+    @ColumnInfo(name = "rounded")
+    private boolean rounded;
     @ColumnInfo(name = "repeated")
     private String repeated;
     @ColumnInfo(name = "tripStatus")
@@ -57,7 +56,7 @@ public class TripDTO implements Serializable {
     public TripDTO(String userId, String name, String trip_start_point, String trip_end_point,
                    Double trip_start_point_latitude, Double trip_start_point_longitude,
                    Double trip_end_point_latitude,Double trip_end_point_longitude, String trip_date,
-                   String trip_time , String repeated , String tripStatus, Notes notes ,String roundStatus) {
+                   String trip_time , String repeated , String tripStatus, Notes notes ,boolean rounded) {
         this.userId = userId;
         this.name = name;
         this.trip_start_point = trip_start_point;
@@ -71,16 +70,11 @@ public class TripDTO implements Serializable {
         this.repeated=repeated;
         this.tripStatus=tripStatus;
         this.notes = notes;
-        this.roundStatus=roundStatus;
+        this.rounded=rounded;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public int getId() {
-        return id;
-    }
+
 
     public String getName() {
         return name;
@@ -118,8 +112,8 @@ public class TripDTO implements Serializable {
         return trip_time;
     }
 
-    public String getRoundStatus() {
-        return roundStatus;
+    public boolean getRoundStatus() {
+        return rounded;
     }
 
     public Notes getNotes() {
@@ -155,8 +149,8 @@ public class TripDTO implements Serializable {
         this.averageSpeed = averageSpeed;
     }
 
-    public void setRoundStatus(String roundStatus) {
-        this.roundStatus = roundStatus;
+    public void setRoundStatus(boolean rounded) {
+        this.rounded = rounded;
     }
 
     public void setTripStatus(String tripStatus) {

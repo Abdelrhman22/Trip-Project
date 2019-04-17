@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import eg.com.iti.triporganizer.Network.NetworkServices.SignInWithFirebase;
 import eg.com.iti.triporganizer.R;
+import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
 import eg.com.iti.triporganizer.screens.home.HomeActivity;
 import eg.com.iti.triporganizer.screens.register.RegistrationActivity;
 

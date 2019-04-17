@@ -17,18 +17,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-
-
 import java.util.Calendar;
-
 import eg.com.iti.triporganizer.R;
-import eg.com.iti.triporganizer.model.TripDTO;
+import eg.com.iti.triporganizer.model.helpers.roomdb.TripDTO;
 
 public class AddTripActivity extends AppCompatActivity {
 

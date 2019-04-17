@@ -1,13 +1,9 @@
 package eg.com.iti.triporganizer.screens.login;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -20,20 +16,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.maps.internal.ILocationSourceDelegate;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 
+import eg.com.iti.triporganizer.Network.NetworkServices.SignInWithFirebase;
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.screens.home.HomeActivity;
 import eg.com.iti.triporganizer.screens.register.RegistrationActivity;
 
-public class LoginActivity extends AppCompatActivity implements ILoginView {
+public class LoginActivity extends AppCompatActivity implements ILoginView{
 
     TextView signupTextView;
     Button loginButton;
@@ -41,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     EditText emailEditText;
     EditText passwordEditText;
     ProgressBar progressBar;
-    LoginPresenter presenter;
+    ILoginPresenter presenter;
     SignInWithFirebase signInWithFirebase;
     boolean loginResult;
     private GoogleSignInClient mGoogleSignInClient;

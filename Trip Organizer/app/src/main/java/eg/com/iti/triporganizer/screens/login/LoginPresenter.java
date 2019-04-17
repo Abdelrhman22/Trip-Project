@@ -1,11 +1,11 @@
 package eg.com.iti.triporganizer.screens.login;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.tasks.Task;
+
+import eg.com.iti.triporganizer.Network.NetworkServices.SignInWithFirebase;
 
 public class LoginPresenter implements ILoginPresenter {
 

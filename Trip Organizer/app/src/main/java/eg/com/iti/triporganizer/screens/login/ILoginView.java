@@ -1,6 +1,6 @@
 package eg.com.iti.triporganizer.screens.login;
 
-interface ILoginView {
+public interface ILoginView {
     void loginDoneSuccessfully();
     void loginFailed();
     void showValidationErrorMessage();

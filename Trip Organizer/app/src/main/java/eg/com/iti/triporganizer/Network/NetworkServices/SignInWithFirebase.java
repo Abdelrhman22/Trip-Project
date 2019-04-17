@@ -1,4 +1,4 @@
-package eg.com.iti.triporganizer.screens.login;
+package eg.com.iti.triporganizer.Network.NetworkServices;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import eg.com.iti.triporganizer.screens.login.ILoginView;
 import eg.com.iti.triporganizer.screens.register.RegistrationActivity;
 
 
@@ -40,9 +41,7 @@ public class SignInWithFirebase {
                 .addOnCompleteListener((Activity) loginView, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.i("msg", "2abl el task is successful");
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             loginView.loginDoneSuccessfully();
 
@@ -55,7 +54,7 @@ public class SignInWithFirebase {
     }
 
     //Sign-in with Google Account
-    void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    public void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         googleSignInAccount = acct;
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);

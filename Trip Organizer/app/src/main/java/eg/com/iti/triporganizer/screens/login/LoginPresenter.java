@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.Task;
+
 public class LoginPresenter implements ILoginPresenter {
 
     private ILoginView loginView;
@@ -49,6 +52,11 @@ public class LoginPresenter implements ILoginPresenter {
     }
 
     @Override
+    public void signInWithGoogle(GoogleSignInAccount account) {
+        signInWithFirebaseObject.firebaseAuthWithGoogle(account);
+    }
+
+    @Override
     public void saveInSharedPreferences(String email, String password) {
         helper.saveInSharedPreferences(email,password);
     }
@@ -60,4 +68,6 @@ public class LoginPresenter implements ILoginPresenter {
         return true;
 
     }
+
+
 }

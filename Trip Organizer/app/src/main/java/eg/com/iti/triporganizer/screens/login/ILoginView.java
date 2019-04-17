@@ -6,6 +6,4 @@ interface ILoginView {
     void showValidationErrorMessage();
     void enterEmailMessage();
     void enterPasswordMessage();
-    void showProgressBar();
-    void hideProgressBar();
 }

@@ -24,7 +24,7 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import java.util.Calendar;
 import eg.com.iti.triporganizer.R;
-import eg.com.iti.triporganizer.model.helpers.roomdb.TripDTO;
+import eg.com.iti.triporganizer.model.roomdb.TripDTO;
 
 public class AddTripActivity extends AppCompatActivity {
 

@@ -47,6 +47,9 @@ dependencies {
     annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
     // Arafa End ---------------------------------------------------------------------
     // Mai Start
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
     // Mai End -----------------------------------------------------------------------
     // Salma Start
     implementation 'com.google.firebase:firebase-auth:16.2.1'

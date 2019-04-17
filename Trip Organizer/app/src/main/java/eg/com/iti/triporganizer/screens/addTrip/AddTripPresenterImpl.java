@@ -3,10 +3,11 @@ package eg.com.iti.triporganizer.screens.addTrip;
 import java.util.Calendar;
 
 import eg.com.iti.triporganizer.Network.NetworkServices.AddTripsToFireBaseDataBase;
-import eg.com.iti.triporganizer.model.helpers.roomdb.TripDTO;
+import eg.com.iti.triporganizer.model.roomdb.TripDTO;
 
 public class AddTripPresenterImpl implements AddTripContract.AddTripPresenter
 {
+
     AddTripContract.AddTripView addTripView;
     AddTripsToFireBaseDataBase addTripsToFireBaseDataBase;
 
@@ -14,6 +15,7 @@ public class AddTripPresenterImpl implements AddTripContract.AddTripPresenter
         this.addTripView=addTripView;
         addTripsToFireBaseDataBase= new AddTripsToFireBaseDataBase(this);
     }
+
 
     @Override
     public void addTrip(TripDTO tripDTO) {

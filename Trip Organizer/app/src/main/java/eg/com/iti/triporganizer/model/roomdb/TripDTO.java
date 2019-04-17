@@ -1,4 +1,4 @@
-package eg.com.iti.triporganizer.model.helpers.roomdb;
+package eg.com.iti.triporganizer.model.roomdb;
 
 
 import android.arch.persistence.room.ColumnInfo;

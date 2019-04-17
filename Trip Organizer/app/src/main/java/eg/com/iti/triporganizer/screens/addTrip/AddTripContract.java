@@ -1,6 +1,6 @@
 package eg.com.iti.triporganizer.screens.addTrip;
 
-import eg.com.iti.triporganizer.model.helpers.roomdb.TripDTO;
+import eg.com.iti.triporganizer.model.roomdb.TripDTO;
 
 public interface AddTripContract {
     interface AddTripView {

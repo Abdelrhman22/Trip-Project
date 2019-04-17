@@ -9,7 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import eg.com.iti.triporganizer.model.helpers.roomdb.TripDTO;
+import eg.com.iti.triporganizer.model.roomdb.TripDTO;
 import eg.com.iti.triporganizer.screens.addTrip.AddTripContract;
 
 public class AddTripsToFireBaseDataBase {

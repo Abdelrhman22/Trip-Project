@@ -29,6 +29,7 @@ public class FirebaseAuthenticationUsingEmailAndPassword {
                 if (task.isSuccessful()) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     if (user != null) {
+                        registeringUser.setUserID(user.getUid());
                         user.sendEmailVerification()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

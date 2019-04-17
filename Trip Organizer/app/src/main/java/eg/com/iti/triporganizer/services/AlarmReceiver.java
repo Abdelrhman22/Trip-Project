@@ -1,4 +1,4 @@
-package eg.com.iti.triporganizer.services.alarm;
+package eg.com.iti.triporganizer.services;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

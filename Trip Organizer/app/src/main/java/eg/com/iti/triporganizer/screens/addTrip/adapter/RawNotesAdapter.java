@@ -60,7 +60,7 @@ public class RawNotesAdapter extends RecyclerView.Adapter<RawNotesAdapter.RawNot
         }
 
         void bind(final int index) {
-            textView.setText(mNotes.get(index).getContent());
+            textView.setText(mNotes.get(index).getBody());
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

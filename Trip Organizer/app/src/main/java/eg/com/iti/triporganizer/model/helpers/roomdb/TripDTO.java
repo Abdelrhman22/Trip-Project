@@ -1,4 +1,4 @@
-package eg.com.iti.triporganizer.model;
+package eg.com.iti.triporganizer.model.helpers.roomdb;
 
 
 import android.arch.persistence.room.ColumnInfo;
@@ -6,6 +6,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import java.io.Serializable;
+
+import eg.com.iti.triporganizer.model.Notes;
 
 @Entity(tableName = "trip")
 public class TripDTO implements Serializable {

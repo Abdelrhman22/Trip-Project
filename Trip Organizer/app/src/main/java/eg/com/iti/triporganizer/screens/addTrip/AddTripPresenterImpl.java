@@ -4,21 +4,8 @@ import java.util.Calendar;
 
 import eg.com.iti.triporganizer.model.TripDTO;
 
-public class AddTripPresenterImpl implements AddTripPresenter
+public class AddTripPresenterImpl
 {
 
-    @Override
-    public void updateFirebaseAndCreateAlarms(TripDTO tripDTO, Calendar myCalendar) {
 
-    }
-
-    @Override
-    public void addTrip() {
-
-    }
-
-    @Override
-    public void updateTrip(TripDTO trip, Calendar myCalendar) {
-
-    }
 }

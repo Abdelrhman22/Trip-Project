@@ -43,8 +43,8 @@ public class SignInWithFirebase {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            loginView.loginDoneSuccessfully();
-
+                            //loginView.loginDoneSuccessfully();
+                            loginView.checkEmailVerification(mAuth);
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             loginView.loginFailed();
@@ -65,7 +65,6 @@ public class SignInWithFirebase {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }

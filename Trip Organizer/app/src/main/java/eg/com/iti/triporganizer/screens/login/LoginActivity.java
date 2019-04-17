@@ -18,6 +18,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import eg.com.iti.triporganizer.Network.NetworkServices.SignInWithFirebase;
 import eg.com.iti.triporganizer.R;
@@ -25,7 +26,7 @@ import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
 import eg.com.iti.triporganizer.screens.home.HomeActivity;
 import eg.com.iti.triporganizer.screens.register.RegistrationActivity;
 
-public class LoginActivity extends AppCompatActivity implements ILoginView{
+public class LoginActivity extends AppCompatActivity implements ILoginView {
 
     TextView signupTextView;
     Button loginButton;
@@ -103,7 +104,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 presenter.signInWithGoogle(account);
-                loginDoneSuccessfully();
+                //loginDoneSuccessfully();
+                //checkEmailVerification();
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);
                 loginFailed();
@@ -136,6 +138,20 @@ public class LoginActivity extends AppCompatActivity implements ILoginView{
     @Override
     public void enterPasswordMessage() {
         Toast.makeText(this, "Please Enter your password!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void checkEmailVerification(FirebaseAuth mAuth) {
+        FirebaseUser firebaseUser = mAuth.getInstance().getCurrentUser();
+        boolean emailFlag = firebaseUser.isEmailVerified();
+
+        if (emailFlag) {
+            loginDoneSuccessfully();
+        } else {
+            Toast.makeText(this, "Please Verify your Email!", Toast.LENGTH_SHORT).show();
+            mAuth.signOut();
+        }
+
     }
 
 

@@ -57,6 +57,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
         setContentView(R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance();
         loginPresenter = new LoginPresenterImpl(this);
+
+        boolean loggedIn = loginPresenter.checkIfLoggedIn();
+        if (loggedIn) {
+            respondToRememberUser();
+        }
+
         initComponents();
         addingListeners();
         //google sign in
@@ -66,6 +72,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
                 .build();
         googleSignInClient = GoogleSignIn.getClient(LoginActivity.this, googleSignInOptions);
 
+    }
+
+    private void respondToRememberUser() {
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -150,6 +162,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
 
     @Override
     public void respondToSuccessfulLogin() {
+        loginPresenter.notifySharedPreferencesManagerToSetRememberMe();
         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(intent);
     }
@@ -196,6 +209,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
+                            loginPresenter.notifySharedPreferencesManagerToSetRememberMe();
                             updateUI();
                         } else {
                             // If sign in fails, display a message to the user.

@@ -12,6 +12,10 @@ public interface LoginContract {
         void notifyViewWithFailedLogin();
 
         void notifyViewWithUnverifiedEmail();
+
+        boolean checkIfLoggedIn();
+
+        void notifySharedPreferencesManagerToSetRememberMe();
     }
     interface LoginView {
 

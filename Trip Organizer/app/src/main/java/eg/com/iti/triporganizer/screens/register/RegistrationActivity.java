@@ -71,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
                     Toast.makeText(RegistrationActivity.this, "Check your internet connection please", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
     }
 
 

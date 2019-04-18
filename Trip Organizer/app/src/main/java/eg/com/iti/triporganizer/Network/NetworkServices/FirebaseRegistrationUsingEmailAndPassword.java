@@ -11,11 +11,11 @@ import com.google.firebase.auth.FirebaseUser;
 import eg.com.iti.triporganizer.model.UserDTO;
 import eg.com.iti.triporganizer.screens.register.RegistrationContract;
 
-public class FirebaseAuthenticationUsingEmailAndPassword {
+public class FirebaseRegistrationUsingEmailAndPassword {
     private FirebaseAuth firebaseAuth;
     private RegistrationContract.RegistrationPresenter registrationPresenter;
 
-    public FirebaseAuthenticationUsingEmailAndPassword(RegistrationContract.RegistrationPresenter registrationPresenter) {
+    public FirebaseRegistrationUsingEmailAndPassword(RegistrationContract.RegistrationPresenter registrationPresenter) {
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.registrationPresenter = registrationPresenter;
     }

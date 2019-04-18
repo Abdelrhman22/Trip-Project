@@ -8,7 +8,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import eg.com.iti.triporganizer.R;
-import eg.com.iti.triporganizer.screens.home.HomeActivity;
 import eg.com.iti.triporganizer.screens.login.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {

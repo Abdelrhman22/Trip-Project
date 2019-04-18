@@ -37,6 +37,7 @@
     <string name="SignUp">Sign Up</string>
     <string name="Backdate">Back Trip Date</string>
     <string name="backTime">Back Trip Time</string>
+    <string name="title_activity_home">HomeActivity</string>
 
     <!-- Mai End ********************************** -->
     <!-- Salma Start -->

@@ -51,8 +51,8 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
     private void initializeComponents() {
         nameWrapper = findViewById(R.id.nameTextInputLayout);
-        emailWrapper = findViewById(R.id.emailTextInputLayout);
-        passwordWrapper = findViewById(R.id.passwordTextInputLayout);
+        emailWrapper = findViewById(R.id.emailWrapper);
+        passwordWrapper = findViewById(R.id.passwordWrapper);
         passwordConfirmationWrapper = findViewById(R.id.confirmPasswordTextInputLayout);
         phoneNumWrapper = findViewById(R.id.phoneTextInputLayout);
         signUpButton = findViewById(R.id.signUpButton);
@@ -71,6 +71,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
                     Toast.makeText(RegistrationActivity.this, "Check your internet connection please", Toast.LENGTH_SHORT).show();
             }
         });
+        
     }
 
 

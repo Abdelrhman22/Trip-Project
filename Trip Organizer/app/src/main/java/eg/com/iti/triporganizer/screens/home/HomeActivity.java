@@ -1,6 +1,5 @@
 package eg.com.iti.triporganizer.screens.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,9 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import eg.com.iti.triporganizer.R;
-import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
-import eg.com.iti.triporganizer.screens.login.LoginActivity;
-import eg.com.iti.triporganizer.screens.login.SharedPreferencesHelper;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,9 +29,8 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                startActivity(new Intent(HomeActivity.this, AddTripActivity.class));
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
 
@@ -62,7 +57,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 

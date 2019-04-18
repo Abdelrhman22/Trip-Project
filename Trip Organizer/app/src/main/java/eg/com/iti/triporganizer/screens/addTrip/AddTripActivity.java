@@ -46,6 +46,13 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
     String currentUserUID, tripName, placeStartName, placeEndName, startDateString, startTimeString, returnDateString, returnTimeString, repeated;
     Double startLat, startLng, endLng, endLat;
+    boolean startTimeSet=false;
+    boolean startDateSet=false;
+    boolean returnTimeSet=false;
+    boolean returnDateSet=false;
+    boolean startPlaceSet=false;
+    boolean endPlaceSet=false;
+
     ArrayList<NoteDTO> notes;
     TripDTO userTrip;
     private static final String LOG = "log";
@@ -138,6 +145,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         startDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                startDateSet=true;
                 startDateString = Integer.toString(dayOfMonth) + " / " + Integer.toString(month + 1) + " / " + Integer.toString(year);
                 startDateText.setText(startDateString);
             }
@@ -158,6 +166,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         startTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                startTimeSet=true;
                 startTimeString = Integer.toString(hourOfDay) + " : " + Integer.toString(minute);
                 startTimeText.setText(startTimeString);
             }
@@ -202,6 +211,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         returnDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                returnDateSet=true;
                 returnDateString = Integer.toString(dayOfMonth) + " / " + Integer.toString(month + 1) + " / " + Integer.toString(year);
                 returnDateText.setText(returnDateString);
             }
@@ -223,6 +233,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                returnTimeSet=true;
                 returnTimeString = Integer.toString(hourOfDay) + " : " + Integer.toString(minute);
                 returnTimeText.setText(returnTimeString);
             }
@@ -268,8 +279,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         if (tripNameWrapper.getEditText() != null) {
             tripName = tripNameWrapper.getEditText().getText().toString();
             Log.i("log", tripName);
-        } else
-            tripNameWrapper.setError("Enter trip name please");
+        }
     }
 
     void initAutoComplete() {
@@ -283,6 +293,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 @Override
                 public void onPlaceSelected(Place place) {
                     //Toast.makeText(getApplicationContext(),place.getName().toString(),Toast.LENGTH_SHORT).show();
+                    startPlaceSet=true;
                     placeStartName = (String) place.getName();
                     startLng = place.getLatLng().longitude;
                     startLat = place.getLatLng().latitude;
@@ -306,7 +317,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             endPlaceAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(Place place) {
-                    Toast.makeText(getApplicationContext(), place.getName().toString(), Toast.LENGTH_SHORT).show();
+                    endPlaceSet=true;
                     placeEndName = (String) place.getName();
                     endLng = place.getLatLng().longitude;
                     endLat = place.getLatLng().latitude;
@@ -355,7 +366,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
     private void checkFieldsNotMissedThenInsertTrip() {
         if (rounded) {
-            if ((tripName.trim().equals("")) || (placeStartName.trim().equals("")) || (placeEndName.trim().equals("")) || (startDateString.trim().equals("")) || (startTimeString.trim().equals("")) || (returnDateString.trim().equals("")) || (returnTimeString.trim().equals(""))) {
+            if ((tripName.trim().equals("")) || (!startPlaceSet) || (!endPlaceSet) || (!startDateSet) || (!startTimeSet) || (!returnDateSet) || (!returnTimeSet)) {
+                if(tripName.trim().equals(""))
+                    tripNameWrapper.setError("Enter trip name please");
                 Toast.makeText(this, "Fill in all fields please", Toast.LENGTH_SHORT).show();
             }
             else{
@@ -367,7 +380,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         }
         else
         {
-            if ((tripName.trim().equals("")) || (placeStartName.trim().equals("")) || (placeEndName.trim().equals("")) || (startDateString.trim().equals("")) || (startTimeString.trim().equals(""))) {
+            if ((tripName.trim().equals("")) || (!startPlaceSet) || (!endPlaceSet) || (!startDateSet) || (!startTimeSet)) {
+                if(tripName.trim().equals(""))
+                    tripNameWrapper.setError("Enter trip name please");
                 Toast.makeText(this, "Fill in all fields please", Toast.LENGTH_SHORT).show();
             }
             else{

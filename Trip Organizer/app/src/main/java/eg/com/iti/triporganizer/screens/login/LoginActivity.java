@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import eg.com.iti.triporganizer.R;
+import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
 import eg.com.iti.triporganizer.screens.home.HomeActivity;
 import eg.com.iti.triporganizer.screens.register.RegistrationActivity;
 import eg.com.iti.triporganizer.utils.UserDataValidation;
@@ -121,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
     private void getUserEmailAndPassword() {
         if (emailWrapper.getEditText() != null) {
             dataInserted = false;
-            userEmail = emailWrapper.getEditText().getText().toString();
+            userEmail = emailWrapper.getEditText().getText().toString().trim();
             if (userEmail.trim().equals("")) {
                 emailWrapper.setErrorEnabled(true);
                 emailWrapper.setError("Email is required");
@@ -163,8 +164,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
     @Override
     public void respondToSuccessfulLogin() {
         loginPresenter.notifySharedPreferencesManagerToSetRememberMe();
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
+        updateUI();
     }
 
     @Override

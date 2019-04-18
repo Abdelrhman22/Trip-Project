@@ -16,6 +16,8 @@ import android.view.MenuItem;
 
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
+import eg.com.iti.triporganizer.screens.login.LoginActivity;
+import eg.com.iti.triporganizer.screens.login.SharedPreferencesHelper;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

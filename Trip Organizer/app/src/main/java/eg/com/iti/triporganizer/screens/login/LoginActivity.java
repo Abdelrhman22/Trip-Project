@@ -1,6 +1,7 @@
 package eg.com.iti.triporganizer.screens.login;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +43,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     private static final String TAG = "LOGIN";
     private static final int RC_SIGN_IN = 1;
     FirebaseAuth mAuth;
+    String email;
+    String password;
 
     public LoginActivity() {
     }
@@ -69,11 +73,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         });
 
         loginButton.setOnClickListener((v) -> {
-            String email = emailEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
+            email = emailEditText.getText().toString();
+            password = passwordEditText.getText().toString();
             Log.i("msg", "Entered Login");
             loginResult = presenter.login(email, password);
-
+            //checkEmailVerification(mAuth);
 
         });
         // Configure Google Sign In
@@ -104,17 +108,19 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 presenter.signInWithGoogle(account);
+                //Toast.makeText(this, "HEREEEEE", Toast.LENGTH_SHORT).show();
+
                 //loginDoneSuccessfully();
-                //checkEmailVerification();
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);
-                loginFailed();
+                //loginFailed();
             }
         }
     }
 
     @Override
     public void loginDoneSuccessfully() {
+        SharedPreferencesHelper.saveInSharedPreferences(email,password);
         Toast.makeText(this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
@@ -161,4 +167,19 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     }
 
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Firebase Sign out
+        mAuth.signOut();
+
+        // Google sign out
+        mGoogleSignInClient.signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                    }
+                });
+    }
 }

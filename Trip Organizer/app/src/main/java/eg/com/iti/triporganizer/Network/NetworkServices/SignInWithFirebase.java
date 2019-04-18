@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import eg.com.iti.triporganizer.screens.login.ILoginView;
+import eg.com.iti.triporganizer.screens.login.SharedPreferencesHelper;
 import eg.com.iti.triporganizer.screens.register.RegistrationActivity;
 
 
@@ -45,6 +46,13 @@ public class SignInWithFirebase {
                             FirebaseUser user = mAuth.getCurrentUser();
                             //loginView.loginDoneSuccessfully();
                             loginView.checkEmailVerification(mAuth);
+                            if(SharedPreferencesHelper.checkIfUserLoggedInBefore() == true)
+                            {
+                                loginView.loginDoneSuccessfully();
+                            }
+                            else{
+                                loginView.loginFailed();
+                            }
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             loginView.loginFailed();
@@ -65,8 +73,10 @@ public class SignInWithFirebase {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            loginView.loginDoneSuccessfully();
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            loginView.loginFailed();
                         }
                     }
                 });

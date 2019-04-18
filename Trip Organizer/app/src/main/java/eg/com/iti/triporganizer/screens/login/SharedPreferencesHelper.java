@@ -5,16 +5,16 @@ import android.content.SharedPreferences;
 
 public class SharedPreferencesHelper {
 
-    private ILoginView loginView;
-    private Context context;
-    SharedPreferences userLoginSettings;
+    private static ILoginView loginView;
+    private static Context context;
+    static SharedPreferences userLoginSettings;
 
-    public SharedPreferencesHelper (ILoginView loginView, Context context) {
+    public SharedPreferencesHelper(ILoginView loginView, Context context) {
         this.loginView = loginView;
-        this.context = (Context)loginView;
+        this.context = (Context) loginView;
     }
 
-    public void saveInSharedPreferences(String email, String password) {
+    public static void saveInSharedPreferences(String email, String password) {
         userLoginSettings = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE);
         android.content.SharedPreferences.Editor editor = userLoginSettings.edit();
         editor.putString("Email", email);
@@ -22,16 +22,23 @@ public class SharedPreferencesHelper {
         editor.commit();
     }
 
+    public static String getUserEmail(Context context) {
+        return context.getSharedPreferences("UserInfo", context.MODE_PRIVATE).getString("Email", "");
+    }
 
-    public boolean checkIfUserLoggedInBefore(String email, String password) {
-        String savedUsername = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE).getString("Username", "false");
-        String savedPassword = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE).getString("Password", "false");
-//        while(savedUsername.equals(email) && savedPassword.equals(password))
-//        {
-//            loggedIn = true;
-//        }
-        return true;
+
+    public static boolean checkIfUserLoggedInBefore() {
+
+        String retrievedEmail = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE).getString("Email", "false");
+        String retrievedPassword = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE).getString("Password", "false");
+
+        if (retrievedEmail.length() == 0 || retrievedPassword.length() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
 }
+

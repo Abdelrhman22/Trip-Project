@@ -10,11 +10,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import eg.com.iti.triporganizer.screens.login.LoginContract;
+import eg.com.iti.triporganizer.utils.SharedPreferencesManager;
 
 public class FirebaseLoginUsingEmailAndPassword {
-    LoginContract.LoginPresenter loginPresenter;
-
-
+    private LoginContract.LoginPresenter loginPresenter;
 
     public FirebaseLoginUsingEmailAndPassword(LoginContract.LoginPresenter loginPresenter) {
         this.loginPresenter = loginPresenter;
@@ -28,8 +27,9 @@ public class FirebaseLoginUsingEmailAndPassword {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if (user != null) {
                         boolean emailVerified = user.isEmailVerified();
-                        if (emailVerified)
+                        if (emailVerified){
                             loginPresenter.notifyViewWithSuccessfulLogin();
+                        }
                         else
                             loginPresenter.notifyViewWithUnverifiedEmail();
                     }

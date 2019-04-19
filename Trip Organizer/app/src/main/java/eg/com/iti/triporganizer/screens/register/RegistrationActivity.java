@@ -71,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
                     Toast.makeText(RegistrationActivity.this, "Check your internet connection please", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
     }
 
 
@@ -88,7 +88,7 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
         }
 
         if (emailWrapper.getEditText() != null) {
-            userEmail = emailWrapper.getEditText().getText().toString();
+            userEmail = emailWrapper.getEditText().getText().toString().trim();
             emailWrapper.setError(null);
             if (userEmail.trim().length() == 0) {
                 emailWrapper.setError("Email is required");

@@ -3,15 +3,18 @@ package eg.com.iti.triporganizer.screens.login;
 import com.google.firebase.auth.FirebaseAuth;
 
 import eg.com.iti.triporganizer.Network.NetworkServices.FirebaseLoginUsingEmailAndPassword;
+import eg.com.iti.triporganizer.utils.SharedPreferencesManager;
 
 public class LoginPresenterImpl implements LoginContract.LoginPresenter {
 
-    LoginContract.LoginView loginView;
-    FirebaseLoginUsingEmailAndPassword firebaseLoginUsingEmailAndPassword;
+    private LoginContract.LoginView loginView;
+    private FirebaseLoginUsingEmailAndPassword firebaseLoginUsingEmailAndPassword;
+    private SharedPreferencesManager sharedPreferencesManager;
 
     public LoginPresenterImpl(LoginContract.LoginView loginView) {
         this.loginView = loginView;
         firebaseLoginUsingEmailAndPassword = new FirebaseLoginUsingEmailAndPassword(this);
+        sharedPreferencesManager=new SharedPreferencesManager(this,loginView);
 
     }
 
@@ -34,5 +37,15 @@ public class LoginPresenterImpl implements LoginContract.LoginPresenter {
     @Override
     public void notifyViewWithUnverifiedEmail() {
         loginView.respondToUnverifiedEmail();
+    }
+
+    @Override
+    public boolean checkIfLoggedIn() {
+        return sharedPreferencesManager.checkRememberMe();
+    }
+
+    @Override
+    public void notifySharedPreferencesManagerToSetRememberMe() {
+        sharedPreferencesManager.setRememberMe();
     }
 }

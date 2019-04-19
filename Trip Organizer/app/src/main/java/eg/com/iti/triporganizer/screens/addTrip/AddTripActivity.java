@@ -36,7 +36,7 @@ import java.util.Calendar;
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.NoteDTO;
 import eg.com.iti.triporganizer.model.Notes;
-import eg.com.iti.triporganizer.model.roomdb.TripDTO;
+import eg.com.iti.triporganizer.model.daos.TripDTO;
 import eg.com.iti.triporganizer.screens.addTrip.adapter.RawNotesAdapter;
 
 

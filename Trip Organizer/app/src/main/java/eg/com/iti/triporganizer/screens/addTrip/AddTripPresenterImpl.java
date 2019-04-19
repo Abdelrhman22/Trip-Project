@@ -1,9 +1,7 @@
 package eg.com.iti.triporganizer.screens.addTrip;
 
-import java.util.Calendar;
-
 import eg.com.iti.triporganizer.Network.NetworkServices.AddTripsToFireBaseDataBase;
-import eg.com.iti.triporganizer.model.roomdb.TripDTO;
+import eg.com.iti.triporganizer.model.daos.TripDTO;
 
 public class AddTripPresenterImpl implements AddTripContract.AddTripPresenter
 {

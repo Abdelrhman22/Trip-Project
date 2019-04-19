@@ -1,48 +1,48 @@
-package eg.com.iti.triporganizer.model.roomdb;
+package eg.com.iti.triporganizer.model.daos;
 
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 
 import eg.com.iti.triporganizer.model.Notes;
 
-@Entity(tableName = "trip")
+
 public class TripDTO implements Serializable {
 
-    @ColumnInfo(name = "name")
+
     private String name;
-    @ColumnInfo(name = "trip_start_point")
+
     private String trip_start_point;
-    @ColumnInfo(name = "trip_end_point")
+
     private String trip_end_point;
-    @ColumnInfo(name = "trip_start_point_longitude")
+
     private Double trip_start_point_longitude;
-    @ColumnInfo(name = "trip_start_point_latitude")
+
     private Double trip_start_point_latitude;
-    @ColumnInfo(name = "trip_end_point_longitude")
+
     private Double trip_end_point_longitude;
-    @ColumnInfo(name = "trip_end_point_latitude")
+
     private Double trip_end_point_latitude;
-    @ColumnInfo(name = "trip_date")
+
     private String trip_date;
-    @ColumnInfo(name = "trip_time")
+
     private String trip_time;
-    @ColumnInfo(name = "rounded")
+
     private boolean rounded;
-    @ColumnInfo(name = "repeated")
+
     private String repeated;
-    @ColumnInfo(name = "tripStatus")
+
     private String tripStatus;
-    @ColumnInfo(name = "notes")
+
     private Notes notes;
-    @ColumnInfo(name = "userId")
+
     private String userId;
-    @ColumnInfo(name = "duration")
+
     private String duration;
-    @ColumnInfo(name = "averageSpeed")
+
     private String averageSpeed;
 
     public String getTripStatus() {
@@ -52,7 +52,7 @@ public class TripDTO implements Serializable {
     public TripDTO() {
     }
 
-    @Ignore
+
     public TripDTO(String userId, String name, String trip_start_point, String trip_end_point,
                    Double trip_start_point_latitude, Double trip_start_point_longitude,
                    Double trip_end_point_latitude,Double trip_end_point_longitude, String trip_date,

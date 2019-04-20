@@ -162,7 +162,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
@@ -239,7 +238,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 points = new ArrayList<>();
                 lineOptions = new PolylineOptions();
 
-                // Fetching i-th ic_route
                 List<HashMap<String, String>> path = result.get(i);
                 // Fetching all the points in i-th ic_route
                 for (int j = 0; j < path.size(); j++) {
@@ -247,11 +245,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
                     LatLng position = new LatLng(lat, lng);
-
                     points.add(position);
                 }
-
-                // Adding all the points in the ic_route to LineOptions
                 lineOptions.addAll(points);
                 lineOptions.width(10);
                 if (colorIndex > 3) {
@@ -259,16 +254,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 lineOptions.color(color[colorIndex]);
                 colorIndex++;
-
-                Log.d("onPostExecute", "onPostExecute lineoptions decoded");
-
             }
-
-            // Drawing polyline in the Google Map for the i-th ic_route
             if (lineOptions != null) {
                 mMap.addPolyline(lineOptions);
-            } else {
-                Log.d("onPostExecute", "without Polylines drawn");
+            } else
+                {
             }
         }
     }

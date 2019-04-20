@@ -47,7 +47,10 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".screens.history.HistoryActivity" />
-        <activity android:name=".screens.dialog.DialogActivity" />
+        <activity android:name=".screens.dialog.DialogActivity" android:launchMode="singleInstance"
+            android:theme="@style/Theme.Transparent">
+
+        </activity>
         <activity android:name=".screens.addTrip.AddTripActivity" /> <!-- Arafa Start -->
         <activity
             android:name=".screens.splash.SplashActivity"

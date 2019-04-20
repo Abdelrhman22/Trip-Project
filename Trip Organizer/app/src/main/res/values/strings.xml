@@ -19,10 +19,10 @@
     <string name="note">Note name</string>
     <string name="add_trip">Add Trip</string>
     <string-array name="Trip_arrays">
-        <item>No Repeat</item>
-        <item>Repeat Daily</item>
-        <item>Repeat Weekly</item>
-        <item>Repeat Monthly</item>
+        <item>Repeat</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
     </string-array>
     <string-array name="units">
         <item>Days</item>

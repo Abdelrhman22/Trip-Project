@@ -1,48 +1,47 @@
-package eg.com.iti.triporganizer.model.roomdb;
+package eg.com.iti.triporganizer.model;
 
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
+import java.util.Calendar;
 
 import eg.com.iti.triporganizer.model.Notes;
 
-@Entity(tableName = "trip")
+
 public class TripDTO implements Serializable {
 
-    @ColumnInfo(name = "name")
+
     private String name;
-    @ColumnInfo(name = "trip_start_point")
+
     private String trip_start_point;
-    @ColumnInfo(name = "trip_end_point")
+
     private String trip_end_point;
-    @ColumnInfo(name = "trip_start_point_longitude")
+
     private Double trip_start_point_longitude;
-    @ColumnInfo(name = "trip_start_point_latitude")
+
     private Double trip_start_point_latitude;
-    @ColumnInfo(name = "trip_end_point_longitude")
+
     private Double trip_end_point_longitude;
-    @ColumnInfo(name = "trip_end_point_latitude")
+
     private Double trip_end_point_latitude;
-    @ColumnInfo(name = "trip_date")
-    private String trip_date;
-    @ColumnInfo(name = "trip_time")
-    private String trip_time;
-    @ColumnInfo(name = "rounded")
+
+    private Calendar tripDateAndTime;
+
     private boolean rounded;
-    @ColumnInfo(name = "repeated")
+
     private String repeated;
-    @ColumnInfo(name = "tripStatus")
+
     private String tripStatus;
-    @ColumnInfo(name = "notes")
+
     private Notes notes;
-    @ColumnInfo(name = "userId")
+
     private String userId;
-    @ColumnInfo(name = "duration")
+
     private String duration;
-    @ColumnInfo(name = "averageSpeed")
+
     private String averageSpeed;
 
     public String getTripStatus() {
@@ -52,11 +51,10 @@ public class TripDTO implements Serializable {
     public TripDTO() {
     }
 
-    @Ignore
+
     public TripDTO(String userId, String name, String trip_start_point, String trip_end_point,
                    Double trip_start_point_latitude, Double trip_start_point_longitude,
-                   Double trip_end_point_latitude,Double trip_end_point_longitude, String trip_date,
-                   String trip_time , String repeated , String tripStatus, Notes notes ,boolean rounded) {
+                   Double trip_end_point_latitude,Double trip_end_point_longitude, Calendar tripDateAndTime, String repeated , String tripStatus, Notes notes ,boolean rounded) {
         this.userId = userId;
         this.name = name;
         this.trip_start_point = trip_start_point;
@@ -65,8 +63,7 @@ public class TripDTO implements Serializable {
         this.trip_start_point_latitude = trip_start_point_latitude;
         this.trip_end_point_longitude = trip_end_point_longitude;
         this.trip_end_point_latitude = trip_end_point_latitude;
-        this.trip_date = trip_date;
-        this.trip_time = trip_time;
+        this.tripDateAndTime=tripDateAndTime;
         this.repeated=repeated;
         this.tripStatus=tripStatus;
         this.notes = notes;
@@ -104,12 +101,8 @@ public class TripDTO implements Serializable {
         return trip_end_point_latitude;
     }
 
-    public String getTrip_date() {
-        return trip_date;
-    }
-
-    public String getTrip_time() {
-        return trip_time;
+    public Calendar getTrip_date() {
+        return tripDateAndTime;
     }
 
     public boolean getRoundStatus() {
@@ -185,12 +178,8 @@ public class TripDTO implements Serializable {
         this.trip_end_point_latitude = trip_end_point_latitude;
     }
 
-    public void setTrip_date(String trip_date) {
-        this.trip_date = trip_date;
-    }
-
-    public void setTrip_time(String trip_time) {
-        this.trip_time = trip_time;
+    public void setTrip_date(Calendar tripDateAndTime) {
+        this.tripDateAndTime = tripDateAndTime;
     }
 
     public void setRepeated(String repeated) {

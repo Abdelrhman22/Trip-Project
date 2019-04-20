@@ -36,9 +36,8 @@ import java.util.Calendar;
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.NoteDTO;
 import eg.com.iti.triporganizer.model.Notes;
-import eg.com.iti.triporganizer.model.roomdb.TripDTO;
+import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.screens.addTrip.adapter.RawNotesAdapter;
-import eg.com.iti.triporganizer.utils.AddedTripValidations;
 
 
 public class AddTripActivity extends AppCompatActivity implements AddTripContract.AddTripView {
@@ -62,7 +61,6 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     FirebaseUser user;
     Notes userNotes;
     AddTripContract.AddTripPresenter addTripPresenter;
-    AddedTripValidations addedTripValidations;
     Calendar currentDateAndTime, startDateAndTime, returnDateAndTime;
 
     //------------------Components----------------------------------------
@@ -91,7 +89,6 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
         addTripPresenter = new AddTripPresenterImpl(this);
-        addedTripValidations = new AddedTripValidations();
         notes = new ArrayList<>();
         initComponents();
         initAutoComplete();
@@ -382,9 +379,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 if (startDateAndTime.before(Calendar.getInstance()) || returnDateAndTime.before(Calendar.getInstance())) {
                     Toast.makeText(this, "You cannot select passed time", Toast.LENGTH_SHORT).show();
                 } else {
-                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateString, startTimeString, repeated, "upcoming", userNotes, rounded);
+                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateAndTime, repeated, "upcoming", userNotes, rounded);
                     addTripPresenter.addTrip(userTrip);
-                    TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, returnDateString, returnTimeString, repeated, "upcoming", userNotes, false);
+                    TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, returnDateAndTime, repeated, "upcoming", userNotes, false);
                     addTripPresenter.addTrip(backTrip);
                 }
             }
@@ -397,7 +394,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 if (startDateAndTime.before(Calendar.getInstance())) {
                     Toast.makeText(this, "You cannot select passed time", Toast.LENGTH_SHORT).show();
                 } else {
-                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateString, startTimeString, repeated, "upcoming", userNotes, rounded);
+                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateAndTime, repeated, "upcoming", userNotes, rounded);
                     addTripPresenter.addTrip(userTrip);
                 }
             }

@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="eg.com.iti.triporganizer">
-    <!-- Arafa start -->
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,13 +26,29 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="donut">
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".screens.mapHistory.MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
         <activity
             android:name=".screens.home.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".screens.history.HistoryActivity" />
         <activity android:name=".screens.dialog.DialogActivity" />
-        <activity android:name=".screens.addTrip.AddTripActivity"></activity> <!-- Arafa Start -->
+        <activity android:name=".screens.addTrip.AddTripActivity" /> <!-- Arafa Start -->
         <activity
             android:name=".screens.splash.SplashActivity"
             android:configChanges="orientation"
@@ -37,13 +58,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBLPdtvo4KoNgMDdVYXcCtJOpM8yvkuSCQ" /> <!-- Arafa End *************************************************** -->
+        </activity> <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
-        <activity android:name=".screens.login.LoginActivity"></activity> <!-- Mai End *************************************************** -->
+        <activity android:name=".screens.login.LoginActivity" /> <!-- Mai End *************************************************** -->
         <!-- salma start -->
         <activity android:name=".screens.register.RegistrationActivity" />
     </application>

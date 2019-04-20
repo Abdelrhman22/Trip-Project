@@ -13,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
+import eg.com.iti.triporganizer.screens.history.HistoryActivity;
+import eg.com.iti.triporganizer.screens.mapHistory.MapsActivity;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,20 +87,22 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.nav_home)
+        {
+            Toast.makeText(this, "You are in Home Page", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.nav_history)
+        {
+            startActivity(new Intent(HomeActivity.this, HistoryActivity.class));
+        }
+        else if (id == R.id.nav_mapHistory)
+        {
+            startActivity(new Intent(HomeActivity.this, MapsActivity.class));
+        }
+        else if (id == R.id.nav_signout)
+        {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

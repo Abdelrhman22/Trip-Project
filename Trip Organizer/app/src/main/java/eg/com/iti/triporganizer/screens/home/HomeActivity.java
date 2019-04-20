@@ -15,18 +15,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
 import eg.com.iti.triporganizer.screens.history.HistoryActivity;
 import eg.com.iti.triporganizer.screens.mapHistory.MapsActivity;
+import eg.com.iti.triporganizer.utils.KeyTags;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mAuth=FirebaseAuth.getInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -57,6 +64,13 @@ public class HomeActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = mAuth.getCurrentUser();
+        userID=currentUser.getUid();
     }
 
     @Override
@@ -97,7 +111,9 @@ public class HomeActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_mapHistory)
         {
-            startActivity(new Intent(HomeActivity.this, MapsActivity.class));
+            Intent mapIntent=new Intent(HomeActivity.this, MapsActivity.class);
+            mapIntent.putExtra(KeyTags.UUIDKey,userID);
+            startActivity(mapIntent);
         }
         else if (id == R.id.nav_signout)
         {

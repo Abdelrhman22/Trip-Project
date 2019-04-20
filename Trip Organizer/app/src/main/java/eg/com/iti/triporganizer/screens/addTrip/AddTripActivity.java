@@ -46,12 +46,13 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
     String currentUserUID, tripName, placeStartName, placeEndName, startDateString, startTimeString, returnDateString, returnTimeString, repeated;
     Double startLat, startLng, endLng, endLat;
-    boolean startTimeSet=false;
-    boolean startDateSet=false;
-    boolean returnTimeSet=false;
-    boolean returnDateSet=false;
-    boolean startPlaceSet=false;
-    boolean endPlaceSet=false;
+    boolean startTimeSet = false;
+    boolean startDateSet = false;
+    boolean returnTimeSet = false;
+    boolean returnDateSet = false;
+    boolean startPlaceSet = false;
+    boolean endPlaceSet = false;
+
 
     ArrayList<NoteDTO> notes;
     TripDTO userTrip;
@@ -62,7 +63,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     Notes userNotes;
     AddTripContract.AddTripPresenter addTripPresenter;
     AddedTripValidations addedTripValidations;
-
+    Calendar currentDateAndTime, startDateAndTime, returnDateAndTime;
 
     //------------------Components----------------------------------------
     PlaceAutocompleteFragment startPlaceAutocompleteFragment, endPlaceAutocompleteFragment;
@@ -132,10 +133,10 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                currentDateAndTime = Calendar.getInstance();
+                int year = currentDateAndTime.get(Calendar.YEAR);
+                int month = currentDateAndTime.get(Calendar.MONTH);
+                int day = currentDateAndTime.get(Calendar.DAY_OF_MONTH);
                 datePickerDialog = new DatePickerDialog(AddTripActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, startDateSetListener, year, month, day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
@@ -145,8 +146,10 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         startDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                startDateSet=true;
-                startDateString = Integer.toString(dayOfMonth) + " / " + Integer.toString(month + 1) + " / " + Integer.toString(year);
+                startDateSet = true;
+                startDateAndTime=Calendar.getInstance();
+                startDateAndTime.set(year, month, dayOfMonth);
+                startDateString = Integer.toString(dayOfMonth) + "-" + Integer.toString(month + 1) + "-" + Integer.toString(year);
                 startDateText.setText(startDateString);
             }
         };
@@ -154,9 +157,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int minute = calendar.get(Calendar.MINUTE);
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                currentDateAndTime = Calendar.getInstance();
+                int minute = currentDateAndTime.get(Calendar.MINUTE);
+                int hour = currentDateAndTime.get(Calendar.HOUR_OF_DAY);
                 timePickerDialog = new TimePickerDialog(AddTripActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, startTimeSetListener, hour, minute, false);
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 timePickerDialog.show();
@@ -166,7 +169,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         startTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                startTimeSet=true;
+                startDateAndTime.set(hourOfDay, minute);
+                startTimeSet = true;
                 startTimeString = Integer.toString(hourOfDay) + " : " + Integer.toString(minute);
                 startTimeText.setText(startTimeString);
             }
@@ -197,10 +201,10 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         returnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                currentDateAndTime = Calendar.getInstance();
+                int year = currentDateAndTime.get(Calendar.YEAR);
+                int month = currentDateAndTime.get(Calendar.MONTH);
+                int day = currentDateAndTime.get(Calendar.DAY_OF_MONTH);
                 datePickerDialog = new DatePickerDialog(AddTripActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, returnDateSetListener, year, month, day);
                 datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 datePickerDialog.show();
@@ -211,8 +215,10 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         returnDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                returnDateSet=true;
-                returnDateString = Integer.toString(dayOfMonth) + " / " + Integer.toString(month + 1) + " / " + Integer.toString(year);
+                returnDateAndTime=Calendar.getInstance();
+                returnDateAndTime.set(year, month, dayOfMonth);
+                returnDateSet = true;
+                returnDateString = Integer.toString(dayOfMonth) + "-" + Integer.toString(month + 1) + "-" + Integer.toString(year);
                 returnDateText.setText(returnDateString);
             }
         };
@@ -220,9 +226,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         returnTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int minute = calendar.get(Calendar.MINUTE);
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                currentDateAndTime = Calendar.getInstance();
+                int minute = currentDateAndTime.get(Calendar.MINUTE);
+                int hour = currentDateAndTime.get(Calendar.HOUR_OF_DAY);
                 timePickerDialog = new TimePickerDialog(AddTripActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, returnTimeSetListener, hour, minute, false);
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 timePickerDialog.show();
@@ -233,7 +239,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                returnTimeSet=true;
+                returnDateAndTime.set(hourOfDay, minute);
+                returnTimeSet = true;
                 returnTimeString = Integer.toString(hourOfDay) + " : " + Integer.toString(minute);
                 returnTimeText.setText(returnTimeString);
             }
@@ -293,7 +300,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 @Override
                 public void onPlaceSelected(Place place) {
                     //Toast.makeText(getApplicationContext(),place.getName().toString(),Toast.LENGTH_SHORT).show();
-                    startPlaceSet=true;
+                    startPlaceSet = true;
                     placeStartName = (String) place.getName();
                     startLng = place.getLatLng().longitude;
                     startLat = place.getLatLng().latitude;
@@ -317,7 +324,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             endPlaceAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
                 @Override
                 public void onPlaceSelected(Place place) {
-                    endPlaceSet=true;
+                    endPlaceSet = true;
                     placeEndName = (String) place.getName();
                     endLng = place.getLatLng().longitude;
                     endLat = place.getLatLng().latitude;
@@ -364,33 +371,39 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         checkFieldsNotMissedThenInsertTrip();
     }
 
+
     private void checkFieldsNotMissedThenInsertTrip() {
         if (rounded) {
             if ((tripName.trim().equals("")) || (!startPlaceSet) || (!endPlaceSet) || (!startDateSet) || (!startTimeSet) || (!returnDateSet) || (!returnTimeSet)) {
-                if(tripName.trim().equals(""))
+                if (tripName.trim().equals(""))
                     tripNameWrapper.setError("Enter trip name please");
                 Toast.makeText(this, "Fill in all fields please", Toast.LENGTH_SHORT).show();
+            } else {
+                if (startDateAndTime.before(Calendar.getInstance()) || returnDateAndTime.before(Calendar.getInstance())) {
+                    Toast.makeText(this, "You cannot select passed time", Toast.LENGTH_SHORT).show();
+                } else {
+                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateString, startTimeString, repeated, "upcoming", userNotes, rounded);
+                    addTripPresenter.addTrip(userTrip);
+                    TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, returnDateString, returnTimeString, repeated, "upcoming", userNotes, false);
+                    addTripPresenter.addTrip(backTrip);
+                }
             }
-            else{
-                userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateString, startTimeString, repeated, "upcoming", userNotes, rounded);
-                addTripPresenter.addTrip(userTrip);
-                TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, returnDateString, returnTimeString, repeated, "upcoming", userNotes, false);
-                addTripPresenter.addTrip(backTrip);
-            }
-        }
-        else
-        {
+        } else {
             if ((tripName.trim().equals("")) || (!startPlaceSet) || (!endPlaceSet) || (!startDateSet) || (!startTimeSet)) {
-                if(tripName.trim().equals(""))
+                if (tripName.trim().equals(""))
                     tripNameWrapper.setError("Enter trip name please");
                 Toast.makeText(this, "Fill in all fields please", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateString, startTimeString, repeated, "upcoming", userNotes, rounded);
-                addTripPresenter.addTrip(userTrip);
+            } else {
+                if (startDateAndTime.before(Calendar.getInstance())) {
+                    Toast.makeText(this, "You cannot select passed time", Toast.LENGTH_SHORT).show();
+                } else {
+                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateString, startTimeString, repeated, "upcoming", userNotes, rounded);
+                    addTripPresenter.addTrip(userTrip);
+                }
             }
         }
     }
+
 
     @Override
     public void respondToSuccessfulInsertion() {
@@ -401,4 +414,5 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     public void respondToFailedInsertion() {
         Toast.makeText(this, "Failed to insert your trip", Toast.LENGTH_SHORT).show();
     }
+
 }

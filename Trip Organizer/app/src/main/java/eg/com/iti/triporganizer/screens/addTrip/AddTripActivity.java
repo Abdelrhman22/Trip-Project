@@ -400,9 +400,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 }
                 else {
                     userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime), repeated, "upcoming", userNotes, rounded);
-                    addTripPresenter.addTrip(userTrip);
+                    addTripPresenter.addTrip(userTrip,startDateAndTime);
                     TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(returnDateAndTime), repeated, "upcoming", userNotes, false);
-                    addTripPresenter.addTrip(backTrip);
+                    addTripPresenter.addTrip(backTrip,returnDateAndTime);
                 }
             }
         } else {
@@ -416,7 +416,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                     Toast.makeText(this, "You cannot select passed time", Toast.LENGTH_SHORT).show();
                 } else {
                     userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime), repeated, "upcoming", userNotes, rounded);
-                    addTripPresenter.addTrip(userTrip);
+                    addTripPresenter.addTrip(userTrip,startDateAndTime);
                 }
             }
         }

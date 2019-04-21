@@ -12,29 +12,29 @@ import eg.com.iti.triporganizer.utils.KeyTags;
 
 public class AlarmHelper {
 
-    public static void startAlarm(TripDTO tripDTO, Context context ) {
+    public static void startAlarm(TripDTO tripDTO, Calendar calendar, Context context ) {
         TripDTO receivedTrip = tripDTO;
-        Calendar calender = receivedTrip.getTrip_date();
         Intent serviceIntent = new Intent(context, BroadCastReciever.class);
-        //serviceIntent.addFlags()
+        serviceIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         serviceIntent.putExtra(KeyTags.tripKey,receivedTrip);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, serviceIntent, 0);
 
-        if (receivedTrip.getRepeated().equals("Daily"))
+        if (receivedTrip.getRepeated().equals("Repeat Daily"))
         {
-            calender.add(Calendar.DATE, 1);
+            calendar.add(Calendar.DATE, 1);
+            //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
         }
-        else if(receivedTrip.getRepeated().equals("Weekly"))
+        else if(receivedTrip.getRepeated().equals("Repeat Weekly"))
         {
-            calender.add(Calendar.DATE, 7);
+            calendar.add(Calendar.DATE, 7);
         }
-        else if(receivedTrip.getRepeated().equals("Monthly"))
+        else if(receivedTrip.getRepeated().equals("Repeat Monthly"))
         {
-            calender.add(Calendar.DATE, 30);
+            calendar.add(Calendar.DATE, 30);
         }
         else {
-            alarmManager.set(android.app.AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), pendingIntent);
+            alarmManager.set(android.app.AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
     }
 }

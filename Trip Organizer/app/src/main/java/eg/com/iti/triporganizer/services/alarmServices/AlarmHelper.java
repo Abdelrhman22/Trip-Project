@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -17,6 +18,7 @@ public class AlarmHelper {
         Intent serviceIntent = new Intent(context, BroadCastReciever.class);
         serviceIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         serviceIntent.putExtra(KeyTags.tripKey,receivedTrip);
+        Log.i("mytag","AlarmHelper "+tripDTO.getName());
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, serviceIntent, 0);
 

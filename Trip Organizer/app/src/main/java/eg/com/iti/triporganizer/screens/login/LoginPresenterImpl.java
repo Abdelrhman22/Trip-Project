@@ -48,4 +48,9 @@ public class LoginPresenterImpl implements LoginContract.LoginPresenter {
     public void notifySharedPreferencesManagerToSetRememberMe() {
         sharedPreferencesManager.setRememberMe();
     }
+
+    @Override
+    public void removeRememberMeFromSharedPreferences() {
+        sharedPreferencesManager.removeRememberMe();
+    }
 }

@@ -16,6 +16,9 @@ public interface LoginContract {
         boolean checkIfLoggedIn();
 
         void notifySharedPreferencesManagerToSetRememberMe();
+
+        void removeRememberMeFromSharedPreferences();
+
     }
     interface LoginView {
 

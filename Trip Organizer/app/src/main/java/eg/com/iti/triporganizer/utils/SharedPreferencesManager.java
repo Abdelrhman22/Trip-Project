@@ -33,4 +33,11 @@ public class SharedPreferencesManager
         editor.putBoolean("RememberMe", true);
         editor.apply();
     }
+
+    public void removeRememberMe() {
+        sharedPreferences = context.getSharedPreferences("userData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("RememberMe", false);
+        editor.apply();
+    }
 }

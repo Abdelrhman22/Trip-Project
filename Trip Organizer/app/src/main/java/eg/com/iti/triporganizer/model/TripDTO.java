@@ -5,6 +5,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -101,6 +103,7 @@ public class TripDTO implements Serializable {
         return trip_end_point_latitude;
     }
 
+    @Exclude
     public Calendar getTrip_date() {
         return tripDateAndTime;
     }

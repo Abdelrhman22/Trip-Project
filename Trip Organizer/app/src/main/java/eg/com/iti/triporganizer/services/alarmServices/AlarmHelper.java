@@ -22,16 +22,15 @@ public class AlarmHelper {
 
         if (receivedTrip.getRepeated().equals("Repeat Daily"))
         {
-            calendar.add(Calendar.DATE, 1);
-            //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
         }
         else if(receivedTrip.getRepeated().equals("Repeat Weekly"))
         {
-            calendar.add(Calendar.DATE, 7);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY*7,pendingIntent);
         }
         else if(receivedTrip.getRepeated().equals("Repeat Monthly"))
         {
-            calendar.add(Calendar.DATE, 30);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY*30,pendingIntent);
         }
         else {
             alarmManager.set(android.app.AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);

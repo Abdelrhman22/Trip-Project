@@ -1,5 +1,6 @@
 package eg.com.iti.triporganizer.screens.home;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,18 +22,21 @@ import com.google.firebase.auth.FirebaseUser;
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
 import eg.com.iti.triporganizer.screens.history.HistoryActivity;
+import eg.com.iti.triporganizer.screens.login.LoginActivity;
 import eg.com.iti.triporganizer.screens.mapHistory.MapsActivity;
 import eg.com.iti.triporganizer.utils.KeyTags;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,HomeContract.HomeView {
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
     String userID;
+    HomeContract.HomePresenter homePresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        homePresenter=new HomePresenterImpl(this);
         mAuth=FirebaseAuth.getInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -117,10 +121,18 @@ public class HomeActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_signout)
         {
-
+            homePresenter.signOut();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void respondToSuccessfulSignOut() {
+        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+        intent.putExtra("signedOut",true);
+        startActivity(intent);
+        finish();
     }
 }

@@ -56,8 +56,14 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         firebaseAuth = FirebaseAuth.getInstance();
         loginPresenter = new LoginPresenterImpl(this);
+
+        Intent intent=getIntent();
+        if(intent.getBooleanExtra("signedOut",false))
+            loginPresenter.removeRememberMeFromSharedPreferences();
+
 
         boolean loggedIn = loginPresenter.checkIfLoggedIn();
         if (loggedIn) {

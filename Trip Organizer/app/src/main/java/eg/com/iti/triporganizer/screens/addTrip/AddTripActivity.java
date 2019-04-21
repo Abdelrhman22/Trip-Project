@@ -39,6 +39,7 @@ import eg.com.iti.triporganizer.model.NoteDTO;
 import eg.com.iti.triporganizer.model.Notes;
 import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.screens.addTrip.adapter.RawNotesAdapter;
+import eg.com.iti.triporganizer.utils.CalenderObjectToTimeAndDateObjectConverter;
 
 
 public class AddTripActivity extends AppCompatActivity implements AddTripContract.AddTripView {
@@ -104,26 +105,26 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
 
     private void initComponents() {
-        addTripBtn = findViewById(R.id.addTripButton);
+        addTripBtn = findViewById(R.id.addTripBtn);
         tripNameWrapper = findViewById(R.id.tripNameWrapper);
-        startDate = findViewById(R.id.startDate);
-        startTime = findViewById(R.id.startTime);
-        returnDate = findViewById(R.id.returnDate);
-        returnTime = findViewById(R.id.returnTime);
-        roundedTrip = findViewById(R.id.twoWayTrip);
-        repetition = findViewById(R.id.spinnerRepeateType);
-        addNote = findViewById(R.id.addNotes);
+        startDate = findViewById(R.id.start_date);
+        startTime = findViewById(R.id.start_time);
+        returnDate = findViewById(R.id.return_date);
+        returnTime = findViewById(R.id.return_time);
+        roundedTrip = findViewById(R.id.rounded_trip);
+        repetition = findViewById(R.id.repeat_spinner);
+        addNote = findViewById(R.id.add_notes);
         noteNameWrapper = findViewById(R.id.noteNameWrapper);
-        startDateText = findViewById(R.id.startDateTextView);
-        startTimeText = findViewById(R.id.startTimeTextView);
-        returnDateText = findViewById(R.id.returnDateTextView);
-        returnTimeText = findViewById(R.id.returnTimeTextView);
-        notesRecyclerView = findViewById(R.id.notesRecyclerView);
+        startDateText = findViewById(R.id.start_date_text);
+        startTimeText = findViewById(R.id.start_time_text);
+        returnDateText = findViewById(R.id.return_date_text);
+        returnTimeText = findViewById(R.id.return_time_text);
+        notesRecyclerView = findViewById(R.id.notes);
         notesRecyclerView.setNestedScrollingEnabled(false);
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(AddTripActivity.this));
         rawNotesAdapter = new RawNotesAdapter(notes);
         notesRecyclerView.setAdapter(rawNotesAdapter);
-        backTripDetails = findViewById(R.id.twoWayTripLayout);
+        backTripDetails = findViewById(R.id.rounded_layout);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -299,7 +300,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
 
     void initAutoComplete() {
         startPlaceAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager()
-                .findFragmentById(R.id.tripStartPlace);
+                .findFragmentById(R.id.tripSrc);
         AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
         startPlaceAutocompleteFragment.setFilter(autocompleteFilter);
         // check value of startPlaceAutocompleteFragment
@@ -325,7 +326,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             Toast.makeText(AddTripActivity.this, "Problem with loading start", Toast.LENGTH_LONG).show();
         }
         endPlaceAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager()
-                .findFragmentById(R.id.tripEndPlace);
+                .findFragmentById(R.id.tripDestination);
         endPlaceAutocompleteFragment.setFilter(autocompleteFilter);
         // check value of startPlaceAutocompleteFragment
         if (endPlaceAutocompleteFragment != null) {
@@ -398,9 +399,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                     Toast.makeText(this, "you cannot return before going", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateAndTime, repeated, "upcoming", userNotes, rounded);
+                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime), repeated, "upcoming", userNotes, rounded);
                     addTripPresenter.addTrip(userTrip);
-                    TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, returnDateAndTime, repeated, "upcoming", userNotes, false);
+                    TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(returnDateAndTime), repeated, "upcoming", userNotes, false);
                     addTripPresenter.addTrip(backTrip);
                 }
             }
@@ -414,7 +415,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 if (startDateAndTime.before(now)) {
                     Toast.makeText(this, "You cannot select passed time", Toast.LENGTH_SHORT).show();
                 } else {
-                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateAndTime, repeated, "upcoming", userNotes, rounded);
+                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime), repeated, "upcoming", userNotes, rounded);
                     addTripPresenter.addTrip(userTrip);
                 }
             }

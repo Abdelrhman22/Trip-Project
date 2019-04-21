@@ -30,7 +30,7 @@ public class TripDTO implements Serializable {
 
     private Double trip_end_point_latitude;
 
-    private Calendar tripDateAndTime;
+    private TripTimeAndDateDTO tripDateAndTime;
 
     private boolean rounded;
 
@@ -56,7 +56,7 @@ public class TripDTO implements Serializable {
 
     public TripDTO(String userId, String name, String trip_start_point, String trip_end_point,
                    Double trip_start_point_latitude, Double trip_start_point_longitude,
-                   Double trip_end_point_latitude,Double trip_end_point_longitude, Calendar tripDateAndTime, String repeated , String tripStatus, Notes notes ,boolean rounded) {
+                   Double trip_end_point_latitude,Double trip_end_point_longitude, TripTimeAndDateDTO tripDateAndTime, String repeated , String tripStatus, Notes notes ,boolean rounded) {
         this.userId = userId;
         this.name = name;
         this.trip_start_point = trip_start_point;
@@ -103,8 +103,7 @@ public class TripDTO implements Serializable {
         return trip_end_point_latitude;
     }
 
-    @Exclude
-    public Calendar getTrip_date() {
+    public TripTimeAndDateDTO getTrip_date() {
         return tripDateAndTime;
     }
 
@@ -181,7 +180,7 @@ public class TripDTO implements Serializable {
         this.trip_end_point_latitude = trip_end_point_latitude;
     }
 
-    public void setTrip_date(Calendar tripDateAndTime) {
+    public void setTrip_date(TripTimeAndDateDTO tripDateAndTime) {
         this.tripDateAndTime = tripDateAndTime;
     }
 

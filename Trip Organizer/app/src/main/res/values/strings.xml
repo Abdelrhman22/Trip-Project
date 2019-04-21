@@ -39,6 +39,9 @@
     <string name="backTime">Back Trip Time</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="settings">...</string>
 
     <!-- Mai End ********************************** -->
     <!-- Salma Start -->

@@ -3,6 +3,7 @@ package eg.com.iti.triporganizer.screens.addTrip;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -80,7 +81,6 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     RecyclerView notesRecyclerView;
     RawNotesAdapter rawNotesAdapter;
     LinearLayout backTripDetails;
-
     //---------------------------------------------------------------------------
 
 

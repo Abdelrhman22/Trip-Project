@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import eg.com.iti.triporganizer.R;
+import eg.com.iti.triporganizer.services.alarmServices.NotificationHelper;
 
 public class DialogActivity extends AppCompatActivity {
 
@@ -27,7 +29,7 @@ public class DialogActivity extends AppCompatActivity {
         player.start();
         final int tripId=getIntent().getIntExtra("tripId",0);
         alertBuilder=new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Trip Road")
+        alertBuilder.setTitle("Road Trip")
                 .setMessage("Do yo want to Start Trip ?")
                 .setPositiveButton("start",new DialogInterface.OnClickListener() {
                     @Override
@@ -44,7 +46,6 @@ public class DialogActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Please install a maps application", Toast.LENGTH_SHORT).show();
                         }
                         finish();
-                        finish();
                     }
                 }).setNeutralButton("snooze", new DialogInterface.OnClickListener() {
             @Override
@@ -53,6 +54,11 @@ public class DialogActivity extends AppCompatActivity {
                 player.release();
 
                 //Snooze trip
+                //Notification in the tray
+                NotificationHelper notificationHelper = new NotificationHelper(DialogActivity.this);
+                NotificationCompat.Builder builder = notificationHelper.getChannelNotification();
+                notificationHelper.getManager().notify(1, builder.build());
+
             }
         }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override

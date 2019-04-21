@@ -1,7 +1,10 @@
 package eg.com.iti.triporganizer.screens.addTrip;
 
+import android.content.Context;
+
 import eg.com.iti.triporganizer.Network.NetworkServices.AddTripsToFireBaseDataBase;
 import eg.com.iti.triporganizer.model.TripDTO;
+import eg.com.iti.triporganizer.services.alarmServices.AlarmHelper;
 
 public class AddTripPresenterImpl implements AddTripContract.AddTripPresenter
 {
@@ -18,6 +21,7 @@ public class AddTripPresenterImpl implements AddTripContract.AddTripPresenter
     @Override
     public void addTrip(TripDTO tripDTO) {
         addTripsToFireBaseDataBase.addTrip(tripDTO);
+        //AlarmHelper.startAlarm(tripDTO);
     }
 
     @Override

@@ -34,10 +34,11 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
         if(getIntent()!=null)
         {
             tripDTO=(TripDTO) getIntent().getSerializableExtra(KeyTags.tripKey);
+            //tripName = tripDTO.getName();
         }
 
         alertBuilder=new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Trip "+tripDTO.getName())
+        alertBuilder.setTitle("Trip ")
                 .setMessage("Do yo want to Start ?")
                 .setPositiveButton("start",new DialogInterface.OnClickListener() {
                     @Override

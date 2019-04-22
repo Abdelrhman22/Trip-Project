@@ -32,6 +32,10 @@ public class BroadCastReciever extends BroadcastReceiver {
             }
            else {
                 Log.i("mytag","BroadCastReciever trip is null");
+                Intent outgoingIntent = new Intent(context, DialogActivity.class);
+                outgoingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(outgoingIntent);
+                Log.i("mytag","after launch intent");
             }
         }
         else

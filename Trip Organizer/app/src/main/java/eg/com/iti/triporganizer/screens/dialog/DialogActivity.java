@@ -44,8 +44,10 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
                     public void onClick(DialogInterface dialog, int which) {
                         player.stop();
                         player.release();
-                        launchGoogleMap(tripDTO.getTrip_start_point_latitude(),tripDTO.getTrip_start_point_longitude(),
-                                tripDTO.getTrip_end_point_latitude(),tripDTO.getTrip_end_point_longitude());
+//                        launchGoogleMap(tripDTO.getTrip_start_point_latitude(),tripDTO.getTrip_start_point_longitude(),
+//                                tripDTO.getTrip_end_point_latitude(),tripDTO.getTrip_end_point_longitude());
+                        launchGoogleMap(29.973137 ,31.017820 ,
+                                30.019712 ,31.210248);
                         //Start trip
                         dialogPrsenter.updateTripStatus(tripDTO);
                         finish();

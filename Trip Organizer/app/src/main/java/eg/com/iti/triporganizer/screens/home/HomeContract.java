@@ -9,6 +9,9 @@ import eg.com.iti.triporganizer.model.TripDTO;
 public interface HomeContract {
     interface HomeView {
         void respondToSuccessfulSignOut();
+
+
+        void respondToSuccessfulTripDeletion();
     }
 
     interface HomePresenter {
@@ -18,6 +21,8 @@ public interface HomeContract {
 
         DatabaseReference retrieveUpcomingTripsFromFirebase();
 
-        void deleteTrip();
+        void deleteTrip(String tripKey);
+
+        void notifyWithSuccessfulTripDeletion();
     }
 }

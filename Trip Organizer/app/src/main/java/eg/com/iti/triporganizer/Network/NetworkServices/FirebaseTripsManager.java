@@ -1,7 +1,11 @@
 package eg.com.iti.triporganizer.Network.NetworkServices;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,11 +26,17 @@ public class FirebaseTripsManager {
         this.homePresenter = homePresenter;
     }
 
-    public void deleteTrip() {
+    public void deleteTrip(String tripKey) {
         firebaseAuth = FirebaseAuth.getInstance();
         getCurrentUser();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("trips").child(currentUserUID).child("upcoming");
+        mDatabaseReference = mFirebaseDatabase.getReference("trips").child(currentUserUID).child("upcoming").child(tripKey);
+        mDatabaseReference.removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                homePresenter.notifyWithSuccessfulTripDeletion();
+            }
+        });
 
     }
     private void getCurrentUser() {

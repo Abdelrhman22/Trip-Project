@@ -37,7 +37,7 @@ import eg.com.iti.triporganizer.screens.mapHistory.MapsActivity;
 import eg.com.iti.triporganizer.utils.KeyTags;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,HomeContract.HomeView {
+        implements NavigationView.OnNavigationItemSelectedListener, HomeContract.HomeView {
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
     String userID;
@@ -60,9 +60,9 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         upcomingTripsList = new ArrayList<>();
-        homePresenter=new HomePresenterImpl(this);
-        databaseReference=homePresenter.retrieveUpcomingTripsFromFirebase();
-        mAuth=FirebaseAuth.getInstance();
+        homePresenter = new HomePresenterImpl(this);
+        databaseReference = homePresenter.retrieveUpcomingTripsFromFirebase();
+        mAuth = FirebaseAuth.getInstance();
         initializeComponents();
         addingListeners();
     }
@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        upcomingTripsRecyclerView =findViewById(R.id.upcomingTripsList);
+        upcomingTripsRecyclerView = findViewById(R.id.upcomingTripsList);
         linearLayoutManager = new LinearLayoutManager(this);
         upcomingTripsRecyclerView.setLayoutManager(linearLayoutManager);
     }
@@ -94,14 +94,12 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot dataSnapshotItr: dataSnapshot.getChildren())
-                {
+                for (DataSnapshot dataSnapshotItr : dataSnapshot.getChildren()) {
                     TripDTO trip = dataSnapshotItr.getValue(TripDTO.class);
                     upcomingTripsList.add(trip);
                 }
-                upComingTripAdapter = new UpComingTripAdapter(HomeActivity.this,homePresenter,upcomingTripsList);
+                upComingTripAdapter = new UpComingTripAdapter(HomeActivity.this, homePresenter, upcomingTripsList);
                 upcomingTripsRecyclerView.setAdapter(upComingTripAdapter);
-                upComingTripAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -126,7 +124,7 @@ public class HomeActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         currentUser = mAuth.getCurrentUser();
-        userID=currentUser.getUid();
+        userID = currentUser.getUid();
     }
 
     @Override
@@ -157,22 +155,15 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home)
-        {
+        if (id == R.id.nav_home) {
             Toast.makeText(this, "You are in Home Page", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_history)
-        {
+        } else if (id == R.id.nav_history) {
             startActivity(new Intent(HomeActivity.this, HistoryActivity.class));
-        }
-        else if (id == R.id.nav_mapHistory)
-        {
-            Intent mapIntent=new Intent(HomeActivity.this, MapsActivity.class);
-            mapIntent.putExtra(KeyTags.UUIDKey,userID);
+        } else if (id == R.id.nav_mapHistory) {
+            Intent mapIntent = new Intent(HomeActivity.this, MapsActivity.class);
+            mapIntent.putExtra(KeyTags.UUIDKey, userID);
             startActivity(mapIntent);
-        }
-        else if (id == R.id.nav_signout)
-        {
+        } else if (id == R.id.nav_signout) {
             homePresenter.signOut();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -183,11 +174,17 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void respondToSuccessfulSignOut() {
         Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-        intent.putExtra("signedOut",true);
+        intent.putExtra("signedOut", true);
         startActivity(intent);
         finish();
     }
-    public void deleteTrip(){
 
+    @Override
+    public void respondToSuccessfulTripDeletion() {
+        Toast.makeText(this, "Trip deleted successfully", Toast.LENGTH_LONG).show();
+       // upComingTripAdapter.notifyDataSetChanged();
+        finish();
+        startActivity(getIntent());
     }
+
 }

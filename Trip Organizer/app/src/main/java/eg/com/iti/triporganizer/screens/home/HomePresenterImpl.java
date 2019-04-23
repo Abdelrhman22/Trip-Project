@@ -18,6 +18,8 @@ public class HomePresenterImpl implements HomeContract.HomePresenter {
         this.homeView=homeView;
         firebaseLogout=new FirebaseLogout(this);
         retrievingUpcomingTripsFromFirebase=new RetrievingUpcomingTripsFromFirebase(this);
+        firebaseTripsManager=new FirebaseTripsManager(this);
+
     }
 
     @Override
@@ -36,9 +38,13 @@ public class HomePresenterImpl implements HomeContract.HomePresenter {
     }
 
     @Override
-    public void deleteTrip() {
-        firebaseTripsManager=new FirebaseTripsManager(this);
-        firebaseTripsManager.deleteTrip();
+    public void deleteTrip(String tripKey) {
+        firebaseTripsManager.deleteTrip(tripKey);
+    }
+
+    @Override
+    public void notifyWithSuccessfulTripDeletion() {
+        homeView.respondToSuccessfulTripDeletion();
     }
 
 }

@@ -6,7 +6,7 @@ import eg.com.iti.triporganizer.model.TripTimeAndDateDTO;
 
 public class CalenderObjectToTimeAndDateObjectConverter {
 
-    public static TripTimeAndDateDTO getTimeAndDateObject(Calendar calendar) {
+    public TripTimeAndDateDTO getTimeAndDateObject(Calendar calendar) {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);

@@ -54,15 +54,14 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
     @Override
     public void onBindViewHolder(@NonNull UpComingTripAdapter.MyViewHolder myViewHolder, int i) {
 
-        //TripTimeAndDateDTO tripDateAndTime = upcomingTripsList.get(i).getTrip_date();
-        Log.i("time", "ss" + upcomingTripsList.get(i).getTrip_date());
-        //String tripDate = tripDateAndTime.getDayOfMonth() + " / " + tripDateAndTime.getMonth() + " / " + tripDateAndTime.getYear();
-        //String tripTime = tripDateAndTime.getHourOfDay() + " : " + tripDateAndTime.getMinute();
+        TripDTO tripDTO=upcomingTripsList.get(i);
+        String tripDate = tripDTO.getDayOfMonth() + " / " + tripDTO.getMonth() + " / " + tripDTO.getYear();
+        String tripTime = tripDTO.getHourOfDay() + " : " + tripDTO.getMinute();
         myViewHolder.tripName.setText(upcomingTripsList.get(i).getName());
         myViewHolder.tripStartPoint.setText(upcomingTripsList.get(i).getTripStartPoint());
         myViewHolder.tripEndPoint.setText(upcomingTripsList.get(i).getTripEndPoint());
-        //myViewHolder.tripDate.setText(tripDate);
-        //myViewHolder.tripTime.setText(tripTime);
+        myViewHolder.tripDate.setText(tripDate);
+        myViewHolder.tripTime.setText(tripTime);
         myViewHolder.tripSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,11 +104,12 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //deleting code
                                 boolean online = NetworkUtilities.isOnline(context);
-                               /* if (online)
-                                   // homePresenter.deleteTrip(upcomingTripsList.get(i));
+                                if (online)
+                                    homePresenter.deleteTrip(upcomingTripsList.get(i).getTripKey());
                                 else
-                                    Toast.makeText(context, "please check your internet connection", Toast.LENGTH_SHORT).show();*/
+                                    Toast.makeText(context, "please check your internet connection", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
+
                             }
 
                         })

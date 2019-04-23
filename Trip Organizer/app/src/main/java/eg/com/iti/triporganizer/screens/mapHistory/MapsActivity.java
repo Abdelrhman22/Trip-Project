@@ -29,24 +29,16 @@ import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.screens.mapHistory.mapParser.DirectionsJSONParser;
 import eg.com.iti.triporganizer.utils.KeyTags;
+import eg.com.iti.triporganizer.utils.MapColors;
+
+import static eg.com.iti.triporganizer.utils.MapColors.markerColor;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
     List<TripDTO> tripDTOArrayList;
-    int[] color = {Color.RED, Color.BLUE, Color.GREEN, Color.CYAN};
-    float[] markerColor = {
-            BitmapDescriptorFactory.HUE_RED,
-            BitmapDescriptorFactory.HUE_BLUE,
-            BitmapDescriptorFactory.HUE_GREEN,
-            BitmapDescriptorFactory.HUE_CYAN,
-            BitmapDescriptorFactory.HUE_MAGENTA,
-            BitmapDescriptorFactory.HUE_ORANGE,
-            BitmapDescriptorFactory.HUE_ROSE,
-            BitmapDescriptorFactory.HUE_VIOLET,
-            BitmapDescriptorFactory.HUE_YELLOW};
-    int colorIndex = 0;
+
     LatLng startPoint;
     LatLng endPoint;
     String userId;
@@ -102,7 +94,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .icon(BitmapDescriptorFactory
                             .defaultMarker(markerColor[i])));
             MarkerPoints.add(startPoint);
-            // Adding new item to the ArrayList
             MarkerPoints.add(endPoint);
 
             // Creating MarkerOptions
@@ -123,11 +114,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Getting URL to the Google Directions API
                 String url = mapsPresenter.getRequestedUrl(origin, dest);
                 Log.d("onMapClick", url);
-                FetchUrl FetchUrl = new FetchUrl();
+                ReadTask  readTask = new ReadTask ();
 
                 // Start downloading json data from Google Directions API
-                FetchUrl.execute(url);
-                //move ic_map_marker camera
+                readTask.execute(url);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
             }
@@ -137,17 +127,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     // Fetches data from url passed
-    private class FetchUrl extends AsyncTask<String, Void, String> {
+    private class ReadTask  extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... url) {
             // For storing data from web service
             String data = "";
             try {
                 // Fetching the data from web service
-                data = downloadUrl(url[0]);
-                Log.d("Background Task data", data);
+                data = mapsPresenter.downloadUrl(url[0]);
             } catch (Exception e) {
-                Log.d("Background Task", e.toString());
+
             }
             return data;
         }
@@ -162,44 +151,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private String downloadUrl(String strUrl) throws IOException {
-        String data = "";
-        InputStream iStream = null;
-        HttpURLConnection urlConnection = null;
-        try {
-            URL url = new URL(strUrl);
-
-            // Creating an http connection to communicate with url
-            urlConnection = (HttpURLConnection) url.openConnection();
-
-            // Connecting to url
-            urlConnection.connect();
-
-            // Reading data from url
-            iStream = urlConnection.getInputStream();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-
-            StringBuffer sb = new StringBuffer();
-
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-            data = sb.toString();
-            Log.d("downloadUrl", data);
-            br.close();
-
-        } catch (Exception e) {
-            Log.d("Exception", e.toString());
-        } finally {
-            iStream.close();
-            urlConnection.disconnect();
-        }
-        return data;
-    }
-
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
 
         // Parsing the data in non-ui thread
@@ -211,17 +162,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             try {
                 jObject = new JSONObject(jsonData[0]);
-                Log.d("ParserTask", jsonData[0]);
                 DirectionsJSONParser parser = new DirectionsJSONParser();
-                Log.d("ParserTask", parser.toString());
-
                 // Starts parsing data
                 routes = parser.parse(jObject);
-                Log.d("ParserTask", "Executing routes");
-                Log.d("ParserTask", routes.toString());
 
             } catch (Exception e) {
-                Log.d("ParserTask", e.toString());
                 e.printStackTrace();
             }
             return routes;
@@ -249,11 +194,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 polylineOptions.addAll(points);
                 polylineOptions.width(10);
-                if (colorIndex > 3) {
-                    colorIndex = 0;
+                if (MapColors.colorIndex > 3) {
+                    MapColors.colorIndex = 0;
                 }
-                polylineOptions.color(color[colorIndex]);
-                colorIndex++;
+                polylineOptions.color(MapColors.color[MapColors.colorIndex]);
+                MapColors.colorIndex++;
             }
             if (polylineOptions != null) {
                 mMap.addPolyline(polylineOptions);

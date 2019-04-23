@@ -8,5 +8,6 @@ public interface MapsContract {
     interface MapsPresenter
     {
         public String getRequestedUrl(LatLng origin, LatLng dest);
+        public String downloadUrl(String url);
     }
 }

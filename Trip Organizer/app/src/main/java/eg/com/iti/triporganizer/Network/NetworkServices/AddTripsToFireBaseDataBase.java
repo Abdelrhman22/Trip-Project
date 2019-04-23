@@ -21,8 +21,10 @@ public class AddTripsToFireBaseDataBase {
     }
 
     public void addTrip(TripDTO tripDTO) {
-        databaseReference = database.getReference("trips").child(tripDTO.getUserId());
-        databaseReference.child(databaseReference.push().getKey()).setValue(tripDTO, new DatabaseReference.CompletionListener() {
+        databaseReference = database.getReference("trips").child(tripDTO.getUserId()).child("upcoming");
+        String tripKey = databaseReference.push().getKey();
+        tripDTO.setTripKey(tripKey);
+        databaseReference.child(tripKey).setValue(tripDTO, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 addTripPresenter.notifyViewWithSuccessfulInsertion();

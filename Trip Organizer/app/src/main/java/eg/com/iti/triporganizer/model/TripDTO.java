@@ -1,16 +1,7 @@
 package eg.com.iti.triporganizer.model;
 
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-
-import com.google.firebase.database.Exclude;
-
 import java.io.Serializable;
-import java.util.Calendar;
-
-import eg.com.iti.triporganizer.model.Notes;
 
 
 public class TripDTO implements Serializable {
@@ -18,17 +9,20 @@ public class TripDTO implements Serializable {
 
     private String name;
 
-    private String trip_start_point;
 
-    private String trip_end_point;
+    private String tripKey;
 
-    private Double trip_start_point_longitude;
+    private String tripStartPoint;
 
-    private Double trip_start_point_latitude;
+    private String tripEndPoint;
 
-    private Double trip_end_point_longitude;
+    private Double tripStartPointLongitude;
 
-    private Double trip_end_point_latitude;
+    private Double tripStartPointLatitude;
+
+    private Double tripEndPointLongitude;
+
+    private Double tripEndPointLatitude;
 
     private TripTimeAndDateDTO tripDateAndTime;
 
@@ -42,9 +36,6 @@ public class TripDTO implements Serializable {
 
     private String userId;
 
-    private String duration;
-
-    private String averageSpeed;
 
     public String getTripStatus() {
         return tripStatus;
@@ -54,17 +45,17 @@ public class TripDTO implements Serializable {
     }
 
 
-    public TripDTO(String userId, String name, String trip_start_point, String trip_end_point,
-                   Double trip_start_point_latitude, Double trip_start_point_longitude,
-                   Double trip_end_point_latitude,Double trip_end_point_longitude, TripTimeAndDateDTO tripDateAndTime, String repeated , String tripStatus, Notes notes ,boolean rounded) {
+    public TripDTO(String userId, String name, String tripStartPoint, String tripEndPoint,
+                   Double tripStartPointLatitude, Double tripStartPointLongitude,
+                   Double tripEndPointLatitude,Double tripEndPointLongitude, TripTimeAndDateDTO tripDateAndTime, String repeated , String tripStatus, Notes notes ,boolean rounded) {
         this.userId = userId;
         this.name = name;
-        this.trip_start_point = trip_start_point;
-        this.trip_end_point = trip_end_point;
-        this.trip_start_point_longitude = trip_start_point_longitude;
-        this.trip_start_point_latitude = trip_start_point_latitude;
-        this.trip_end_point_longitude = trip_end_point_longitude;
-        this.trip_end_point_latitude = trip_end_point_latitude;
+        this.tripStartPoint = tripStartPoint;
+        this.tripEndPoint = tripEndPoint;
+        this.tripStartPointLongitude = tripStartPointLongitude;
+        this.tripStartPointLatitude = tripStartPointLatitude;
+        this.tripEndPointLongitude = tripEndPointLongitude;
+        this.tripEndPointLatitude = tripEndPointLatitude;
         this.tripDateAndTime=tripDateAndTime;
         this.repeated=repeated;
         this.tripStatus=tripStatus;
@@ -79,28 +70,33 @@ public class TripDTO implements Serializable {
         return name;
     }
 
-    public String getTrip_start_point() {
-        return trip_start_point;
+    public String getTripKey() {
+        return tripKey;
     }
 
-    public String getTrip_end_point() {
-        return trip_end_point;
+
+    public String getTripStartPoint() {
+        return tripStartPoint;
+    }
+
+    public String getTripEndPoint() {
+        return tripEndPoint;
     }
 
     public Double getTrip_start_point_longitude() {
-        return trip_start_point_longitude;
+        return tripStartPointLongitude;
     }
 
     public Double getTrip_start_point_latitude() {
-        return trip_start_point_latitude;
+        return tripStartPointLatitude;
     }
 
     public Double getTrip_end_point_longitude() {
-        return trip_end_point_longitude;
+        return tripEndPointLongitude;
     }
 
     public Double getTrip_end_point_latitude() {
-        return trip_end_point_latitude;
+        return tripEndPointLatitude;
     }
 
     public TripTimeAndDateDTO getTrip_date() {
@@ -124,24 +120,8 @@ public class TripDTO implements Serializable {
         return userId;
     }
 
-    public String getDuration() {
-        return duration;
-    }
-
-    public String getAverageSpeed() {
-        return averageSpeed;
-    }
-
     public void setNotes(Notes notes) {
         this.notes = notes;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public void setAverageSpeed(String averageSpeed) {
-        this.averageSpeed = averageSpeed;
     }
 
     public void setRoundStatus(boolean rounded) {
@@ -156,31 +136,35 @@ public class TripDTO implements Serializable {
         this.name = name;
     }
 
-    public void setTrip_start_point(String trip_start_point) {
-        this.trip_start_point = trip_start_point;
+    public void setTripKey(String tripKey) {
+        this.tripKey = tripKey;
     }
 
-    public void setTrip_end_point(String trip_end_point) {
-        this.trip_end_point = trip_end_point;
+    public void setTripStartPoint(String tripStartPoint) {
+        this.tripStartPoint = tripStartPoint;
     }
 
-    public void setTrip_start_point_longitude(Double trip_start_point_longitude) {
-        this.trip_start_point_longitude = trip_start_point_longitude;
+    public void setTripEndPoint(String tripEndPoint) {
+        this.tripEndPoint = tripEndPoint;
     }
 
-    public void setTrip_start_point_latitude(Double trip_start_point_latitude) {
-        this.trip_start_point_latitude = trip_start_point_latitude;
+    public void setTripStartPointLongitude(Double tripStartPointLongitude) {
+        this.tripStartPointLongitude = tripStartPointLongitude;
     }
 
-    public void setTrip_end_point_longitude(Double trip_end_point_longitude) {
-        this.trip_end_point_longitude = trip_end_point_longitude;
+    public void setTripStartPointLatitude(Double tripStartPointLatitude) {
+        this.tripStartPointLatitude = tripStartPointLatitude;
     }
 
-    public void setTrip_end_point_latitude(Double trip_end_point_latitude) {
-        this.trip_end_point_latitude = trip_end_point_latitude;
+    public void setTripEndPointLongitude(Double tripEndPointLongitude) {
+        this.tripEndPointLongitude = tripEndPointLongitude;
     }
 
-    public void setTrip_date(TripTimeAndDateDTO tripDateAndTime) {
+    public void setTripEndPointLatitude(Double tripEndPointLatitude) {
+        this.tripEndPointLatitude = tripEndPointLatitude;
+    }
+
+    public void setTripDate(TripTimeAndDateDTO tripDateAndTime) {
         this.tripDateAndTime = tripDateAndTime;
     }
 

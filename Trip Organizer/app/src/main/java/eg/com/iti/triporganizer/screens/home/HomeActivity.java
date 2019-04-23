@@ -1,10 +1,12 @@
 package eg.com.iti.triporganizer.screens.home;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,8 +20,16 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+import eg.com.iti.triporganizer.Network.NetworkServices.FirebaseTripsManager;
 import eg.com.iti.triporganizer.R;
+import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
 import eg.com.iti.triporganizer.screens.history.HistoryActivity;
 import eg.com.iti.triporganizer.screens.login.LoginActivity;
@@ -32,37 +42,79 @@ public class HomeActivity extends AppCompatActivity
     FirebaseUser currentUser;
     String userID;
     HomeContract.HomePresenter homePresenter;
+    UpComingTripAdapter upComingTripAdapter;
+    DatabaseReference databaseReference;
+    ArrayList<TripDTO> upcomingTripsList;
+
+    //--------------------------------------------------------------
+    Toolbar toolbar;
+    FloatingActionButton fab;
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
+    NavigationView navigationView;
+    RecyclerView upcomingTripsRecyclerView;
+    LinearLayoutManager linearLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        upcomingTripsList = new ArrayList<>();
         homePresenter=new HomePresenterImpl(this);
+        databaseReference=homePresenter.retrieveUpcomingTripsFromFirebase();
         mAuth=FirebaseAuth.getInstance();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        initializeComponents();
+        addingListeners();
+    }
+
+    private void initializeComponents() {
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addTripBtn);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, AddTripActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        fab = findViewById(R.id.addTripBtn);
+        drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        upcomingTripsRecyclerView =findViewById(R.id.upcomingTripsList);
+        linearLayoutManager = new LinearLayoutManager(this);
+        upcomingTripsRecyclerView.setLayoutManager(linearLayoutManager);
     }
+
+
+    private void addingListeners() {
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(HomeActivity.this, AddTripActivity.class);
+            startActivity(intent);
+        });
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot dataSnapshotItr: dataSnapshot.getChildren())
+                {
+                    TripDTO trip = dataSnapshotItr.getValue(TripDTO.class);
+                    upcomingTripsList.add(trip);
+                }
+                upComingTripAdapter = new UpComingTripAdapter(HomeActivity.this,homePresenter,upcomingTripsList);
+                upcomingTripsRecyclerView.setAdapter(upComingTripAdapter);
+                upComingTripAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(HomeActivity.this, "Your Trips are unavailable", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -123,7 +175,7 @@ public class HomeActivity extends AppCompatActivity
         {
             homePresenter.signOut();
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -134,5 +186,8 @@ public class HomeActivity extends AppCompatActivity
         intent.putExtra("signedOut",true);
         startActivity(intent);
         finish();
+    }
+    public void deleteTrip(){
+
     }
 }

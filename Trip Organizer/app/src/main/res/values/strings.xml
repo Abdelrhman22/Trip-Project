@@ -42,6 +42,11 @@
     <string name="from">From:</string>
     <string name="to">To:</string>
     <string name="settings">...</string>
+    <string name="edit_trip">Edit Trip</string>
+    <string name="view_notes">View Notes</string>
+    <string name="delete_trip">Delete Trip</string>
+    <string name="start_trip">Start Trip</string>
+    <string name="delete">Are you sure to delete this trip ?</string>
 
     <!-- Mai End ********************************** -->
     <!-- Salma Start -->

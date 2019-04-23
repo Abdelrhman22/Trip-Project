@@ -13,29 +13,36 @@ import eg.com.iti.triporganizer.utils.KeyTags;
 
 public class AlarmHelper {
 
+    private static AlarmManager alarmManager;
+    private  static PendingIntent pendingIntent;
+
     public static void startAlarm(TripDTO tripDTO, Calendar calendar, Context context ) {
         TripDTO receivedTrip = tripDTO;
         Intent serviceIntent = new Intent(context, BroadCastReciever.class);
         serviceIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         serviceIntent.putExtra(KeyTags.tripKey,receivedTrip);
         Log.i("mytag","AlarmHelper "+tripDTO.getName());
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, serviceIntent, 0);
+        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        pendingIntent = PendingIntent.getBroadcast(context, 1, serviceIntent, 0);
 
-        if (receivedTrip.getRepeated().equals("Repeat Daily"))
-        {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+        switch (receivedTrip.getRepeated()) {
+            case "Repeat Daily":
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                break;
+            case "Repeat Weekly":
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+                break;
+            case "Repeat Monthly":
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 30, pendingIntent);
+                break;
+            default:
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                break;
         }
-        else if(receivedTrip.getRepeated().equals("Repeat Weekly"))
-        {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY*7,pendingIntent);
-        }
-        else if(receivedTrip.getRepeated().equals("Repeat Monthly"))
-        {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY*30,pendingIntent);
-        }
-        else {
-            alarmManager.set(android.app.AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        }
+    }
+
+    public  static  void stopAlarmService()
+    {
+        alarmManager.cancel(pendingIntent);
     }
 }

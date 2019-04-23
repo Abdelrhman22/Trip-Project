@@ -1,5 +1,9 @@
 package eg.com.iti.triporganizer.screens.addTrip;
 
+import android.content.Context;
+
+import java.util.Calendar;
+
 import eg.com.iti.triporganizer.model.TripDTO;
 
 public interface AddTripContract {
@@ -8,7 +12,7 @@ public interface AddTripContract {
         void respondToFailedInsertion();
     }
     interface AddTripPresenter{
-        void addTrip (TripDTO tripDTO);
+        void addTrip (TripDTO tripDTO, Calendar calendar);
         void notifyViewWithSuccessfulInsertion();
         void notifyViewWithFailedInsertion();
     }

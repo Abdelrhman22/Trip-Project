@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,16 +23,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import eg.com.iti.triporganizer.R;
@@ -44,7 +47,6 @@ import eg.com.iti.triporganizer.utils.CalenderObjectToTimeAndDateObjectConverter
 
 
 public class AddTripActivity extends AppCompatActivity implements AddTripContract.AddTripView {
-
 
     String currentUserUID, tripName, placeStartName, placeEndName, startDateString, startTimeString, returnDateString, returnTimeString, repeated;
     Double startLat, startLng, endLng, endLat;
@@ -65,9 +67,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     Notes userNotes;
     AddTripContract.AddTripPresenter addTripPresenter;
     Calendar currentDateAndTime, startDateAndTime, returnDateAndTime;
-
+    AutocompleteSupportFragment startPlaceAutocompleteFragment,endPlaceAutocompleteFragment;
     //------------------Components----------------------------------------
-    PlaceAutocompleteFragment startPlaceAutocompleteFragment, endPlaceAutocompleteFragment;
+
     Button addTripBtn;
     TextInputLayout tripNameWrapper, noteNameWrapper;
     ImageView startDate, startTime, returnDate, returnTime, addNote;
@@ -83,7 +85,6 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     RecyclerView notesRecyclerView;
     RawNotesAdapter rawNotesAdapter;
     LinearLayout backTripDetails;
-
     //---------------------------------------------------------------------------
 
 
@@ -301,61 +302,51 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     }
 
     void initAutoComplete() {
-        startPlaceAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager()
-                .findFragmentById(R.id.tripSrc);
-        AutocompleteFilter autocompleteFilter = new AutocompleteFilter.Builder().setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
-        startPlaceAutocompleteFragment.setFilter(autocompleteFilter);
-        // check value of startPlaceAutocompleteFragment
-        if (startPlaceAutocompleteFragment != null) {
-            startPlaceAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    //Toast.makeText(getApplicationContext(),place.getName().toString(),Toast.LENGTH_SHORT).show();
-                    startPlaceSet = true;
-                    placeStartName = (String) place.getName();
-                    startLng = place.getLatLng().longitude;
-                    startLat = place.getLatLng().latitude;
-                    Toast.makeText(AddTripActivity.this, placeStartName, Toast.LENGTH_SHORT).show();
-                }
+        Places.initialize(getApplicationContext(), getResources().getString(R.string.google_maps_key));
+        PlacesClient placesClient = Places.createClient(this);
 
-                @Override
-                public void onError(Status status) {
-                    Log.e(LOG, status.toString());
-                    //Toast.makeText(getApplicationContext(),"ErrorStart "+status.toString(),Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Toast.makeText(AddTripActivity.this, "Problem with loading start", Toast.LENGTH_LONG).show();
-        }
-        endPlaceAutocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager()
-                .findFragmentById(R.id.tripDestination);
-        endPlaceAutocompleteFragment.setFilter(autocompleteFilter);
-        // check value of startPlaceAutocompleteFragment
-        if (endPlaceAutocompleteFragment != null) {
-            endPlaceAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-                @Override
-                public void onPlaceSelected(Place place) {
-                    endPlaceSet = true;
-                    placeEndName = (String) place.getName();
-                    endLng = place.getLatLng().longitude;
-                    endLat = place.getLatLng().latitude;
-                    Toast.makeText(AddTripActivity.this, placeEndName, Toast.LENGTH_SHORT).show();
-                }
+        startPlaceAutocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.tripSrc);
+        startPlaceAutocompleteFragment.setCountry("EG");
+        startPlaceAutocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
 
-                @Override
-                public void onError(Status status) {
-                    Log.e(LOG, status.toString());
-                    //Toast.makeText(getApplicationContext(),"Error"+status.toString(),Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Toast.makeText(AddTripActivity.this, "Problem with loading End", Toast.LENGTH_LONG).show();
-        }
-        AutocompleteFilter typeFilter1 = new AutocompleteFilter.Builder()
-                .setCountry("EG")
-                .build();
-        startPlaceAutocompleteFragment.setFilter(typeFilter1);
-        endPlaceAutocompleteFragment.setFilter(typeFilter1);
+        startPlaceAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                startPlaceSet=true;
+                placeStartName = (String) place.getName();
+                startLng = place.getLatLng().longitude;
+                startLat = place.getLatLng().latitude;
+                Toast.makeText(AddTripActivity.this, placeStartName, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Status status) {
+
+                Toast.makeText(AddTripActivity.this, "Can't Load Place", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        endPlaceAutocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.tripDestination);
+        endPlaceAutocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        endPlaceAutocompleteFragment.setCountry("EG");
+        endPlaceAutocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+
+                endPlaceSet = true;
+                placeEndName = (String) place.getName();
+                endLng = place.getLatLng().longitude;
+                endLat = place.getLatLng().latitude;
+                Toast.makeText(AddTripActivity.this, placeEndName, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onError(Status status) {
+                Toast.makeText(AddTripActivity.this, "Can not Load Place 2", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setUserData() {
@@ -402,10 +393,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 }
                 else {
                     userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime), repeated, "upcoming", userNotes, rounded);
-                    addTripPresenter.addTrip(userTrip);
+                    addTripPresenter.addTrip(userTrip,startDateAndTime);
                     TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(returnDateAndTime), repeated, "upcoming", userNotes, false);
-                    addTripPresenter.addTrip(backTrip);
-                    goToHome();
+                    addTripPresenter.addTrip(backTrip,returnDateAndTime);
                 }
             }
         } else {
@@ -420,8 +410,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 } else {
                     userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime), repeated, "upcoming", userNotes, rounded);
                     Log.i("ss","h"+CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime));
-                    addTripPresenter.addTrip(userTrip);
-
+                    addTripPresenter.addTrip(userTrip,startDateAndTime);
                 }
             }
         }

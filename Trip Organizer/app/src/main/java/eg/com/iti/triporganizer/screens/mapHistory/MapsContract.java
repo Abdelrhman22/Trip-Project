@@ -7,6 +7,6 @@ public interface MapsContract {
 
     interface MapsPresenter
     {
-        public String getUrl(LatLng origin, LatLng dest);
+        public String getRequestedUrl(LatLng origin, LatLng dest);
     }
 }

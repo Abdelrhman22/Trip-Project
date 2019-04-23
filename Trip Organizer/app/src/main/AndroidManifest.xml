@@ -66,6 +66,11 @@
         <activity android:name=".screens.login.LoginActivity" /> <!-- Mai End *************************************************** -->
         <!-- salma start -->
         <activity android:name=".screens.register.RegistrationActivity" />
+
+        <receiver android:name=".services.alarmServices.BroadCastReciever" android:exported="true" android:enabled="true"/>
+
     </application>
+
+
 
 </manifest>

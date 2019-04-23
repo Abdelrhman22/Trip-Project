@@ -121,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng dest = MarkerPoints.get(1);
 
                 // Getting URL to the Google Directions API
-                String url = mapsPresenter.getUrl(origin, dest);
+                String url = mapsPresenter.getRequestedUrl(origin, dest);
                 Log.d("onMapClick", url);
                 FetchUrl FetchUrl = new FetchUrl();
 
@@ -231,12 +231,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
             ArrayList<LatLng> points;
-            PolylineOptions lineOptions = null;
+            PolylineOptions polylineOptions = null;
 
             // Traversing through all the routes
             for (int i = 0; i < result.size(); i++) {
                 points = new ArrayList<>();
-                lineOptions = new PolylineOptions();
+                polylineOptions = new PolylineOptions();
 
                 List<HashMap<String, String>> path = result.get(i);
                 // Fetching all the points in i-th ic_route
@@ -247,16 +247,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     LatLng position = new LatLng(lat, lng);
                     points.add(position);
                 }
-                lineOptions.addAll(points);
-                lineOptions.width(10);
+                polylineOptions.addAll(points);
+                polylineOptions.width(10);
                 if (colorIndex > 3) {
                     colorIndex = 0;
                 }
-                lineOptions.color(color[colorIndex]);
+                polylineOptions.color(color[colorIndex]);
                 colorIndex++;
             }
-            if (lineOptions != null) {
-                mMap.addPolyline(lineOptions);
+            if (polylineOptions != null) {
+                mMap.addPolyline(polylineOptions);
             } else
                 {
             }

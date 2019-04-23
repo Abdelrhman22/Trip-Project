@@ -64,7 +64,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                     />
                 <TextView
                     android:layout_width="match_parent"
@@ -80,7 +80,7 @@
 
                 <fragment
                     android:id="@+id/tripDestination"
-                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

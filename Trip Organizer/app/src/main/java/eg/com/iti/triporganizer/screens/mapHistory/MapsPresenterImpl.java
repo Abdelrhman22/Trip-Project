@@ -11,7 +11,7 @@ public class MapsPresenterImpl implements MapsContract.MapsPresenter {
     }
 
     @Override
-    public String getUrl(LatLng origin, LatLng dest)
+    public String getRequestedUrl(LatLng origin, LatLng dest)
     {
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;

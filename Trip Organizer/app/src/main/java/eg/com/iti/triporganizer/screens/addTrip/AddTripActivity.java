@@ -3,6 +3,7 @@ package eg.com.iti.triporganizer.screens.addTrip;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -41,6 +42,7 @@ import eg.com.iti.triporganizer.model.NoteDTO;
 import eg.com.iti.triporganizer.model.Notes;
 import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.screens.addTrip.adapter.RawNotesAdapter;
+import eg.com.iti.triporganizer.screens.home.HomeActivity;
 import eg.com.iti.triporganizer.utils.CalenderObjectToTimeAndDateObjectConverter;
 
 
@@ -407,16 +409,23 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                     Toast.makeText(this, "You cannot select passed time", Toast.LENGTH_SHORT).show();
                 } else {
                     userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime), repeated, "upcoming", userNotes, rounded);
+                    Log.i("ss","h"+CalenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime));
                     addTripPresenter.addTrip(userTrip,startDateAndTime);
                 }
             }
         }
     }
 
+    private void goToHome() {
+        Intent intent=new Intent(AddTripActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     public void respondToSuccessfulInsertion() {
         Toast.makeText(this, "Your trip inserted successfully", Toast.LENGTH_SHORT).show();
+        goToHome();
     }
 
     @Override

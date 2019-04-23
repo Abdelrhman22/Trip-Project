@@ -1,5 +1,6 @@
 package eg.com.iti.triporganizer.screens.dialog;
 
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -71,6 +72,7 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
                 player.release();
 
                 //Snooze trip
+
                 //Notification in the tray
                 NotificationHelper notificationHelper = new NotificationHelper(DialogActivity.this);
                 NotificationCompat.Builder builder = notificationHelper.getChannelNotification();

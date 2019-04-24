@@ -3,12 +3,15 @@ package eg.com.iti.triporganizer.services.alarmServices;
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import eg.com.iti.triporganizer.R;
+import eg.com.iti.triporganizer.screens.dialog.DialogActivity;
 
 public class NotificationHelper extends ContextWrapper {
     public static final String channelID = "channelID";
@@ -39,9 +42,13 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public NotificationCompat.Builder getChannelNotification() {
+        Intent activityIntent = new Intent(this,DialogActivity.class);
+        PendingIntent contentIntent =  PendingIntent.getActivity(this,
+                0, activityIntent, 0);
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
                 .setContentTitle("Road Trip Alarm!")
                 .setContentText("Your trip is about to start.")
-                .setSmallIcon(R.drawable.ic_notifications);
+                .setSmallIcon(R.drawable.ic_notifications)
+                .setContentIntent(contentIntent);
     }
 }

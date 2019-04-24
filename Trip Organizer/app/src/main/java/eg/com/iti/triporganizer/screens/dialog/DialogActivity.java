@@ -1,5 +1,6 @@
 package eg.com.iti.triporganizer.screens.dialog;
 
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -16,6 +17,8 @@ import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.services.alarmServices.NotificationHelper;
 import eg.com.iti.triporganizer.utils.KeyTags;
+
+import static eg.com.iti.triporganizer.services.alarmServices.AlarmHelper.stopAlarmService;
 
 public class DialogActivity extends AppCompatActivity implements DialogActivityContract.DialogView {
 
@@ -36,6 +39,7 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
             tripDTO=(TripDTO) getIntent().getSerializableExtra(KeyTags.tripKey);
             if(tripDTO!=null)
             {
+
                 tripName = tripDTO.getName();
             }
            else
@@ -56,6 +60,9 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
                                 30.019712 ,31.210248);
                         //Start trip
                         dialogPrsenter.updateTripStatus(tripDTO);
+
+                        //Call Method that starts widget service
+                        //tripDTO.getNotes()
                         finish();
                     }
                 }).setNeutralButton("snooze", new DialogInterface.OnClickListener() {
@@ -65,6 +72,7 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
                 player.release();
 
                 //Snooze trip
+
                 //Notification in the tray
                 NotificationHelper notificationHelper = new NotificationHelper(DialogActivity.this);
                 NotificationCompat.Builder builder = notificationHelper.getChannelNotification();
@@ -77,6 +85,7 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
                 player.stop();
                 player.release();
                 //Cancel trip
+                stopAlarmService();
                 finish();
             }
         }).setIcon(getResources().getDrawable(R.drawable.ic_notification)).setCancelable(false).show();

@@ -4,6 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 import eg.com.iti.triporganizer.Network.NetworkServices.FirebaseLogout;
 import eg.com.iti.triporganizer.Network.NetworkServices.FirebaseTripsManager;
 import eg.com.iti.triporganizer.Network.NetworkServices.RetrievingUpcomingTripsFromFirebase;
+import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.utils.NetworkUtilities;
 import eg.com.iti.triporganizer.utils.SharedPreferencesManager;
 
@@ -46,6 +47,17 @@ public class HomePresenterImpl implements HomeContract.HomePresenter {
     public void notifyWithSuccessfulTripDeletion() {
         homeView.respondToSuccessfulTripDeletion();
     }
+
+    @Override
+    public void editTrip(TripDTO tripDTO) {
+        firebaseTripsManager.editTrip(tripDTO);
+    }
+
+    @Override
+    public void notifyViewWithEditTripDone(TripDTO tripDTO) {
+        homeView.respondToSuccessfulEditTrip(tripDTO);
+    }
+
 
 }
 

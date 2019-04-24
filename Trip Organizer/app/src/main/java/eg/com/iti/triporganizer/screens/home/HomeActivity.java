@@ -187,4 +187,26 @@ public class HomeActivity extends AppCompatActivity
         startActivity(getIntent());
     }
 
+    @Override
+    public void respondToSuccessfulEditTrip(TripDTO tripDTO) {
+        Intent intent = new Intent(HomeActivity.this,AddTripActivity.class);
+        intent.putExtra("tripName",tripDTO.getName());
+        intent.putExtra("tripStartPoint",tripDTO.getTripStartPoint());
+        intent.putExtra("tripEndPoint",tripDTO.getTripEndPoint());
+        intent.putExtra("tripHour",tripDTO.getHourOfDay());
+        intent.putExtra("tripMinute",tripDTO.getMinute());
+        intent.putExtra("tripYear",tripDTO.getYear());
+        intent.putExtra("tripMonth",tripDTO.getMonth());
+        intent.putExtra("tripDay",tripDTO.getDayOfMonth());
+        intent.putExtra("repeated",tripDTO.getRepeated());
+        for(int itr=0;itr<tripDTO.getNotes().getNotes().size();itr++){
+           intent.putExtra("note"+itr,tripDTO.getNotes().getNotes().get(itr).getBody());
+           intent.putExtra("checked"+itr,tripDTO.getNotes().getNotes().get(itr).isDone());
+        }
+        intent.putExtra("notesCount",tripDTO.getNotes().getNotes().size());
+
+        startActivity(intent);
+
+    }
+
 }

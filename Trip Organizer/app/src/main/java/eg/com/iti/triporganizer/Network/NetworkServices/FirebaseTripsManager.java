@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.screens.home.HomeContract;
 
 public class FirebaseTripsManager {
@@ -46,5 +47,10 @@ public class FirebaseTripsManager {
         if (user != null) {
             currentUserUID = user.getUid();
         }
+    }
+
+    public void editTrip(TripDTO tripDTO) {
+        deleteTrip(tripDTO.getTripKey());
+        homePresenter.notifyViewWithEditTripDone(tripDTO);
     }
 }

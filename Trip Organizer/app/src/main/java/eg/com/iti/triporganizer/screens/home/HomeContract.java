@@ -12,6 +12,8 @@ public interface HomeContract {
 
 
         void respondToSuccessfulTripDeletion();
+
+        void respondToSuccessfulEditTrip(TripDTO tripDTO);
     }
 
     interface HomePresenter {
@@ -24,5 +26,9 @@ public interface HomeContract {
         void deleteTrip(String tripKey);
 
         void notifyWithSuccessfulTripDeletion();
+
+        void editTrip(TripDTO tripDTO);
+        
+        void notifyViewWithEditTripDone(TripDTO tripDTO);
     }
 }

@@ -54,7 +54,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
     @Override
     public void onBindViewHolder(@NonNull UpComingTripAdapter.MyViewHolder myViewHolder, int i) {
 
-        TripDTO tripDTO=upcomingTripsList.get(i);
+        TripDTO tripDTO = upcomingTripsList.get(i);
         String tripDate = tripDTO.getDayOfMonth() + " / " + tripDTO.getMonth() + " / " + tripDTO.getYear();
         String tripTime = tripDTO.getHourOfDay() + " : " + tripDTO.getMinute();
         myViewHolder.tripName.setText(upcomingTripsList.get(i).getName());
@@ -74,7 +74,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.editTrip:
-                                Toast.makeText(context, "edit trip", Toast.LENGTH_SHORT).show();
+                                editTrip(upcomingTripsList.get(i));
                                 return true;
                             case R.id.viewNotes:
                                 Toast.makeText(context, "view notes", Toast.LENGTH_SHORT).show();
@@ -89,7 +89,12 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                         }
                     }
 
+
                 });
+            }
+
+            private void editTrip(TripDTO tripDTO) {
+                homePresenter.editTrip(tripDTO);
             }
 
             private AlertDialog showDeleteDialog() {
@@ -109,7 +114,6 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 else
                                     Toast.makeText(context, "please check your internet connection", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
-
                             }
 
                         })

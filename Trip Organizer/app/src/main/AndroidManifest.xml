@@ -40,19 +40,23 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:screenOrientation="portrait"
             android:name=".screens.mapHistory.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".screens.home.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screens.history.HistoryActivity" />
+        <activity android:name=".screens.history.HistoryActivity" android:label="History"
+            android:screenOrientation="portrait"/>
         <activity android:name=".screens.dialog.DialogActivity" android:launchMode="singleInstance"
-            android:theme="@style/Theme.Transparent">
+            android:theme="@style/Theme.Transparent" android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".screens.addTrip.AddTripActivity" /> <!-- Arafa Start -->
+        <activity android:name=".screens.addTrip.AddTripActivity" android:screenOrientation="portrait"/> <!-- Arafa Start -->
         <activity
+            android:theme="@style/AppThemeup"
             android:name=".screens.splash.SplashActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
@@ -63,9 +67,10 @@
             </intent-filter>
         </activity> <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
-        <activity android:name=".screens.login.LoginActivity" /> <!-- Mai End *************************************************** -->
+        <activity android:name=".screens.login.LoginActivity" android:screenOrientation="portrait"
+            /> <!-- Mai End *************************************************** -->
         <!-- salma start -->
-        <activity android:name=".screens.register.RegistrationActivity" />
+        <activity android:name=".screens.register.RegistrationActivity" android:screenOrientation="portrait"/>
 
         <receiver android:name=".services.alarmServices.BroadCastReciever" android:exported="true" android:enabled="true"/>
 

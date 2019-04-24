@@ -12,6 +12,8 @@ package eg.com.iti.triporganizer.screens.home;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -84,6 +86,11 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 deleteDialog.show();
                                 return true;
                             }
+                            case R.id.startTrip: {
+                                showDirection(tripDTO);
+                                Log.i("aaaaa",""+upcomingTripsList.get(i).getRepeated());
+                                return true;
+                            }
                             default:
                                 return false;
                         }
@@ -134,6 +141,17 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
 
     }
 
+    private void showDirection(TripDTO tripDTO)
+    {
+        Intent mapIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://maps.google.com/maps?saddr=" + 29.392691 + "," + 30.828360 + "&daddr=" + 30.044420 + "," + 31.235712));
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
+            mapIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(mapIntent);
+        } else {
+            Toast.makeText(context, "Please install a maps application", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public int getItemCount() {

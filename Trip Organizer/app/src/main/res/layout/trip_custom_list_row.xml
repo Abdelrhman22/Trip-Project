@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/listID"
+    android:layout_margin="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,13 +12,9 @@
     <!--Added card elevation for each card view item and card radius to make it a little bit rounded-->
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="393dp"
-        android:layout_height="194dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
 
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -83,7 +80,8 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/card_view">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
@@ -142,7 +140,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/rank"
                 app:layout_constraintEnd_toEndOf="@+id/tripStartPoint"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/tripStartPoint" />
+                app:layout_constraintStart_toStartOf="@+id/tripStartPoint"
+                app:layout_constraintTop_toTopOf="@+id/rank" />
 
             <TextView
                 android:id="@+id/tripStartPoint"
@@ -182,4 +181,4 @@
         <!--Circular / Rounder Image-->
 
     </android.support.v7.widget.CardView>
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

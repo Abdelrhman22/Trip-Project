@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +46,7 @@ public class HomeActivity extends AppCompatActivity
     UpComingTripAdapter upComingTripAdapter;
     DatabaseReference databaseReference;
     ArrayList<TripDTO> upcomingTripsList;
+    TextView userName,userEmail;
 
     //--------------------------------------------------------------
     Toolbar toolbar;
@@ -81,6 +83,15 @@ public class HomeActivity extends AppCompatActivity
         upcomingTripsRecyclerView = findViewById(R.id.upcomingTripsList);
         linearLayoutManager = new LinearLayoutManager(this);
         upcomingTripsRecyclerView.setLayoutManager(linearLayoutManager);
+        currentUser = mAuth.getCurrentUser();
+        userName=navigationView.getHeaderView(0).findViewById(R.id.userName);
+        userEmail=navigationView.getHeaderView(0).findViewById(R.id.userEmail);
+        userID = currentUser.getUid();
+        Log.i("name",currentUser.getDisplayName());
+        userName.setText(currentUser.getDisplayName());
+        userEmail.setText(currentUser.getEmail());
+
+
     }
 
 
@@ -123,8 +134,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        currentUser = mAuth.getCurrentUser();
-        userID = currentUser.getUid();
+
     }
 
     @Override

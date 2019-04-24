@@ -15,5 +15,7 @@ public interface AddTripContract {
         void addTrip (TripDTO tripDTO, Calendar calendar);
         void notifyViewWithSuccessfulInsertion();
         void notifyViewWithFailedInsertion();
+
+        void deleteTrip(String editedTripKey);
     }
 }

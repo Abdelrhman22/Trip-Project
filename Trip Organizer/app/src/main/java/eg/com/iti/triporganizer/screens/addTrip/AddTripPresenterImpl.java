@@ -6,12 +6,13 @@ import android.util.Log;
 import java.util.Calendar;
 
 import eg.com.iti.triporganizer.Network.NetworkServices.AddTripsToFireBaseDataBase;
+import eg.com.iti.triporganizer.Network.NetworkServices.FirebaseTripsManager;
 import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.services.alarmServices.AlarmHelper;
 
 public class AddTripPresenterImpl implements AddTripContract.AddTripPresenter
 {
-
+FirebaseTripsManager firebaseTripsManager;
     AddTripContract.AddTripView addTripView;
     AddTripsToFireBaseDataBase addTripsToFireBaseDataBase;
     Context context;
@@ -20,6 +21,7 @@ public class AddTripPresenterImpl implements AddTripContract.AddTripPresenter
         this.addTripView=addTripView;
         this.context = (Context)addTripView;
         addTripsToFireBaseDataBase= new AddTripsToFireBaseDataBase(this);
+        firebaseTripsManager=new FirebaseTripsManager(this);
     }
 
 
@@ -38,5 +40,10 @@ public class AddTripPresenterImpl implements AddTripContract.AddTripPresenter
     @Override
     public void notifyViewWithFailedInsertion() {
         addTripView.respondToFailedInsertion();
+    }
+
+    @Override
+    public void deleteTrip(String editedTripKey) {
+        firebaseTripsManager.deleteTrip(editedTripKey);
     }
 }

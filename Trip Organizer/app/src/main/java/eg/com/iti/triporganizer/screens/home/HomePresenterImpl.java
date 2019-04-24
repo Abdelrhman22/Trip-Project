@@ -48,15 +48,9 @@ public class HomePresenterImpl implements HomeContract.HomePresenter {
         homeView.respondToSuccessfulTripDeletion();
     }
 
-    @Override
-    public void editTrip(TripDTO tripDTO) {
-        firebaseTripsManager.editTrip(tripDTO);
-    }
 
-    @Override
-    public void notifyViewWithEditTripDone(TripDTO tripDTO) {
-        homeView.respondToSuccessfulEditTrip(tripDTO);
-    }
+
+
 
 
 }

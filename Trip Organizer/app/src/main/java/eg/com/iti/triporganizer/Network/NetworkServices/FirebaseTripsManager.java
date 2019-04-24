@@ -10,10 +10,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import eg.com.iti.triporganizer.model.TripDTO;
+import eg.com.iti.triporganizer.screens.addTrip.AddTripContract;
 import eg.com.iti.triporganizer.screens.home.HomeContract;
 
 public class FirebaseTripsManager {
     HomeContract.HomePresenter homePresenter;
+    AddTripContract.AddTripPresenter addTripPresenter;
+    boolean edittrip = false;
     //firebase database
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -27,6 +30,11 @@ public class FirebaseTripsManager {
         this.homePresenter = homePresenter;
     }
 
+    public FirebaseTripsManager(AddTripContract.AddTripPresenter addTripPresenter) {
+        this.addTripPresenter = addTripPresenter;
+        edittrip = true;
+    }
+
     public void deleteTrip(String tripKey) {
         firebaseAuth = FirebaseAuth.getInstance();
         getCurrentUser();
@@ -35,11 +43,13 @@ public class FirebaseTripsManager {
         mDatabaseReference.removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                homePresenter.notifyWithSuccessfulTripDeletion();
+                if (!edittrip)
+                    homePresenter.notifyWithSuccessfulTripDeletion();
             }
         });
 
     }
+
     private void getCurrentUser() {
 
         user = firebaseAuth.getCurrentUser();
@@ -49,8 +59,4 @@ public class FirebaseTripsManager {
         }
     }
 
-    public void editTrip(TripDTO tripDTO) {
-        deleteTrip(tripDTO.getTripKey());
-        homePresenter.notifyViewWithEditTripDone(tripDTO);
-    }
 }

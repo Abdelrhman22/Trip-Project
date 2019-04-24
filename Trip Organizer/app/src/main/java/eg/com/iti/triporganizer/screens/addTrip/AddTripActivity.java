@@ -65,6 +65,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     private static final String LOG = "log";
     static Boolean isTouched = false;
     static boolean rounded;
+    boolean editedTrip=false;
+    String editedTripKey;
     FirebaseUser user;
     Notes userNotes;
     AddTripContract.AddTripPresenter addTripPresenter;
@@ -111,6 +113,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         addListeners();
         Intent intent=getIntent();
         if(intent!=null)
+            editedTripKey=intent.getStringExtra("tripKey");
+            editedTrip=intent.getBooleanExtra("editedTrip",false);
             tripNameWrapper.getEditText().setText(intent.getStringExtra("tripName"));
         }
 
@@ -297,6 +301,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         addTripBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(editedTrip)
+                    addTripPresenter.deleteTrip(editedTripKey);
                 createTrip();
             }
         });

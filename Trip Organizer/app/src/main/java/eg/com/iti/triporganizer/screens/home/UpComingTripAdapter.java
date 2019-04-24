@@ -12,6 +12,7 @@ package eg.com.iti.triporganizer.screens.home;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.model.TripTimeAndDateDTO;
+import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
 import eg.com.iti.triporganizer.utils.NetworkUtilities;
 
 public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapter.MyViewHolder> {
@@ -94,7 +96,12 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
             }
 
             private void editTrip(TripDTO tripDTO) {
-                homePresenter.editTrip(tripDTO);
+                //homePresenter.editTrip(tripDTO);
+                Intent intent = new Intent(context, AddTripActivity.class);
+                intent.putExtra("editedTrip",true);
+                intent.putExtra("tripKey",tripDTO.getTripKey());
+                intent.putExtra("tripName",tripDTO.getName());
+                context.startActivity(intent);
             }
 
             private AlertDialog showDeleteDialog() {

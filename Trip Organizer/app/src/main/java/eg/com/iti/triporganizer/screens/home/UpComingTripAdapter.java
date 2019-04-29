@@ -88,8 +88,8 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 return true;
                             }
                             case R.id.startTrip: {
+                                homePresenter.moveTripFromUpcomingToHistory(upcomingTripsList.get(i));
                                 showDirection(tripDTO);
-                                Log.i("aaaaa",""+upcomingTripsList.get(i).getRepeated());
                                 return true;
                             }
                             default:
@@ -107,6 +107,24 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                 intent.putExtra("editedTrip",true);
                 intent.putExtra("tripKey",tripDTO.getTripKey());
                 intent.putExtra("tripName",tripDTO.getName());
+                intent.putExtra("tripRepetition",tripDTO.getRepeated());
+                intent.putExtra("tripStartPoint",tripDTO.getTripStartPoint());
+                intent.putExtra("tripEndPoint",tripDTO.getTripEndPoint());
+                intent.putExtra("tripStartYear",tripDTO.getYear());
+                intent.putExtra("tripStartMonth",tripDTO.getMonth());
+                intent.putExtra("tripStartDay",tripDTO.getDayOfMonth());
+                intent.putExtra("tripStartHour",tripDTO.getHourOfDay());
+                intent.putExtra("tripStartMinute",tripDTO.getMinute());
+                intent.putExtra("startPlaceLatitude",tripDTO.getTrip_start_point_latitude());
+                intent.putExtra("startPlaceLongitude",tripDTO.getTrip_start_point_longitude());
+                intent.putExtra("endPlaceLatitude",tripDTO.getTrip_end_point_latitude());
+                intent.putExtra("endPlaceLongitude",tripDTO.getTrip_end_point_longitude());
+
+
+
+//                for(int i =0;i<tripDTO.getNotes().getNotes().size();i++){
+  //                  intent.putExtra("note"+i,tripDTO.getNotes().getNotes().get(i));
+    //            }
                 context.startActivity(intent);
             }
 
@@ -147,7 +165,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
 
     }
 
-    private void showDirection(TripDTO tripDTO)
+    public void showDirection(TripDTO tripDTO)
     {
         Intent mapIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://maps.google.com/maps?saddr=" + 29.392691 + "," + 30.828360 + "&daddr=" + 30.044420 + "," + 31.235712));
         mapIntent.setPackage("com.google.android.apps.maps");

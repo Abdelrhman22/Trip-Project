@@ -16,7 +16,9 @@ import eg.com.iti.triporganizer.screens.home.HomeContract;
 public class FirebaseTripsManager {
     HomeContract.HomePresenter homePresenter;
     AddTripContract.AddTripPresenter addTripPresenter;
+
     boolean edittrip = false;
+    boolean moveTrip=false;
     //firebase database
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -43,7 +45,7 @@ public class FirebaseTripsManager {
         mDatabaseReference.removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                if (!edittrip)
+                if (!edittrip&&!moveTrip)
                     homePresenter.notifyWithSuccessfulTripDeletion();
             }
         });
@@ -59,4 +61,17 @@ public class FirebaseTripsManager {
         }
     }
 
+    public void moveTripFromUpcomingToHistory(TripDTO tripDTO) {
+        moveTrip=true;
+        deleteTrip(tripDTO.getTripKey());
+        mDatabaseReference = mFirebaseDatabase.getReference("trips").child(currentUserUID).child("history");
+        String tripKey = tripDTO.getTripKey();
+        mDatabaseReference.child(tripKey).setValue(tripDTO,new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                homePresenter.showMap(tripDTO);
+            }
+        });
+    }
 }
+

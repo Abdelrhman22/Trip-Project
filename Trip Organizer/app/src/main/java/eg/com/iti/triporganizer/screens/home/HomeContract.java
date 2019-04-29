@@ -2,8 +2,6 @@ package eg.com.iti.triporganizer.screens.home;
 
 import com.google.firebase.database.DatabaseReference;
 
-import java.util.ArrayList;
-
 import eg.com.iti.triporganizer.model.TripDTO;
 
 public interface HomeContract {
@@ -13,6 +11,7 @@ public interface HomeContract {
 
         void respondToSuccessfulTripDeletion();
 
+        void notifyHomeToShowMap(TripDTO tripDTO);
     }
 
     interface HomePresenter {
@@ -25,5 +24,9 @@ public interface HomeContract {
         void deleteTrip(String tripKey);
 
         void notifyWithSuccessfulTripDeletion();
+
+        void moveTripFromUpcomingToHistory(TripDTO tripDTO);
+
+        void showMap(TripDTO tripDTO);
     }
 }

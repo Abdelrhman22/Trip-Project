@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:background="#25527B"
     tools:context=".screens.splash.SplashActivity">
+
     <ImageView
         android:id="@+id/logo"
-        android:src="@drawable/logo"
+        android:layout_width="233dp"
+        android:layout_height="229dp"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:src="@drawable/splash" />
 </RelativeLayout>

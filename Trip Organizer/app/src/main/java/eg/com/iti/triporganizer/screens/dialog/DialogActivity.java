@@ -55,16 +55,17 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
                     public void onClick(DialogInterface dialog, int which) {
                         player.stop();
                         player.release();
-//                        launchGoogleMap(tripDTO.getTrip_start_point_latitude(),tripDTO.getTrip_start_point_longitude(),
-//                                tripDTO.getTrip_end_point_latitude(),tripDTO.getTrip_end_point_longitude());
-                        launchGoogleMap(29.973137 ,31.017820 ,
-                                30.019712 ,31.210248);
+                        launchGoogleMap(tripDTO.getTrip_start_point_latitude(),tripDTO.getTrip_start_point_longitude(),
+                                tripDTO.getTrip_end_point_latitude(),tripDTO.getTrip_end_point_longitude());
+                        //launchGoogleMap(29.973137 ,31.017820 ,
+                   //             30.019712 ,31.210248);
                         //Start trip
                         dialogPrsenter.updateTripStatus(tripDTO);
 
                         //Call Method that starts widget service
                         //tripDTO.getNotes()
-                        finish();
+                        //finish();
+                        finishAffinity();
                     }
                 }).setNeutralButton("snooze", new DialogInterface.OnClickListener() {
             @Override
@@ -103,6 +104,7 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
         } else {
             Toast.makeText(getApplicationContext(), "Please install a maps application", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void runMediaPlayer()
@@ -112,4 +114,5 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
         player.setVolume(100.0f,100.0f);
         player.start();
     }
+
 }

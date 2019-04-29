@@ -48,9 +48,15 @@ public class HomePresenterImpl implements HomeContract.HomePresenter {
         homeView.respondToSuccessfulTripDeletion();
     }
 
+    @Override
+    public void moveTripFromUpcomingToHistory(TripDTO tripDTO) {
+        firebaseTripsManager.moveTripFromUpcomingToHistory(tripDTO);
+    }
 
-
-
+    @Override
+    public void showMap(TripDTO tripDTO) {
+        homeView.notifyHomeToShowMap(tripDTO);
+    }
 
 
 }

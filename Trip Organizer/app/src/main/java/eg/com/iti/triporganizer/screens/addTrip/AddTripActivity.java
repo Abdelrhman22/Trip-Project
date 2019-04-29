@@ -60,12 +60,13 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     boolean endPlaceSet = false;
 
 
+    Place startPlace;
     ArrayList<NoteDTO> notes;
     TripDTO userTrip;
     private static final String LOG = "log";
     static Boolean isTouched = false;
     static boolean rounded;
-    boolean editedTrip=false;
+    boolean editedTrip = false;
     String editedTripKey;
     FirebaseUser user;
     Notes userNotes;
@@ -111,14 +112,55 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         initComponents();
         initAutoComplete();
         addListeners();
-        Intent intent=getIntent();
-        if(intent!=null)
-            editedTripKey=intent.getStringExtra("tripKey");
-            editedTrip=intent.getBooleanExtra("editedTrip",false);
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra("editedTrip", false)) {
+            startPlaceSet = true;
+            endPlaceSet = true;
+            startDateSet=true;
+            startTimeSet=true;
+            editedTripKey = intent.getStringExtra("tripKey");
+            editedTrip = intent.getBooleanExtra("editedTrip", false);
             tripNameWrapper.getEditText().setText(intent.getStringExtra("tripName"));
+
+            //set start place and end place (if not edited)
+            startPlaceAutocompleteFragment.setText(intent.getStringExtra("tripStartPoint"));
+            endPlaceAutocompleteFragment.setText(intent.getStringExtra("tripEndPoint"));
+            placeStartName = intent.getStringExtra("tripStartPoint");
+            placeEndName = intent.getStringExtra("tripEndPoint");
+            endLat = intent.getDoubleExtra("endPlaceLatitude", 0);
+            endLng = intent.getDoubleExtra("endPlaceLongitude", 0);
+            startLat = intent.getDoubleExtra("startPlaceLatitude", 0);
+            startLng = intent.getDoubleExtra("startPlaceLongitude", 0);
+
+            //start time and date
+            startDateAndTime.set(Calendar.YEAR,Integer.parseInt(intent.getStringExtra("tripStartYear")));
+            startDateAndTime.set(Calendar.MONTH,Integer.parseInt(intent.getStringExtra("tripStartMonth"))-1);
+            startDateAndTime.set(Calendar.DAY_OF_MONTH,Integer.parseInt(intent.getStringExtra("tripStartDay")));
+            startDateAndTime.set(Calendar.HOUR_OF_DAY,Integer.parseInt(intent.getStringExtra("tripStartHour")));
+            startDateAndTime.set(Calendar.MINUTE,Integer.parseInt(intent.getStringExtra("tripStartMinute")));
+            startDateString = intent.getStringExtra("tripStartDay") + "-" + intent.getStringExtra("tripStartMonth") + "-" + intent.getStringExtra("tripStartYear");
+            startDateText.setText(startDateString);
+            startTimeString = intent.getStringExtra("tripStartHour") + " : " + intent.getStringExtra("tripStartMinute");
+            startTimeText.setText(startTimeString);
+
+            //set repetition
+            String editedTripRepetition = intent.getStringExtra("tripRepetition");
+            switch (editedTripRepetition) {
+                case "No Repeat":
+                    repetition.setSelection(0);
+                    break;
+                case "Repeat Daily":
+                    repetition.setSelection(1);
+                    break;
+                case "Repeat Weekly":
+                    repetition.setSelection(2);
+                    break;
+                case "Repeat Monthly":
+                    repetition.setSelection(3);
+                    break;
+            }
         }
-
-
+    }
 
     private void initComponents() {
         addTripBtn = findViewById(R.id.addTripBtn);
@@ -301,7 +343,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         addTripBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editedTrip)
+                if (editedTrip)
                     addTripPresenter.deleteTrip(editedTripKey);
                 createTrip();
             }
@@ -329,6 +371,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
+
                 startPlaceSet = true;
                 placeStartName = (String) place.getName();
                 startLng = place.getLatLng().longitude;
@@ -405,9 +448,9 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                 } else if (returnDateAndTime.before(startDateAndTime)) {
                     Toast.makeText(this, "you cannot return before going", Toast.LENGTH_SHORT).show();
                 } else {
-                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateAndTime.get(Calendar.YEAR), startDateAndTime.get(Calendar.MONTH), startDateAndTime.get(Calendar.DAY_OF_MONTH), startDateAndTime.get(Calendar.HOUR_OF_DAY), startDateAndTime.get(Calendar.MINUTE), repeated, "upcoming", userNotes, rounded);
+                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateAndTime.get(Calendar.YEAR), startDateAndTime.get(Calendar.MONTH)+1, startDateAndTime.get(Calendar.DAY_OF_MONTH), startDateAndTime.get(Calendar.HOUR_OF_DAY), startDateAndTime.get(Calendar.MINUTE), repeated, "upcoming", userNotes, rounded);
                     addTripPresenter.addTrip(userTrip, startDateAndTime);
-                    TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, returnDateAndTime.get(Calendar.YEAR), returnDateAndTime.get(Calendar.MONTH), returnDateAndTime.get(Calendar.DAY_OF_MONTH), returnDateAndTime.get(Calendar.HOUR_OF_DAY), returnDateAndTime.get(Calendar.MINUTE), repeated, "upcoming", userNotes, false);
+                    TripDTO backTrip = new TripDTO(currentUserUID, tripName, placeEndName, placeStartName, endLat, endLng, startLat, startLng, returnDateAndTime.get(Calendar.YEAR), returnDateAndTime.get(Calendar.MONTH)+1, returnDateAndTime.get(Calendar.DAY_OF_MONTH), returnDateAndTime.get(Calendar.HOUR_OF_DAY), returnDateAndTime.get(Calendar.MINUTE), repeated, "upcoming", userNotes, false);
                     addTripPresenter.addTrip(backTrip, returnDateAndTime);
                 }
             }
@@ -422,7 +465,7 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
                     Toast.makeText(this, "You cannot select passed time", Toast.LENGTH_SHORT).show();
                 } else {
                     TripTimeAndDateDTO timeAndDateObject = calenderObjectToTimeAndDateObjectConverter.getTimeAndDateObject(startDateAndTime);
-                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateAndTime.get(Calendar.YEAR), startDateAndTime.get(Calendar.MONTH), startDateAndTime.get(Calendar.DAY_OF_MONTH), startDateAndTime.get(Calendar.HOUR_OF_DAY), startDateAndTime.get(Calendar.MINUTE), repeated, "upcoming", userNotes, rounded);
+                    userTrip = new TripDTO(currentUserUID, tripName, placeStartName, placeEndName, startLat, startLng, endLat, endLng, startDateAndTime.get(Calendar.YEAR), startDateAndTime.get(Calendar.MONTH)+1, startDateAndTime.get(Calendar.DAY_OF_MONTH), startDateAndTime.get(Calendar.HOUR_OF_DAY), startDateAndTime.get(Calendar.MINUTE), repeated, "upcoming", userNotes, rounded);
                     Log.i("ss", "h" + timeAndDateObject);
                     addTripPresenter.addTrip(userTrip, startDateAndTime);
                 }

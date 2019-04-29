@@ -51,7 +51,8 @@
         <activity android:name=".screens.history.HistoryActivity" android:label="History"
             android:screenOrientation="portrait"/>
         <activity android:name=".screens.dialog.DialogActivity" android:launchMode="singleInstance"
-            android:theme="@style/Theme.Transparent" android:screenOrientation="portrait">
+            android:theme="@style/AppThemeup"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".screens.addTrip.AddTripActivity" android:screenOrientation="portrait"/> <!-- Arafa Start -->

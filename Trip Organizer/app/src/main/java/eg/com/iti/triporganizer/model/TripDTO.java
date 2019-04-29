@@ -9,7 +9,6 @@ public class TripDTO implements Serializable {
 
     private String name;
 
-
     private String tripKey;
 
     private String tripStartPoint;
@@ -34,7 +33,6 @@ public class TripDTO implements Serializable {
 
     private String minute;
 
-
     private boolean rounded;
 
     private String repeated;
@@ -44,11 +42,6 @@ public class TripDTO implements Serializable {
     private Notes notes;
 
     private String userId;
-
-
-    public String getTripStatus() {
-        return tripStatus;
-    }
 
     public TripDTO() {
     }
@@ -76,143 +69,144 @@ public class TripDTO implements Serializable {
         this.rounded = rounded;
     }
 
-
     public String getName() {
         return name;
-    }
-
-    public String getTripKey() {
-        return tripKey;
-    }
-
-
-    public String getTripStartPoint() {
-        return tripStartPoint;
-    }
-
-    public String getTripEndPoint() {
-        return tripEndPoint;
-    }
-
-    public Double getTrip_start_point_longitude() {
-        return tripStartPointLongitude;
-    }
-
-    public Double getTrip_start_point_latitude() {
-        return tripStartPointLatitude;
-    }
-
-    public Double getTrip_end_point_longitude() {
-        return tripEndPointLongitude;
-    }
-
-    public Double getTrip_end_point_latitude() {
-        return tripEndPointLatitude;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public String getMonth() {
-        return month;
-    }
-
-    public String getDayOfMonth() {
-        return dayOfMonth;
-    }
-
-    public String getHourOfDay() {
-        return hourOfDay;
-    }
-
-    public String getMinute() {
-        return minute;
-    }
-
-    public boolean getRoundStatus() {
-        return rounded;
-    }
-
-    public Notes getNotes() {
-        return notes;
-    }
-
-
-    public String getRepeated() {
-        return repeated;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setNotes(Notes notes) {
-        this.notes = notes;
-    }
-
-    public void setRoundStatus(boolean rounded) {
-        this.rounded = rounded;
-    }
-
-    public void setTripStatus(String tripStatus) {
-        this.tripStatus = tripStatus;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getTripKey() {
+        return tripKey;
+    }
+
     public void setTripKey(String tripKey) {
         this.tripKey = tripKey;
+    }
+
+    public String getTripStartPoint() {
+        return tripStartPoint;
     }
 
     public void setTripStartPoint(String tripStartPoint) {
         this.tripStartPoint = tripStartPoint;
     }
 
+    public String getTripEndPoint() {
+        return tripEndPoint;
+    }
+
     public void setTripEndPoint(String tripEndPoint) {
         this.tripEndPoint = tripEndPoint;
+    }
+
+    public Double getTripStartPointLongitude() {
+        return tripStartPointLongitude;
     }
 
     public void setTripStartPointLongitude(Double tripStartPointLongitude) {
         this.tripStartPointLongitude = tripStartPointLongitude;
     }
 
+    public Double getTripStartPointLatitude() {
+        return tripStartPointLatitude;
+    }
+
     public void setTripStartPointLatitude(Double tripStartPointLatitude) {
         this.tripStartPointLatitude = tripStartPointLatitude;
+    }
+
+    public Double getTripEndPointLongitude() {
+        return tripEndPointLongitude;
     }
 
     public void setTripEndPointLongitude(Double tripEndPointLongitude) {
         this.tripEndPointLongitude = tripEndPointLongitude;
     }
 
+    public Double getTripEndPointLatitude() {
+        return tripEndPointLatitude;
+    }
+
     public void setTripEndPointLatitude(Double tripEndPointLatitude) {
         this.tripEndPointLatitude = tripEndPointLatitude;
+    }
+
+    public String getYear() {
+        return year;
     }
 
     public void setYear(String year) {
         this.year = year;
     }
 
+    public String getMonth() {
+        return month;
+    }
+
     public void setMonth(String month) {
         this.month = month;
+    }
+
+    public String getDayOfMonth() {
+        return dayOfMonth;
     }
 
     public void setDayOfMonth(String dayOfMonth) {
         this.dayOfMonth = dayOfMonth;
     }
 
+    public String getHourOfDay() {
+        return hourOfDay;
+    }
+
     public void setHourOfDay(String hourOfDay) {
         this.hourOfDay = hourOfDay;
+    }
+
+    public String getMinute() {
+        return minute;
     }
 
     public void setMinute(String minute) {
         this.minute = minute;
     }
 
+    public boolean isRounded() {
+        return rounded;
+    }
+
+    public void setRounded(boolean rounded) {
+        this.rounded = rounded;
+    }
+
+    public String getRepeated() {
+        return repeated;
+    }
+
     public void setRepeated(String repeated) {
         this.repeated = repeated;
+    }
+
+    public String getTripStatus() {
+        return tripStatus;
+    }
+
+    public void setTripStatus(String tripStatus) {
+        this.tripStatus = tripStatus;
+    }
+
+    public Notes getNotes() {
+        return notes;
+    }
+
+    public void setNotes(Notes notes) {
+        this.notes = notes;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public void setUserId(String userId) {

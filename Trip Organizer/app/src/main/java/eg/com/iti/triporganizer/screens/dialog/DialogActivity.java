@@ -41,7 +41,7 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
             {
 
                 tripName = tripDTO.getName();
-                Log.i("lat",""+tripDTO.getTrip_start_point_latitude());
+                Log.i("lat",""+tripDTO.getTripStartPointLatitude());
             }
            else
                tripName="empty";

@@ -1,8 +1,8 @@
 package eg.com.iti.triporganizer.screens.mapHistory;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,13 +15,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import org.json.JSONObject;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +38,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
     List<TripDTO> tripDTOArrayList;
-
+    List<TripDTO> receivedTrip;
+    //firebase database
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+    private FirebaseAuth firebaseAuth;
     LatLng startPoint;
     LatLng endPoint;
     String userId;
@@ -47,6 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        tripDTOArrayList=new ArrayList<>();
+        receivedTrip=new ArrayList<>();
         mapsPresenter=new MapsPresenterImpl(MapsActivity.this);
         Intent intent = getIntent();
         if(intent!=null)
@@ -58,6 +64,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         {
             Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
         }
+        firebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference("trips").child(userId).child("history");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -67,61 +76,65 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshotItr : dataSnapshot.getChildren()) {
+                    TripDTO trip = dataSnapshotItr.getValue(TripDTO.class);
+                    tripDTOArrayList.add(trip);
+                }
+                receivedTrip=tripDTOArrayList;
+                Toast.makeText(MapsActivity.this, "size= "+receivedTrip.size(), Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < receivedTrip.size(); i++) {
+
+                    ///LatLng startPoint=new LatLng(tripDTOArrayList.get(i).getTrip_start_point_latitude(),tripDTOArrayList.get(i).getTrip_start_point_longitude());
+                    //LatLng endPoint  =new LatLng(tripDTOArrayList.get(i).getTrip_end_point_latitude(),tripDTOArrayList.get(i).getTrip_end_point_longitude());
+                    startPoint=new LatLng(receivedTrip.get(i).getTripStartPointLatitude(),receivedTrip.get(i).getTripStartPointLongitude());
+                    endPoint  =new LatLng(receivedTrip.get(i).getTripEndPointLatitude(),receivedTrip.get(i).getTripEndPointLongitude());
+
+                    MarkerPoints.clear();
+                    mMap.addMarker(new MarkerOptions().position(startPoint).title("Start Point")
+                            .icon(BitmapDescriptorFactory
+                                    .defaultMarker(markerColor[i])));
+                    MarkerPoints.add(startPoint);
+                    MarkerPoints.add(endPoint);
+
+                    // Creating MarkerOptions
+                    MarkerOptions options = new MarkerOptions();
+                    // Setting the position of the marker
+                    options.position(endPoint);
+                    if (MarkerPoints.size() == 1) {
+                        options.icon(BitmapDescriptorFactory.defaultMarker(markerColor[i]));
+                    } else if (MarkerPoints.size() == 2) {
+                        options.icon(BitmapDescriptorFactory.defaultMarker(markerColor[i]));
+                    }
+                    mMap.addMarker(options);
+                    // Checks, whether start and end locations are captured
+                    if (MarkerPoints.size() >= 2) {
+                        LatLng origin = MarkerPoints.get(0);
+                        LatLng dest = MarkerPoints.get(1);
+
+                        // Getting URL to the Google Directions API
+                        String url = mapsPresenter.getRequestedUrl(origin, dest);
+                        Log.d("onMapClick", url);
+                        ReadTask  readTask = new ReadTask ();
+
+                        // Start downloading json data from Google Directions API
+                        readTask.execute(url);
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
+                        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         // PrefManager prefManager;
         // prefManager=new PrefManager(getContext());
         // tripDTOArrayList= MyAppDB.getAppDatabase(getContext()).tripDao().getAllTrips("started", prefManager.getUserId());
-
-        for (int i = 0; i < 3; i++) {
-            ///LatLng startPoint=new LatLng(tripDTOArrayList.get(i).getTrip_start_point_latitude(),tripDTOArrayList.get(i).getTrip_start_point_longitude());
-            //LatLng endPoint  =new LatLng(tripDTOArrayList.get(i).getTrip_end_point_latitude(),tripDTOArrayList.get(i).getTrip_end_point_longitude());
-            if(i==0)
-            {
-                startPoint=new LatLng(29.392691,30.828360); //fayoum
-                endPoint  =new LatLng(30.044420,31.235712); // cairo
-            }
-            else if(i==1)
-            {
-                startPoint=new LatLng(24.088938,32.899830); //Aswan
-                endPoint  =new LatLng(30.013056,31.208853); // Giza
-            }
-            else
-            {
-                startPoint=new LatLng(29.845400,31.337151);  // helwan
-                endPoint  =new LatLng(31.200092,29.918739);  // Alex
-            }
-            MarkerPoints.clear();
-            mMap.addMarker(new MarkerOptions().position(startPoint).title("Start Point")
-                    .icon(BitmapDescriptorFactory
-                            .defaultMarker(markerColor[i])));
-            MarkerPoints.add(startPoint);
-            MarkerPoints.add(endPoint);
-
-            // Creating MarkerOptions
-            MarkerOptions options = new MarkerOptions();
-            // Setting the position of the marker
-            options.position(endPoint);
-            if (MarkerPoints.size() == 1) {
-                options.icon(BitmapDescriptorFactory.defaultMarker(markerColor[i]));
-            } else if (MarkerPoints.size() == 2) {
-                options.icon(BitmapDescriptorFactory.defaultMarker(markerColor[i]));
-            }
-            mMap.addMarker(options);
-            // Checks, whether start and end locations are captured
-            if (MarkerPoints.size() >= 2) {
-                LatLng origin = MarkerPoints.get(0);
-                LatLng dest = MarkerPoints.get(1);
-
-                // Getting URL to the Google Directions API
-                String url = mapsPresenter.getRequestedUrl(origin, dest);
-                Log.d("onMapClick", url);
-                ReadTask  readTask = new ReadTask ();
-
-                // Start downloading json data from Google Directions API
-                readTask.execute(url);
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-            }
-        }
 
     }
 
@@ -203,7 +216,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (polylineOptions != null) {
                 mMap.addPolyline(polylineOptions);
             } else
-                {
+            {
             }
         }
     }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -60,10 +58,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
     boolean endPlaceSet = false;
 
 
-    Place startPlace;
     ArrayList<NoteDTO> notes;
     TripDTO userTrip;
-    private static final String LOG = "log";
     static Boolean isTouched = false;
     static boolean rounded;
     boolean editedTrip = false;
@@ -116,8 +112,8 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
         if (intent.getBooleanExtra("editedTrip", false)) {
             startPlaceSet = true;
             endPlaceSet = true;
-            startDateSet=true;
-            startTimeSet=true;
+            startDateSet = true;
+            startTimeSet = true;
             editedTripKey = intent.getStringExtra("tripKey");
             editedTrip = intent.getBooleanExtra("editedTrip", false);
             tripNameWrapper.getEditText().setText(intent.getStringExtra("tripName"));
@@ -132,16 +128,32 @@ public class AddTripActivity extends AppCompatActivity implements AddTripContrac
             startLat = intent.getDoubleExtra("startPlaceLatitude", 0);
             startLng = intent.getDoubleExtra("startPlaceLongitude", 0);
 
-            //start time and date
-            startDateAndTime.set(Calendar.YEAR,Integer.parseInt(intent.getStringExtra("tripStartYear")));
-            startDateAndTime.set(Calendar.MONTH,Integer.parseInt(intent.getStringExtra("tripStartMonth"))-1);
-            startDateAndTime.set(Calendar.DAY_OF_MONTH,Integer.parseInt(intent.getStringExtra("tripStartDay")));
-            startDateAndTime.set(Calendar.HOUR_OF_DAY,Integer.parseInt(intent.getStringExtra("tripStartHour")));
-            startDateAndTime.set(Calendar.MINUTE,Integer.parseInt(intent.getStringExtra("tripStartMinute")));
+            //start time and date(if not edited)
+            startDateAndTime.set(Calendar.YEAR, Integer.parseInt(intent.getStringExtra("tripStartYear")));
+            startDateAndTime.set(Calendar.MONTH, Integer.parseInt(intent.getStringExtra("tripStartMonth")) - 1);
+            startDateAndTime.set(Calendar.DAY_OF_MONTH, Integer.parseInt(intent.getStringExtra("tripStartDay")));
+            startDateAndTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(intent.getStringExtra("tripStartHour")));
+            startDateAndTime.set(Calendar.MINUTE, Integer.parseInt(intent.getStringExtra("tripStartMinute")));
             startDateString = intent.getStringExtra("tripStartDay") + "-" + intent.getStringExtra("tripStartMonth") + "-" + intent.getStringExtra("tripStartYear");
             startDateText.setText(startDateString);
             startTimeString = intent.getStringExtra("tripStartHour") + " : " + intent.getStringExtra("tripStartMinute");
             startTimeText.setText(startTimeString);
+
+            //adding the notes
+            if(intent.getBooleanExtra("hasNotes",true)) {
+                int notesNum = intent.getIntExtra("notesNum", 0);
+                for (int i = 0; i < notesNum; i++) {
+                    String noteContent = intent.getStringExtra("note" + i);
+                    boolean isNoteDone = intent.getBooleanExtra("done" + i, false);
+                    if (notesRecyclerView.getVisibility() == View.GONE)
+                        notesRecyclerView.setVisibility(View.VISIBLE);
+                    if (!noteContent.equals("")) {
+                        NoteDTO note = new NoteDTO(isNoteDone, noteContent);
+                        notes.add(note);
+                        rawNotesAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
 
             //set repetition
             String editedTripRepetition = intent.getStringExtra("tripRepetition");

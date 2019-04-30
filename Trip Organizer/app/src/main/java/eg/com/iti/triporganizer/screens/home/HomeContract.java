@@ -12,6 +12,8 @@ public interface HomeContract {
         void respondToSuccessfulTripDeletion();
 
         void notifyHomeToShowMap(TripDTO tripDTO);
+
+        void showNotesDialog(TripDTO tripDTO);
     }
 
     interface HomePresenter {
@@ -28,5 +30,7 @@ public interface HomeContract {
         void moveTripFromUpcomingToHistory(TripDTO tripDTO);
 
         void showMap(TripDTO tripDTO);
+
+        void notifyViewToShowNotesDialog(TripDTO tripDTO);
     }
 }

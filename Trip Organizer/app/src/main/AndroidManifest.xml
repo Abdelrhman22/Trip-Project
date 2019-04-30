@@ -46,7 +46,7 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".screens.home.HomeActivity"
-            android:label="@string/title_activity_home"
+            android:label="Road trip"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".screens.history.HistoryActivity" android:label="History"
             android:screenOrientation="portrait"/>

@@ -1,5 +1,7 @@
 package eg.com.iti.triporganizer.screens.home;
 
+import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -141,20 +143,7 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -199,6 +188,12 @@ public class HomeActivity extends AppCompatActivity
         startActivity(getIntent());
         upComingTripAdapter.showDirection(tripDTO);
 
+    }
+
+    @Override
+    public void showNotesDialog(TripDTO tripDTO) {
+        NotesFragment dialogFragment = new NotesFragment(tripDTO.getNotes().getNotes());
+        dialogFragment.show(getSupportFragmentManager(), "dialog");
     }
 
 

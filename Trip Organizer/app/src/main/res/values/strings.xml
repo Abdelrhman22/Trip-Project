@@ -47,6 +47,8 @@
     <string name="delete_trip">Delete Trip</string>
     <string name="start_trip">Start Trip</string>
     <string name="delete">Are you sure to delete this trip ?</string>
+    <string name="Notes">Notes</string>
+    <string name="checkbox">CheckBox</string>
 
     <!-- Mai End ********************************** -->
     <!-- Salma Start -->

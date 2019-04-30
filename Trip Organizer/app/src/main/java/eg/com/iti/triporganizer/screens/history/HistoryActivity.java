@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.TripDTO;
+import eg.com.iti.triporganizer.screens.home.NotesFragment;
 
 public class HistoryActivity extends AppCompatActivity implements HistoryContract.HistoryView {
     private FirebaseAuth mAuth;
@@ -67,5 +68,11 @@ public class HistoryActivity extends AppCompatActivity implements HistoryContrac
         historyTripsRecyclerView =findViewById(R.id.oldTripsListRecyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
         historyTripsRecyclerView.setLayoutManager(linearLayoutManager);
+    }
+
+    @Override
+    public void showNotesDialog(TripDTO tripDTO) {
+        NotesFragment dialogFragment = new NotesFragment(tripDTO.getNotes().getNotes());
+        dialogFragment.show(getSupportFragmentManager(), "dialog");
     }
 }

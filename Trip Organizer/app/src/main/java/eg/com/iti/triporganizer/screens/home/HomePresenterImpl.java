@@ -58,6 +58,11 @@ public class HomePresenterImpl implements HomeContract.HomePresenter {
         homeView.notifyHomeToShowMap(tripDTO);
     }
 
+    @Override
+    public void notifyViewToShowNotesDialog(TripDTO tripDTO) {
+        homeView.showNotesDialog(tripDTO);
+    }
+
 
 }
 

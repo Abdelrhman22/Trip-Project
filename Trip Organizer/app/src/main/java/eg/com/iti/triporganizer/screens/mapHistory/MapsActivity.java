@@ -58,11 +58,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(intent!=null)
         {
             userId=intent.getStringExtra(KeyTags.UUIDKey); // get UUID from Homw Page
-            Toast.makeText(this, ""+userId, Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
         }
         firebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -84,11 +79,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     tripDTOArrayList.add(trip);
                 }
                 receivedTrip=tripDTOArrayList;
-                Toast.makeText(MapsActivity.this, "size= "+receivedTrip.size(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MapsActivity.this, "size= "+receivedTrip.size(), Toast.LENGTH_SHORT).show();
                 for (int i = 0; i < receivedTrip.size(); i++) {
 
-                    ///LatLng startPoint=new LatLng(tripDTOArrayList.get(i).getTrip_start_point_latitude(),tripDTOArrayList.get(i).getTrip_start_point_longitude());
-                    //LatLng endPoint  =new LatLng(tripDTOArrayList.get(i).getTrip_end_point_latitude(),tripDTOArrayList.get(i).getTrip_end_point_longitude());
+
                     startPoint=new LatLng(receivedTrip.get(i).getTripStartPointLatitude(),receivedTrip.get(i).getTripStartPointLongitude());
                     endPoint  =new LatLng(receivedTrip.get(i).getTripEndPointLatitude(),receivedTrip.get(i).getTripEndPointLongitude());
 

@@ -48,10 +48,11 @@
             android:name=".screens.home.HomeActivity"
             android:label="Road trip"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screens.history.HistoryActivity" android:label="History"
+        <activity android:name=".screens.history.HistoryActivity" android:label="History" android:parentActivityName=".screens.home.HomeActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".screens.dialog.DialogActivity" android:launchMode="singleInstance"
-            android:theme="@style/AppThemeup"
+        <activity android:name=".screens.dialog.DialogActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.Transparent"
             android:screenOrientation="portrait">
 
         </activity>

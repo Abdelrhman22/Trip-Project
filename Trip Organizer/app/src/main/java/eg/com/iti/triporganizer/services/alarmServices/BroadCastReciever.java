@@ -22,21 +22,26 @@ public class BroadCastReciever extends BroadcastReceiver {
 
         if (intent != null)
         {
-            TripDTO tripDTO = (TripDTO) intent.getSerializableExtra(KeyTags.tripKey);
-            if(tripDTO !=null)
-            {
+            // get Trip Data From Alarm
+            String key=intent.getStringExtra(KeyTags.tripKey);
+            String name=intent.getStringExtra(KeyTags.tripName);
+            String userID=intent.getStringExtra(KeyTags.tripUserId);
+            double startLat =intent.getDoubleExtra(KeyTags.tripStartLat,0.0);
+            double startLong =intent.getDoubleExtra(KeyTags.tripStartLong,0.0);
+            double endLat =intent.getDoubleExtra(KeyTags.tripEndLat,0.0);
+            double endLon =intent.getDoubleExtra(KeyTags.tripEndLong,0.0);
+            // Launching DialogActivity with TripData
                 Intent outgoingIntent = new Intent(context, DialogActivity.class);
-                outgoingIntent.putExtra(KeyTags.tripKey,tripDTO);
+                outgoingIntent.putExtra(KeyTags.tripKey,key);
+                outgoingIntent.putExtra(KeyTags.tripName,name);
+                outgoingIntent.putExtra(KeyTags.tripUserId,userID);
+                outgoingIntent.putExtra(KeyTags.tripStartLat,startLat);
+                outgoingIntent.putExtra(KeyTags.tripStartLong,startLong);
+                outgoingIntent.putExtra(KeyTags.tripEndLat,endLat);
+                outgoingIntent.putExtra(KeyTags.tripEndLong,endLon);
+
                 outgoingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(outgoingIntent);
-            }
-           else {
-                Log.i("mytag","BroadCastReciever trip is null");
-                Intent outgoingIntent = new Intent(context, DialogActivity.class);
-                outgoingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(outgoingIntent);
-                Log.i("mytag","after launch intent");
-            }
         }
         else
         {

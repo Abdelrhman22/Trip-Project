@@ -20,8 +20,13 @@ public class AlarmHelper {
         TripDTO receivedTrip = tripDTO;
         Intent serviceIntent = new Intent(context, BroadCastReciever.class);
         serviceIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        serviceIntent.putExtra(KeyTags.tripKey,receivedTrip);
-        Log.i("mytag","AlarmHelper "+tripDTO.getName());
+        serviceIntent.putExtra(KeyTags.tripKey,tripDTO.getTripKey());    // tripKey
+        serviceIntent.putExtra(KeyTags.tripName,tripDTO.getName());     // tripName
+        serviceIntent.putExtra(KeyTags.tripUserId,tripDTO.getUserId()); // tripUserId
+        serviceIntent.putExtra(KeyTags.tripStartLat,tripDTO.getTripStartPointLatitude());   // tripStartLat
+        serviceIntent.putExtra(KeyTags.tripStartLong,tripDTO.getTripStartPointLongitude());  // tripStartLong
+        serviceIntent.putExtra(KeyTags.tripEndLat,tripDTO.getTripEndPointLatitude());        // tripEndLat
+        serviceIntent.putExtra(KeyTags.tripEndLong,tripDTO.getTripEndPointLongitude());  // tripEndLong
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         pendingIntent = PendingIntent.getBroadcast(context, 1, serviceIntent, 0);
 

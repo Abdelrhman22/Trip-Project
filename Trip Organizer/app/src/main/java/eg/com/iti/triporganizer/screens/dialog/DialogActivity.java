@@ -1,6 +1,5 @@
 package eg.com.iti.triporganizer.screens.dialog;
 
-import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -20,13 +19,14 @@ import eg.com.iti.triporganizer.utils.KeyTags;
 
 import static eg.com.iti.triporganizer.services.alarmServices.AlarmHelper.stopAlarmService;
 
-public class DialogActivity extends AppCompatActivity implements DialogActivityContract.DialogView {
+public class DialogActivity extends AppCompatActivity implements DialogContract.DialogView {
 
-    DialogActivityContract.DialogPrsenter dialogPrsenter;
+    DialogContract.DialogPrsenter dialogPrsenter;
     private AlertDialog.Builder alertBuilder;
     private MediaPlayer player;
-    TripDTO tripDTO;
-    String tripName;
+    TripDTO receivedTrip=new TripDTO();
+    String key, name , userID;
+    double startLat,startLong,endLat,endLon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,34 +34,29 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
         dialogPrsenter=new DialogPresenterImpl(this);
         runMediaPlayer();
         setFinishOnTouchOutside(false);
-        if(getIntent()!=null)
+        Intent intent=getIntent();
+        if(intent!=null)
         {
-            tripDTO=(TripDTO) getIntent().getSerializableExtra(KeyTags.tripKey);
-            if(tripDTO!=null)
-            {
-
-                tripName = tripDTO.getName();
-                Log.i("lat",""+tripDTO.getTripStartPointLatitude());
-            }
-           else
-               tripName="empty";
+             key=intent.getStringExtra(KeyTags.tripKey);
+             name=intent.getStringExtra(KeyTags.tripName);
+             userID=intent.getStringExtra(KeyTags.tripUserId);
+             startLat =intent.getDoubleExtra(KeyTags.tripStartLat,0.0);
+             startLong =intent.getDoubleExtra(KeyTags.tripStartLong,0.0);
+             endLat =intent.getDoubleExtra(KeyTags.tripEndLat,0.0);
+             endLon =intent.getDoubleExtra(KeyTags.tripEndLong,0.0);
+            dialogPrsenter.getTripByKey(key,userID);
         }
 
         alertBuilder=new AlertDialog.Builder(this);
-        alertBuilder.setTitle("Trip "+tripName)
+        alertBuilder.setTitle("Trip "+name)
                 .setMessage("Do yo want to Start ?")
                 .setPositiveButton("start",new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         player.stop();
                         player.release();
-                        launchGoogleMap(tripDTO.getTripStartPointLatitude(),tripDTO.getTripStartPointLongitude(),
-                                tripDTO.getTripEndPointLatitude(),tripDTO.getTripEndPointLongitude());
-                        //launchGoogleMap(29.973137 ,31.017820 ,
-                   //             30.019712 ,31.210248);
-                        //Start trip
-                        dialogPrsenter.updateTripStatus(tripDTO);
-
+                        launchGoogleMap(startLat,startLong,endLat,endLon);
+                        dialogPrsenter.moveTripFromUpcomingToHistory(receivedTrip);
                         //Call Method that starts widget service
                         //tripDTO.getNotes()
                         //finish();
@@ -94,7 +89,7 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
 
     }
 
-    private void launchGoogleMap(Double trip_start_point_latitude, Double trip_start_point_longitude, Double trip_end_point_latitude, Double trip_end_point_longitude)
+    private void launchGoogleMap(double trip_start_point_latitude, double trip_start_point_longitude, double trip_end_point_latitude, double trip_end_point_longitude)
     {
         Intent mapIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://maps.google.com/maps?saddr=" + trip_start_point_latitude + "," + trip_start_point_longitude + "&daddr=" + trip_end_point_latitude + "," + trip_end_point_longitude));
         mapIntent.setPackage("com.google.android.apps.maps");
@@ -115,4 +110,9 @@ public class DialogActivity extends AppCompatActivity implements DialogActivityC
         player.start();
     }
 
+    @Override
+    public void getTripData(TripDTO tripDTO) {
+        receivedTrip=tripDTO;
+        Log.i("tripValue","received"+receivedTrip.getName());
+    }
 }

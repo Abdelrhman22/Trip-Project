@@ -10,18 +10,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import eg.com.iti.triporganizer.Network.NetworkServices.FirebaseTripsManager;
 import eg.com.iti.triporganizer.model.TripDTO;
 
-public class DialogPresenterImpl implements DialogContract.DialogPrsenter {
-    DialogContract.DialogView view;
+public class DialogPresenterImpl implements DialogContract.DialogPresenter {
+    DialogContract.DialogView dialogView;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth firebaseAuth;
-    FireBaseManager fireBaseManager;
-    DialogPresenterImpl(DialogContract.DialogView view)
+    FirebaseTripsManager firebaseTripsManager;
+    DialogPresenterImpl(DialogContract.DialogView dialogView)
     {
-        this.view=view;
-        fireBaseManager=new FireBaseManager(this);
+        this.dialogView=dialogView;
+        firebaseTripsManager=new FirebaseTripsManager(this);
     }
 
 
@@ -39,7 +40,7 @@ public class DialogPresenterImpl implements DialogContract.DialogPrsenter {
                     if(trip.getKey().equals(tripKey))
                     {
                         TripDTO tripDTO=trip.getValue(TripDTO.class);
-                        view.getTripData(tripDTO);
+                        dialogView.getTripData(tripDTO);
                     }
                 }
             }
@@ -53,7 +54,7 @@ public class DialogPresenterImpl implements DialogContract.DialogPrsenter {
     }
     @Override
     public void moveTripFromUpcomingToHistory(TripDTO tripDTO) {
-        fireBaseManager.moveTripFromUpcomingToHistory(tripDTO);
+        firebaseTripsManager.moveTripFromUpcomingToHistory(tripDTO);
     }
 
     @Override
@@ -61,13 +62,16 @@ public class DialogPresenterImpl implements DialogContract.DialogPrsenter {
         Log.i("mymessage","Trip has updated");
     }
 
+
     @Override
     public void startTrip(TripDTO tripDTO) {
-        view.startFloatingWidgetService();
+        dialogView.startFloatingWidgetService();
     }
 
     @Override
     public void canCelTrip(TripDTO tripDTO) {
-        fireBaseManager.deleteTrip(tripDTO.getTripKey(),tripDTO.getUserId());
+        firebaseTripsManager.deleteTrip(tripDTO.getTripKey());
     }
+
+
 }

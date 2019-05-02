@@ -9,7 +9,7 @@ public interface DialogContract
           void getTripData(TripDTO tripDTO);
           void startFloatingWidgetService();
     }
-    interface DialogPrsenter
+    interface DialogPresenter
     {
        public void getTripByKey(String key, String UserId);
         void moveTripFromUpcomingToHistory(TripDTO tripDTO);

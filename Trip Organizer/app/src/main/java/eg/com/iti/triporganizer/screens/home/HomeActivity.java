@@ -1,22 +1,21 @@
 package eg.com.iti.triporganizer.screens.home;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
-import android.support.v4.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -41,6 +40,7 @@ import eg.com.iti.triporganizer.utils.KeyTags;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HomeContract.HomeView {
+
     private FirebaseAuth mAuth;
     FirebaseUser currentUser;
     String userID;
@@ -48,8 +48,8 @@ public class HomeActivity extends AppCompatActivity
     UpComingTripAdapter upComingTripAdapter;
     DatabaseReference databaseReference;
     ArrayList<TripDTO> upcomingTripsList;
-    TextView userName,userEmail;
-    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION=2005;
+    TextView userName, userEmail;
+    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2005;
     //--------------------------------------------------------------
     Toolbar toolbar;
     FloatingActionButton fab;
@@ -62,6 +62,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
 
@@ -76,6 +77,7 @@ public class HomeActivity extends AppCompatActivity
         initializeComponents();
         addingListeners();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
@@ -87,6 +89,7 @@ public class HomeActivity extends AppCompatActivity
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
     private void initializeComponents() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -102,10 +105,10 @@ public class HomeActivity extends AppCompatActivity
         linearLayoutManager = new LinearLayoutManager(this);
         upcomingTripsRecyclerView.setLayoutManager(linearLayoutManager);
         currentUser = mAuth.getCurrentUser();
-        userName=navigationView.getHeaderView(0).findViewById(R.id.userName);
-        userEmail=navigationView.getHeaderView(0).findViewById(R.id.userEmail);
+        userName = navigationView.getHeaderView(0).findViewById(R.id.userName);
+        userEmail = navigationView.getHeaderView(0).findViewById(R.id.userEmail);
         userID = currentUser.getUid();
-        Log.i("name",currentUser.getDisplayName());
+        Log.i("name", currentUser.getDisplayName());
         userName.setText(currentUser.getDisplayName());
         userEmail.setText(currentUser.getEmail());
 
@@ -163,7 +166,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -197,7 +199,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void respondToSuccessfulTripDeletion() {
         Toast.makeText(this, "Trip deleted successfully", Toast.LENGTH_LONG).show();
-       // upComingTripAdapter.notifyDataSetChanged();
+        // upComingTripAdapter.notifyDataSetChanged();
         finish();
         startActivity(getIntent());
     }
@@ -211,8 +213,13 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void showNotesDialog(TripDTO tripDTO) {
-        NotesFragment dialogFragment = new NotesFragment(tripDTO.getNotes().getNotes());
-        dialogFragment.show(getSupportFragmentManager(), "dialog");
+
+       FragmentTransaction ft = getFragmentManager().beginTransaction();
+        NotesCustomDialogFragments notesCustomDialogFragments = new NotesCustomDialogFragments();
+        notesCustomDialogFragments.setNotes(tripDTO.getNotes().getNotes());
+        ft.add(R.id.dialogFragment, notesCustomDialogFragments);
+        ft.commit();
+
     }
 
 

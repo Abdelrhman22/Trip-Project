@@ -1,5 +1,6 @@
 package eg.com.iti.triporganizer.screens.history;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.TripDTO;
-import eg.com.iti.triporganizer.screens.home.NotesFragment;
+import eg.com.iti.triporganizer.screens.home.NotesCustomDialogFragments;
 
 public class HistoryActivity extends AppCompatActivity implements HistoryContract.HistoryView {
     private FirebaseAuth mAuth;
@@ -72,7 +73,10 @@ public class HistoryActivity extends AppCompatActivity implements HistoryContrac
 
     @Override
     public void showNotesDialog(TripDTO tripDTO) {
-        NotesFragment dialogFragment = new NotesFragment(tripDTO.getNotes().getNotes());
-        dialogFragment.show(getSupportFragmentManager(), "dialog");
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        NotesCustomDialogFragments notesCustomDialogFragments = new NotesCustomDialogFragments();
+        notesCustomDialogFragments.setNotes(tripDTO.getNotes().getNotes());
+        ft.add(R.id.contentHolderHistory, notesCustomDialogFragments);
+        ft.commit();
     }
 }

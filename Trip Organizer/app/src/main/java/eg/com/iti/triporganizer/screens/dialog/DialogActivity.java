@@ -15,6 +15,7 @@ import android.widget.Toast;
 import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.Notes;
 import eg.com.iti.triporganizer.model.TripDTO;
+import eg.com.iti.triporganizer.screens.home.UpComingTripAdapter;
 import eg.com.iti.triporganizer.services.alarmServices.NotificationHelper;
 import eg.com.iti.triporganizer.services.floatingWidget.FloatingIconService;
 import eg.com.iti.triporganizer.utils.KeyTags;
@@ -23,17 +24,18 @@ import static eg.com.iti.triporganizer.services.alarmServices.AlarmHelper.stopAl
 
 public class DialogActivity extends AppCompatActivity implements DialogContract.DialogView {
 
-    DialogContract.DialogPrsenter dialogPrsenter;
+    DialogContract.DialogPresenter dialogPresenter;
     private AlertDialog.Builder alertBuilder;
     private MediaPlayer player;
     TripDTO receivedTrip=new TripDTO();
+    UpComingTripAdapter upComingTripAdapter;
     String key, name , userID;
     double startLat,startLong,endLat,endLon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog);
-        dialogPrsenter=new DialogPresenterImpl(this);
+        dialogPresenter =new DialogPresenterImpl(this);
         runMediaPlayer();
         setFinishOnTouchOutside(false);
         Intent intent=getIntent();
@@ -46,7 +48,7 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
              startLong =intent.getDoubleExtra(KeyTags.tripStartLong,0.0);
              endLat =intent.getDoubleExtra(KeyTags.tripEndLat,0.0);
              endLon =intent.getDoubleExtra(KeyTags.tripEndLong,0.0);
-            dialogPrsenter.getTripByKey(key,userID);
+            dialogPresenter.getTripByKey(key,userID);
         }
 
         alertBuilder=new AlertDialog.Builder(this);
@@ -58,8 +60,8 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
                         player.stop();
                         player.release();
                         launchGoogleMap(startLat,startLong,endLat,endLon);
-                        dialogPrsenter.moveTripFromUpcomingToHistory(receivedTrip);
-                        dialogPrsenter.startTrip(receivedTrip);
+                        dialogPresenter.moveTripFromUpcomingToHistory(receivedTrip);
+                        dialogPresenter.startTrip(receivedTrip);
                         finishAffinity();
                     }
                 }).setNeutralButton("snooze", new DialogInterface.OnClickListener() {
@@ -82,7 +84,7 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
                 player.stop();
                 player.release();
                 //Cancel trip
-                dialogPrsenter.canCelTrip(receivedTrip);
+                dialogPresenter.canCelTrip(receivedTrip);
                 stopAlarmService();
                 finish();
             }
@@ -127,4 +129,6 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
             startService(intent);
         }
     }
+
+
 }

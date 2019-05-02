@@ -23,7 +23,7 @@ public class FireBaseManager {
     {
         this.dialogPrsenter=dialogPrsenter;
     }
-    private void deleteTrip(String tripKey, String userID)
+    public void deleteTrip(String tripKey, String userID)
     {
         firebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();

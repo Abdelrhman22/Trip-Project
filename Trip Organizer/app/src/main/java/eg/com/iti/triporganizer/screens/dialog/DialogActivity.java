@@ -13,8 +13,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import eg.com.iti.triporganizer.R;
+import eg.com.iti.triporganizer.model.Notes;
 import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.services.alarmServices.NotificationHelper;
+import eg.com.iti.triporganizer.services.floatingWidget.FloatingIconService;
 import eg.com.iti.triporganizer.utils.KeyTags;
 
 import static eg.com.iti.triporganizer.services.alarmServices.AlarmHelper.stopAlarmService;
@@ -57,9 +59,7 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
                         player.release();
                         launchGoogleMap(startLat,startLong,endLat,endLon);
                         dialogPrsenter.moveTripFromUpcomingToHistory(receivedTrip);
-                        //Call Method that starts widget service
-                        //tripDTO.getNotes()
-                        //finish();
+                        dialogPrsenter.startTrip(receivedTrip);
                         finishAffinity();
                     }
                 }).setNeutralButton("snooze", new DialogInterface.OnClickListener() {
@@ -82,6 +82,7 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
                 player.stop();
                 player.release();
                 //Cancel trip
+                dialogPrsenter.canCelTrip(receivedTrip);
                 stopAlarmService();
                 finish();
             }
@@ -114,5 +115,16 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
     public void getTripData(TripDTO tripDTO) {
         receivedTrip=tripDTO;
         Log.i("tripValue","received"+receivedTrip.getName());
+    }
+
+    @Override
+    public void startFloatingWidgetService() {
+        Intent intent = new Intent(this, FloatingIconService.class);
+        Notes notes = receivedTrip.getNotes();
+        if (notes.getNotes().size() != 0)
+        {
+            intent.putExtra(KeyTags.trip, receivedTrip);
+            startService(intent);
+        }
     }
 }

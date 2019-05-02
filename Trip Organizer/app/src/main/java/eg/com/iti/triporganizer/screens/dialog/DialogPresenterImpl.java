@@ -60,4 +60,14 @@ public class DialogPresenterImpl implements DialogContract.DialogPrsenter {
     public void TripUpdated() {
         Log.i("mymessage","Trip has updated");
     }
+
+    @Override
+    public void startTrip(TripDTO tripDTO) {
+        view.startFloatingWidgetService();
+    }
+
+    @Override
+    public void canCelTrip(TripDTO tripDTO) {
+        fireBaseManager.deleteTrip(tripDTO.getTripKey(),tripDTO.getUserId());
+    }
 }

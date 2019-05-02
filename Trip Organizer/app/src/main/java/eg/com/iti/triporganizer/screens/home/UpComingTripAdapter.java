@@ -31,8 +31,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import eg.com.iti.triporganizer.R;
+import eg.com.iti.triporganizer.model.Notes;
 import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.screens.addTrip.AddTripActivity;
+import eg.com.iti.triporganizer.services.alarmServices.AlarmHelper;
+import eg.com.iti.triporganizer.services.floatingWidget.FloatingIconService;
+import eg.com.iti.triporganizer.utils.KeyTags;
 import eg.com.iti.triporganizer.utils.NetworkUtilities;
 
 public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapter.MyViewHolder> {
@@ -87,8 +91,16 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 return true;
                             }
                             case R.id.startTrip: {
+                                AlarmHelper.cancelAlarm(context.getApplicationContext());
                                 homePresenter.moveTripFromUpcomingToHistory(upcomingTripsList.get(i));
                                 showDirection(tripDTO);
+                                Intent intent = new Intent(context, FloatingIconService.class);
+                                Notes notes = tripDTO.getNotes();
+                                if (notes.getNotes().size() != 0)
+                                {
+                                    intent.putExtra(KeyTags.trip, tripDTO);
+                                    context.startService(intent);
+                                }
                                 return true;
                             }
                             default:

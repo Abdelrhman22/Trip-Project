@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:layout_margin="5dp"
+    android:background="@color/colorPrimary"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <CheckBox
+        android:background="#ffffff"
+        android:id="@+id/noteStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:layout_marginEnd="15dp"
+        android:textColor="@color/white"
+        />
+    <TextView
+        android:id="@+id/noteName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Note Name"
+        android:textSize="25sp"
+        android:textColor="#ffffff"
+        />
+</LinearLayout>

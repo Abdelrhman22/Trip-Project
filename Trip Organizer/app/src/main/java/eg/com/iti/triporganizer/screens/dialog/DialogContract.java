@@ -6,13 +6,15 @@ public interface DialogContract
 {
     interface DialogView
     {
-        public  void getTripData(TripDTO tripDTO);
-
+          void getTripData(TripDTO tripDTO);
+          void startFloatingWidgetService();
     }
     interface DialogPrsenter
     {
        public void getTripByKey(String key, String UserId);
         void moveTripFromUpcomingToHistory(TripDTO tripDTO);
         void TripUpdated();
+        public void startTrip(TripDTO tripDTO);
+        public void canCelTrip(TripDTO tripDTO);
     }
 }

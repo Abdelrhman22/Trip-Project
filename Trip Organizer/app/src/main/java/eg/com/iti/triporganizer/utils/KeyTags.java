@@ -13,4 +13,5 @@ public class KeyTags {
     public static final String tripStartLong = "tripStartLong";
     public static final String tripEndLat = "tripEndLat";
     public static final String tripEndLong = "tripEndLong";
+    public static final String trip = "trip";
 }

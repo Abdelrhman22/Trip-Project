@@ -8,6 +8,10 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
+    <uses-permission android:name="TASKS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,7 +30,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="donut">
-
+        <service
+            android:name=".services.floatingWidget.FloatingIconService"
+            android:enabled="true"
+            android:exported="true"></service>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -40,28 +47,32 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:screenOrientation="portrait"
             android:name=".screens.mapHistory.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".screens.home.HomeActivity"
             android:label="Road trip"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screens.history.HistoryActivity" android:label="History" android:parentActivityName=".screens.home.HomeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".screens.dialog.DialogActivity"
-            android:launchMode="singleInstance"
-            android:theme="@style/Theme.Transparent"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".screens.addTrip.AddTripActivity" android:screenOrientation="portrait"/> <!-- Arafa Start -->
         <activity
-            android:theme="@style/AppThemeup"
+            android:name=".screens.history.HistoryActivity"
+            android:label="History"
+            android:parentActivityName=".screens.home.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".screens.dialog.DialogActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent"></activity>
+        <activity
+            android:name=".screens.addTrip.AddTripActivity"
+            android:screenOrientation="portrait" /> <!-- Arafa Start -->
+        <activity
             android:name=".screens.splash.SplashActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeup">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,15 +80,18 @@
             </intent-filter>
         </activity> <!-- Arafa End *************************************************** -->
         <!-- Mai Start -->
-        <activity android:name=".screens.login.LoginActivity" android:screenOrientation="portrait"
-            /> <!-- Mai End *************************************************** -->
+        <activity
+            android:name=".screens.login.LoginActivity"
+            android:screenOrientation="portrait" /> <!-- Mai End *************************************************** -->
         <!-- salma start -->
-        <activity android:name=".screens.register.RegistrationActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".screens.register.RegistrationActivity"
+            android:screenOrientation="portrait" />
 
-        <receiver android:name=".services.alarmServices.BroadCastReciever" android:exported="true" android:enabled="true"/>
-
+        <receiver
+            android:name=".services.alarmServices.BroadCastReciever"
+            android:enabled="true"
+            android:exported="true" />
     </application>
-
-
 
 </manifest>

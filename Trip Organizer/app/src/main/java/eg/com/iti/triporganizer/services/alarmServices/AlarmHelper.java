@@ -50,4 +50,12 @@ public class AlarmHelper {
     {
         alarmManager.cancel(pendingIntent);
     }
+    public static void cancelAlarm(Context context) {
+        Intent intent = new Intent(context, BroadCastReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 1,
+                intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
+    }
 }

@@ -1,6 +1,9 @@
 package eg.com.iti.triporganizer.screens.home;
 
 import android.app.FragmentTransaction;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,7 +49,7 @@ public class HomeActivity extends AppCompatActivity
     DatabaseReference databaseReference;
     ArrayList<TripDTO> upcomingTripsList;
     TextView userName,userEmail;
-
+    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION=2005;
     //--------------------------------------------------------------
     Toolbar toolbar;
     FloatingActionButton fab;
@@ -60,6 +63,12 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+        }
         upcomingTripsList = new ArrayList<>();
         homePresenter = new HomePresenterImpl(this);
         databaseReference = homePresenter.retrieveUpcomingTripsFromFirebase();
@@ -67,7 +76,17 @@ public class HomeActivity extends AppCompatActivity
         initializeComponents();
         addingListeners();
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
+            //Check if the permission is granted or not.
+            if (resultCode != RESULT_OK) {
+                // permission not taken
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
     private void initializeComponents() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

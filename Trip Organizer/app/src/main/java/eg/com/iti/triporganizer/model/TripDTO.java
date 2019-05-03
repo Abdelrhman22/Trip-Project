@@ -43,6 +43,16 @@ public class TripDTO implements Serializable {
 
     private String userId;
 
+    private int requestCode;
+
+    public int getRequestCode() {
+        return requestCode;
+    }
+
+    public void setRequestCode(int requestCode) {
+        this.requestCode = requestCode;
+    }
+
     public TripDTO() {
     }
 

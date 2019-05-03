@@ -91,7 +91,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 return true;
                             }
                             case R.id.startTrip: {
-                                AlarmHelper.cancelAlarm(context.getApplicationContext());
+                                AlarmHelper.cancelAlarm(context.getApplicationContext(),upcomingTripsList.get(i));
                                 homePresenter.moveTripFromUpcomingToHistory(upcomingTripsList.get(i));
                                 showDirection(tripDTO);
                                 Intent intent = new Intent(context, FloatingIconService.class);
@@ -164,7 +164,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 boolean online = NetworkUtilities.isOnline(context);
                                 if (online)
                                 {
-                                    AlarmHelper.cancelAlarm(context.getApplicationContext());
+                                    AlarmHelper.cancelAlarm(context.getApplicationContext(),upcomingTripsList.get(i));
                                     homePresenter.deleteTrip(upcomingTripsList.get(i).getTripKey());
                                 }
                                 else

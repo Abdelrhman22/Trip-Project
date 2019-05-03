@@ -2,6 +2,7 @@ package eg.com.iti.triporganizer.Network.NetworkServices;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,26 +53,15 @@ public class FirebaseTripsManager {
         firebaseAuth = FirebaseAuth.getInstance();
         getCurrentUser();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("trips");
-        mDatabaseReference.child(currentUserUID).child("upcoming").child(tripKey).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mDatabaseReference.removeValue(new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                        if (!edittrip && !moveTrip)
-                            homePresenter.notifyWithSuccessfulTripDeletion();
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
+        mDatabaseReference = mFirebaseDatabase.getReference("trips").child(currentUserUID).child("upcoming").child(tripKey);
+        mDatabaseReference.removeValue(new DatabaseReference.CompletionListener() {
+           @Override
+           public void onComplete(DatabaseError databaseError,DatabaseReference databaseReference)
+           {
+                    if (!edittrip && !moveTrip)
+                   homePresenter.notifyWithSuccessfulTripDeletion();
+           }
+       });
     }
 
     private void getCurrentUser() {
@@ -99,5 +89,18 @@ public class FirebaseTripsManager {
             }
         });
     }
+    public void deleteTrip(String tripKey, String userID)
+    {
+        firebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference("trips").child(userID).child("upcoming").child(tripKey);
+        mDatabaseReference.removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference)
+            {
+                Log.i("mymessage","deleted");
+            }
+        });
+    } // end of Delete Method
 }
 

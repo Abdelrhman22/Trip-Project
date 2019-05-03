@@ -163,7 +163,10 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 //deleting code
                                 boolean online = NetworkUtilities.isOnline(context);
                                 if (online)
+                                {
+                                    AlarmHelper.cancelAlarm(context.getApplicationContext());
                                     homePresenter.deleteTrip(upcomingTripsList.get(i).getTripKey());
+                                }
                                 else
                                     Toast.makeText(context, "please check your internet connection", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();

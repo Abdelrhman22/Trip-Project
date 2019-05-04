@@ -126,20 +126,22 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/name"
                 app:layout_constraintTop_toBottomOf="@+id/name"
-                app:layout_constraintVertical_bias="0.0" />
+                />
 
             <TextView
                 android:id="@+id/tripEndPoint"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="none"
+                android:singleLine="false"
                 android:text="@string/end_point"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/rank"
-                app:layout_constraintEnd_toEndOf="@+id/tripStartPoint"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/tripStartPoint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/rank"
                 app:layout_constraintTop_toTopOf="@+id/rank" />
 
             <TextView
@@ -148,9 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="start point"
+                android:text="@string/start_points"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tripEndPoint"

@@ -41,6 +41,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryContrac
         mAuth=FirebaseAuth.getInstance();
         initializeComponents();
         addingListeners();
+
     }
 
     private void addingListeners() {

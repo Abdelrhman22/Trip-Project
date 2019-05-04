@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +28,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 
@@ -68,6 +73,26 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
         myViewHolder.tripEndPoint.setText(upcomingTripsList.get(i).getTripEndPoint());
         myViewHolder.tripDate.setText(tripDate);
         myViewHolder.tripTime.setText(tripTime);
+
+        //set image
+        String url="https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&";
+        url+="&key="+ context.getString(R.string.google_api_key);
+        String photo_url_str ="https://maps.googleapis.com/maps/api/staticmap?";
+        photo_url_str+="&zoom=15";
+        photo_url_str+="&size=150x150";
+        photo_url_str+="&maptype=roadmap";
+        photo_url_str+="&markers=color:blue%7Clabel:G%7C"+upcomingTripsList.get(i).getTripEndPointLatitude()+", "+upcomingTripsList.get(i).getTripEndPointLongitude();
+        photo_url_str+="&key="+ "AIzaSyDZl8cLWi-yEroZ-m-lSUtoQiaf-oi-rbU";
+        Glide.with(context)
+                .load(photo_url_str)
+                .placeholder(R.drawable.map)
+                .error(R.drawable.error)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(myViewHolder.tripImage);
+
+
+
         myViewHolder.tripSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +121,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 showDirection(tripDTO);
                                 Intent intent = new Intent(context, FloatingIconService.class);
                                 Notes notes = tripDTO.getNotes();
-                                if (notes.getNotes().size() != 0)
-                                {
+                                if (notes.getNotes().size() != 0) {
                                     intent.putExtra(KeyTags.trip, tripDTO);
                                     context.startService(intent);
                                 }
@@ -107,7 +131,6 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 return false;
                         }
                     }
-
 
 
                 });
@@ -131,8 +154,8 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                 intent.putExtra("startPlaceLongitude", tripDTO.getTripStartPointLongitude());
                 intent.putExtra("endPlaceLatitude", tripDTO.getTripEndPointLatitude());
                 intent.putExtra("endPlaceLongitude", tripDTO.getTripEndPointLongitude());
-                if (tripDTO.getNotes()!= null) {
-                    intent.putExtra("hasNotes",true);
+                if (tripDTO.getNotes() != null) {
+                    intent.putExtra("hasNotes", true);
                     intent.putExtra("notesNum", tripDTO.getNotes().getNotes().size());
                     for (int i = 0; i < tripDTO.getNotes().getNotes().size(); i++) {
                         intent.putExtra("note" + i, tripDTO.getNotes().getNotes().get(i).getBody());
@@ -142,11 +165,12 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                 context.startActivity(intent);
 
             }
+
             private void viewNotes(TripDTO tripDTO) {
-                if(tripDTO.getNotes()==null)
+                if (tripDTO.getNotes() == null)
                     Toast.makeText(context, "This trip has no notes", Toast.LENGTH_SHORT).show();
                 else {
-                  homePresenter.notifyViewToShowNotesDialog(tripDTO);
+                    homePresenter.notifyViewToShowNotesDialog(tripDTO);
                 }
             }
 
@@ -162,12 +186,10 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //deleting code
                                 boolean online = NetworkUtilities.isOnline(context);
-                                if (online)
-                                {
+                                if (online) {
                                     AlarmHelper.cancelAlarm(context.getApplicationContext());
                                     homePresenter.deleteTrip(upcomingTripsList.get(i).getTripKey());
-                                }
-                                else
+                                } else
                                     Toast.makeText(context, "please check your internet connection", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
@@ -214,6 +236,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
         TextView tripStartPoint;
         TextView tripEndPoint;
         ImageView tripSettings;
+        ImageView tripImage;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -227,6 +250,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
             tripStartPoint = itemView.findViewById(R.id.tripStartPoint);
             tripEndPoint = itemView.findViewById(R.id.tripEndPoint);
             tripSettings = itemView.findViewById(R.id.tripSettings);
+            tripImage = itemView.findViewById(R.id.profile_image);
         }
 
     }

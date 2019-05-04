@@ -91,9 +91,8 @@ public class FirebaseTripsManager {
     }
     public void deleteTrip(String tripKey, String userID)
     {
-        firebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference("trips").child(userID).child("upcoming").child(tripKey);
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseReference = mFirebaseDatabase.getReference("trips").child(userID).child("upcoming").child(tripKey);
         mDatabaseReference.removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference)

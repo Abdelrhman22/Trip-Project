@@ -71,9 +71,9 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
                 player.release();
 
                 //Snooze trip
-
                 //Notification in the tray
                 NotificationHelper notificationHelper = new NotificationHelper(DialogActivity.this);
+                notificationHelper.getTripDetails(receivedTrip);
                 NotificationCompat.Builder builder = notificationHelper.getChannelNotification();
                 notificationHelper.getManager().notify(1, builder.build());
                 finish();

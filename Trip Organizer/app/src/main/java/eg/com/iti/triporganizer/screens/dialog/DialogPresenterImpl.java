@@ -71,7 +71,7 @@ public class DialogPresenterImpl implements DialogContract.DialogPresenter {
     @Override
     public void canCelTrip(TripDTO tripDTO) {
         Log.i("abdoarafatag","insideCancel");
-        firebaseTripsManager.deleteTrip(tripDTO.getTripKey(),tripDTO.getUserId());
+        firebaseTripsManager.deleteTrip(tripDTO.getTripKey());
     }
 
 

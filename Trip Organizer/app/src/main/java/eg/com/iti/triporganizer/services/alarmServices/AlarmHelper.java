@@ -15,9 +15,15 @@ public class AlarmHelper {
 
     private static AlarmManager alarmManager;
     private  static PendingIntent pendingIntent;
-
-    public static void startAlarm(TripDTO tripDTO, Calendar calendar, Context context ) {
+    public static Integer codesArray []={0,0,0,0,0,0,0,0,0,0};
+    private static int requestCode=10;
+    public static void startAlarm(TripDTO tripDTO, Calendar calendar, Context context )
+    {
         TripDTO receivedTrip = tripDTO;
+        requestCode = 10;
+        getRequestCode();
+        Log.i("requestCode","is"+requestCode);
+        tripDTO.setRequestCode(requestCode);
         Intent serviceIntent = new Intent(context, BroadCastReciever.class);
         serviceIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         serviceIntent.putExtra(KeyTags.tripKey,tripDTO.getTripKey());    // tripKey
@@ -28,7 +34,7 @@ public class AlarmHelper {
         serviceIntent.putExtra(KeyTags.tripEndLat,tripDTO.getTripEndPointLatitude());        // tripEndLat
         serviceIntent.putExtra(KeyTags.tripEndLong,tripDTO.getTripEndPointLongitude());  // tripEndLong
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        pendingIntent = PendingIntent.getBroadcast(context, 1, serviceIntent, 0);
+        pendingIntent = PendingIntent.getBroadcast(context, requestCode, serviceIntent, 0);
 
         switch (receivedTrip.getRepeated()) {
             case "Repeat Daily":
@@ -50,12 +56,24 @@ public class AlarmHelper {
     {
         alarmManager.cancel(pendingIntent);
     }
-    public static void cancelAlarm(Context context) {
+    public static void cancelAlarm(Context context,TripDTO tripDTO) {
         Intent intent = new Intent(context, BroadCastReciever.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 1,
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), tripDTO.getRequestCode(),
                 intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
         pendingIntent.cancel();
+    }
+    private static void getRequestCode()
+    {
+        for(int i=0;i<codesArray.length;i++)
+        {
+            if(codesArray[i]!=1)
+            {
+                requestCode=i;
+                codesArray[i]=1;
+                break;
+            }
+        }
     }
 }

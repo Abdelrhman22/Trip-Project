@@ -116,7 +116,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 return true;
                             }
                             case R.id.startTrip: {
-                                AlarmHelper.cancelAlarm(context.getApplicationContext());
+                                AlarmHelper.cancelAlarm(context.getApplicationContext(),upcomingTripsList.get(i));
                                 homePresenter.moveTripFromUpcomingToHistory(upcomingTripsList.get(i));
                                 showDirection(tripDTO);
                                 Intent intent = new Intent(context, FloatingIconService.class);
@@ -186,8 +186,14 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //deleting code
                                 boolean online = NetworkUtilities.isOnline(context);
+<<<<<<< HEAD
                                 if (online) {
                                     AlarmHelper.cancelAlarm(context.getApplicationContext());
+=======
+                                if (online)
+                                {
+                                    AlarmHelper.cancelAlarm(context.getApplicationContext(),upcomingTripsList.get(i));
+>>>>>>> 7eb545a7e56975aca35fe85d85f124214ba81ce7
                                     homePresenter.deleteTrip(upcomingTripsList.get(i).getTripKey());
                                 } else
                                     Toast.makeText(context, "please check your internet connection", Toast.LENGTH_SHORT).show();

@@ -16,6 +16,7 @@ import eg.com.iti.triporganizer.R;
 import eg.com.iti.triporganizer.model.Notes;
 import eg.com.iti.triporganizer.model.TripDTO;
 import eg.com.iti.triporganizer.screens.home.UpComingTripAdapter;
+import eg.com.iti.triporganizer.services.alarmServices.AlarmHelper;
 import eg.com.iti.triporganizer.services.alarmServices.NotificationHelper;
 import eg.com.iti.triporganizer.services.floatingWidget.FloatingIconService;
 import eg.com.iti.triporganizer.utils.KeyTags;
@@ -84,8 +85,9 @@ public class DialogActivity extends AppCompatActivity implements DialogContract.
                 player.stop();
                 player.release();
                 //Cancel trip
+                AlarmHelper.cancelAlarm(DialogActivity.this,receivedTrip);
                 dialogPresenter.canCelTrip(receivedTrip);
-                stopAlarmService();
+                //stopAlarmService();
                 finish();
             }
         }).setIcon(getResources().getDrawable(R.drawable.ic_notification)).setCancelable(false).show();

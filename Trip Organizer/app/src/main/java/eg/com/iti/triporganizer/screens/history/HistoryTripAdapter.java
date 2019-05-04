@@ -62,8 +62,7 @@ public class HistoryTripAdapter extends RecyclerView.Adapter<HistoryTripAdapter.
         myViewHolder.tripDate.setText(tripDate);
         myViewHolder.tripTime.setText(tripTime);
         //set image
-        String url="https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&";
-        url+="&key="+ context.getString(R.string.google_api_key);
+
         String photo_url_str ="https://maps.googleapis.com/maps/api/staticmap?";
         photo_url_str+="&zoom=15";
         photo_url_str+="&size=150x150";

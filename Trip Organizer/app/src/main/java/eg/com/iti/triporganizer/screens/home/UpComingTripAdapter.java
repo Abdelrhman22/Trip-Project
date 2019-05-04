@@ -19,7 +19,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,7 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
@@ -73,10 +71,8 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
         myViewHolder.tripEndPoint.setText(upcomingTripsList.get(i).getTripEndPoint());
         myViewHolder.tripDate.setText(tripDate);
         myViewHolder.tripTime.setText(tripTime);
-
         //set image
-        String url="https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&";
-        url+="&key="+ context.getString(R.string.google_api_key);
+
         String photo_url_str ="https://maps.googleapis.com/maps/api/staticmap?";
         photo_url_str+="&zoom=15";
         photo_url_str+="&size=150x150";
@@ -90,9 +86,6 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(myViewHolder.tripImage);
-
-
-
         myViewHolder.tripSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +109,7 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                                 return true;
                             }
                             case R.id.startTrip: {
-                                AlarmHelper.cancelAlarm(context.getApplicationContext(),upcomingTripsList.get(i));
+                                AlarmHelper.cancelAlarm(context.getApplicationContext(), upcomingTripsList.get(i));
                                 homePresenter.moveTripFromUpcomingToHistory(upcomingTripsList.get(i));
                                 showDirection(tripDTO);
                                 Intent intent = new Intent(context, FloatingIconService.class);
@@ -186,14 +179,8 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //deleting code
                                 boolean online = NetworkUtilities.isOnline(context);
-<<<<<<< HEAD
                                 if (online) {
-                                    AlarmHelper.cancelAlarm(context.getApplicationContext());
-=======
-                                if (online)
-                                {
-                                    AlarmHelper.cancelAlarm(context.getApplicationContext(),upcomingTripsList.get(i));
->>>>>>> 7eb545a7e56975aca35fe85d85f124214ba81ce7
+                                    AlarmHelper.cancelAlarm(context.getApplicationContext(), upcomingTripsList.get(i));
                                     homePresenter.deleteTrip(upcomingTripsList.get(i).getTripKey());
                                 } else
                                     Toast.makeText(context, "please check your internet connection", Toast.LENGTH_SHORT).show();
@@ -257,8 +244,8 @@ public class UpComingTripAdapter extends RecyclerView.Adapter<UpComingTripAdapte
             tripEndPoint = itemView.findViewById(R.id.tripEndPoint);
             tripSettings = itemView.findViewById(R.id.tripSettings);
             tripImage = itemView.findViewById(R.id.profile_image);
+
         }
 
     }
-
 }
